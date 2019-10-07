@@ -10,13 +10,13 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="x4N-6d-Y5R">
-                                <rect key="frame" x="20" y="251.5" width="374" height="100"/>
+                                <rect key="frame" x="20" y="207.5" width="374" height="100"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DIl-TU-Hx5">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="47"/>
@@ -36,7 +36,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7xL-6F-ntM">
-                                <rect key="frame" x="20" y="381.5" width="374" height="40"/>
+                                <rect key="frame" x="20" y="337.5" width="374" height="40"/>
                                 <color key="backgroundColor" systemColor="systemGrayColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="eeF-4M-I73"/>
@@ -52,7 +52,7 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XIT-GP-ykr">
-                                <rect key="frame" x="20" y="431.5" width="374" height="40"/>
+                                <rect key="frame" x="20" y="387.5" width="374" height="40"/>
                                 <color key="backgroundColor" systemColor="systemGrayColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Kg8-MP-x3w"/>
@@ -67,11 +67,11 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="nPd-QY-cfb" kind="show" id="ftj-cE-zDg"/>
+                                    <segue destination="nPd-QY-cfb" kind="presentation" modalPresentationStyle="fullScreen" id="OLm-RF-w12"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chat Apps" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R1x-F2-6xN">
-                                <rect key="frame" x="10" y="188" width="394" height="33.5"/>
+                                <rect key="frame" x="10" y="144" width="394" height="33.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="black" pointSize="28"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -101,16 +101,32 @@
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="129.91071428571428"/>
         </scene>
+        <!--Home View Controller-->
+        <scene sceneID="L6B-2N-gUy">
+            <objects>
+                <viewController storyboardIdentifier="HomeViewController" id="1Oz-dh-bK3" customClass="HomeViewController" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AqT-aS-Z04">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="tSn-cA-FMY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hAL-7z-aDD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dd0-Bi-i9k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1048" y="830"/>
+        </scene>
         <!--Register View Controller-->
         <scene sceneID="D9Z-hf-57S">
             <objects>
-                <viewController id="nPd-QY-cfb" customClass="RegisterViewController" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegisterViewController" id="nPd-QY-cfb" customClass="RegisterViewController" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vjE-bX-vnR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="6bh-Sd-Mco">
-                                <rect key="frame" x="20" y="382" width="374" height="200"/>
+                                <rect key="frame" x="20" y="338" width="374" height="200"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6BY-fd-guw">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="45.5"/>
@@ -138,7 +154,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nir-Xw-zOV">
-                                <rect key="frame" x="20" y="612" width="374" height="40"/>
+                                <rect key="frame" x="20" y="568" width="374" height="40"/>
                                 <color key="backgroundColor" systemColor="systemGrayColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="qJ2-3X-E3T"/>
@@ -157,13 +173,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Register" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBa-4R-krk">
-                                <rect key="frame" x="20" y="108" width="374" height="29"/>
+                                <rect key="frame" x="20" y="64" width="374" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bKe-0m-Hjk">
-                                <rect key="frame" x="20" y="152" width="374" height="200"/>
+                                <rect key="frame" x="20" y="108" width="374" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="qdY-Mk-gfd"/>
                                 </constraints>
@@ -211,12 +227,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="BYQ-9L-H6m"/>
+                        <segue destination="1Oz-dh-bK3" kind="relationship" relationship="rootViewController" id="KEI-JI-p66"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x8q-iO-wia" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="271" y="130"/>
+            <point key="canvasLocation" x="232" y="830"/>
         </scene>
     </scenes>
 </document>

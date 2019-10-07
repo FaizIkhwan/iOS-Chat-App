@@ -22,21 +22,37 @@ class RegisterViewController: UIViewController {
     // MARK:- IBAction
     
     @IBAction func registerButtonPressed(_ sender: Any) {
+        guard
+            let username = usernameTextField.text,
+            let email = emailTextField.text,
+            let password = passwordTextField.text,
+            let confirmPassword = confirmPasswordTextField.text
+        else {
+            print("Form is not valid")
+            return
+        }
         
-        usernameTextField.resignFirstResponder()
-        emailTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
-        confirmPasswordTextField.resignFirstResponder()
-        
-        let username = usernameTextField.text
-        let email = emailTextField.text
-        let password = passwordTextField.text
-        let confirmPassword = confirmPasswordTextField.text
-        
-        print("username: \(username)")
-        print("email: \(email)")
-        print("password: \(password)")
-        print("confirmPassword: \(confirmPassword)")
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            if error != nil {
+                print("ERROR: ", error!)
+                return
+            }
+            let values = ["username": username, "email": email, "password": password]
+            guard let uid = authResult?.user.uid else { return }
+            
+            let ref = Database.database().reference(fromURL: "https://ios-chat-apps.firebaseio.com/")
+            let userReference = ref.child("users").child(uid)
+            userReference.updateChildValues(values) { (err, ref) in
+                if err != nil {
+                    print("ERR: ", err!)
+                    return
+                }
+                
+                print("saved in db")
+                self.dismiss(animated: true)
+            }
+            
+        }
     }
     
     // MARK:- View Lifecycle
