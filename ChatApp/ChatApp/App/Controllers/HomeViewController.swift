@@ -7,17 +7,58 @@
 //
 
 import UIKit
+import Firebase
 
 class HomeViewController: UIViewController {
 
+    // MARK: - IBAction
+    
+    @IBAction func logoutButtonPressed(_ sender: Any) {
+        handleLogout()
+        presentLoginView()
+    }
+    
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        presentLoginView()
+        checkIfUserIsLoggedIn()        
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "Back"
+        navigationItem.backBarButtonItem = backItem
+    }
+    
+    // MARK: - Functions        
+    
+    func checkIfUserIsLoggedIn() {
+        if Auth.auth().currentUser?.uid == nil {
+            presentLoginView()
+        } else {
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshots) in
+                if let dic = snapshots.value as? [String: AnyObject] {
+                    self.navigationItem.title = dic["username"] as? String
+                }
+            })
+        }
     }
     
     func presentLoginView() {
         let loginVC = LoginViewController.instantiate(storyboardName: "Main")
         present(loginVC, animated: true)
+    }
+    
+    func handleLogout() {
+        do {
+            try Auth.auth().signOut()
+        } catch let logoutError {
+            print(logoutError)
+        }
     }
 
 }
