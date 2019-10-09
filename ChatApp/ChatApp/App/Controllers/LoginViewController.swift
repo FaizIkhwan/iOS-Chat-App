@@ -17,6 +17,8 @@ class LoginViewController: UIViewController, Storyboarded {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var verticalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var forgotPasswordTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var forgotPasswordBottomConstraint: NSLayoutConstraint!
     
     // MARK:- View Lifecycle
     
@@ -36,17 +38,18 @@ class LoginViewController: UIViewController, Storyboarded {
         if notification.name == UIResponder.keyboardWillShowNotification {
             UIView.animate(withDuration: 0.2) {
                 print("IFFF")
-                self.verticalConstraint.constant = -30
+                self.forgotPasswordTopConstraint.priority = UILayoutPriority(rawValue: 1000)
+                self.forgotPasswordBottomConstraint.constant = keyboardRect.height - 20
+//                self.verticalConstraint.constant = 10
+                print("formStackView.frame.size.height: ", self.formStackView.frame.size.height)
                 self.view.layoutIfNeeded()
-//                self.formStackView.frame.origin.y = self.view.frame.size.height - keyboardRect.height - self.formStackView.frame.size.height
-                print("y point \(self.formStackView.frame.origin.y)")
             }
         } else {
             print("ELSE")
             UIView.animate(withDuration: 0.2) {
-                self.verticalConstraint.constant = 0
+                self.forgotPasswordTopConstraint.priority = UILayoutPriority(rawValue: 250)
+                self.forgotPasswordBottomConstraint.constant = 20
                 self.view.layoutIfNeeded()
-//                self.formStackView.frame.origin.y = (self.view.frame.size.height - self.formStackView.frame.size.height)/2
             }
         }
     }
