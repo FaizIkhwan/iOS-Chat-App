@@ -50,6 +50,8 @@ class HomeViewController: UIViewController {
     
     func presentLoginView() {
         let loginVC = LoginViewController.instantiate(storyboardName: "Main")
+        loginVC.modalPresentationStyle = .overCurrentContext
+        loginVC.modalTransitionStyle = .crossDissolve
         present(loginVC, animated: true)
     }
     

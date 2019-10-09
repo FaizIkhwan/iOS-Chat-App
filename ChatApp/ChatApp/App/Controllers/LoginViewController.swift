@@ -12,11 +12,12 @@ import Firebase
 class LoginViewController: UIViewController, Storyboarded {
 
     // MARK: - IBOutlet
-    
+            
     @IBOutlet weak var formStackView: UIStackView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-        
+    @IBOutlet weak var verticalConstraint: NSLayoutConstraint!
+    
     // MARK:- View Lifecycle
     
     override func viewDidLoad() {
@@ -34,11 +35,18 @@ class LoginViewController: UIViewController, Storyboarded {
         guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
         if notification.name == UIResponder.keyboardWillShowNotification {
             UIView.animate(withDuration: 0.2) {
-                self.formStackView.frame.origin.y = self.view.frame.size.height - keyboardRect.height - self.formStackView.frame.size.height
+                print("IFFF")
+                self.verticalConstraint.constant = -30
+                self.view.layoutIfNeeded()
+//                self.formStackView.frame.origin.y = self.view.frame.size.height - keyboardRect.height - self.formStackView.frame.size.height
+                print("y point \(self.formStackView.frame.origin.y)")
             }
-        } else {            
+        } else {
+            print("ELSE")
             UIView.animate(withDuration: 0.2) {
-                self.formStackView.frame.origin.y = (self.view.frame.size.height - self.formStackView.frame.size.height)/2
+                self.verticalConstraint.constant = 0
+                self.view.layoutIfNeeded()
+//                self.formStackView.frame.origin.y = (self.view.frame.size.height - self.formStackView.frame.size.height)/2
             }
         }
     }
@@ -54,13 +62,13 @@ class LoginViewController: UIViewController, Storyboarded {
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     func notificationAddObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     // MARK: - Functions
