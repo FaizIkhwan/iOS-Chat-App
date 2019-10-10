@@ -6,10 +6,10 @@
 //  Copyright © 2019 Faiz Ikhwan. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct User {
-    let username: String
     let email: String
     let password: String
+    let username: String
 }
