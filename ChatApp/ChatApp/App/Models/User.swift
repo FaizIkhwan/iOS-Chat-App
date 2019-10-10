@@ -12,4 +12,10 @@ struct User {
     let email: String
     let password: String
     let username: String
+    
+    enum Const {
+        static let email = "email"
+        static let password = "password"
+        static let username = "username"
+    }
 }

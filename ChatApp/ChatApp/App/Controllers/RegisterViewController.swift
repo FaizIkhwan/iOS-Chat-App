@@ -12,12 +12,13 @@ import Firebase
 class RegisterViewController: UIViewController {
 
     // MARK: - IBOutlet
-    
+        
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     // MARK:- View Lifecycle
     
@@ -34,10 +35,21 @@ class RegisterViewController: UIViewController {
     
     @objc func keyboardWillChange(notification: Notification) {
         guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification {
-            view.frame.origin.y = -keyboardRect.height
+        if notification.name == UIResponder.keyboardWillShowNotification {
+            UIImageView.animate(withDuration: 0.2, animations: {
+                self.imageView.alpha = 0.0
+                self.bottomConstraint.constant = -keyboardRect.height
+                self.view.layoutIfNeeded()
+            }) { (finished) in
+                self.imageView.isHidden = true
+            }
         } else {
-            view.frame.origin.y = 0
+            self.imageView.isHidden = false
+            UIImageView.animate(withDuration: 0.2, animations: {
+                self.imageView.alpha = 1.0
+                self.bottomConstraint.constant = 0
+                self.view.layoutIfNeeded()
+            })
         }
     }
     
@@ -54,13 +66,11 @@ class RegisterViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     func notificationAddObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     // MARK: - Functions
@@ -71,7 +81,7 @@ class RegisterViewController: UIViewController {
                 print("ERROR: ", error!)
                 return
             }
-            let values = ["username": username, "email": email, "password": password]
+            let values = [User.Const.username: username, User.Const.email: email, User.Const.password: password]
             guard let uid = authResult?.user.uid else { return }
             
             let ref = Database.database().reference(fromURL: "https://ios-chat-apps.firebaseio.com/")
@@ -81,7 +91,6 @@ class RegisterViewController: UIViewController {
                     print("ERR: ", err!)
                     return
                 }
-                print("saved in db")
                 self.dismiss(animated: true)
             }
         }
@@ -102,5 +111,9 @@ class RegisterViewController: UIViewController {
         }
         // Validate input first
         authentication(username: username, email: email, password: password)
+    }
+    
+    @IBAction func backButtonPressed(_ sender: UIButton) {
+        self.dismiss(animated: true)
     }
 }

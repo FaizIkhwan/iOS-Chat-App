@@ -10,13 +10,6 @@ import UIKit
 import Firebase
 
 class HomeViewController: UIViewController {
-
-    // MARK: - IBAction
-    
-    @IBAction func logoutButtonPressed(_ sender: Any) {
-        handleLogout()
-        presentLoginView()
-    }
     
     // MARK: - View Lifecycle
     
@@ -61,6 +54,13 @@ class HomeViewController: UIViewController {
         } catch let logoutError {
             print(logoutError)
         }
+    }
+    
+    // MARK: - IBAction
+    
+    @IBAction func logoutButtonPressed(_ sender: Any) {
+        handleLogout()
+        presentLoginView()
     }
 
 }
