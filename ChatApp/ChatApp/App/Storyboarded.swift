@@ -10,7 +10,7 @@ import UIKit
 
 protocol Storyboarded {}
 
-extension Storyboarded where Self: UIViewController {
+extension Storyboarded where Self: UIViewController {    
     static func instantiate(storyboardName: String) -> Self {
         let storyboardIdentifier = String(describing: self)
         let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle.main)

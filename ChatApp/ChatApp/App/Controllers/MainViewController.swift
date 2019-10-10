@@ -1,21 +1,21 @@
 //
-//  HomeViewController.swift
+//  MainViewController.swift
 //  ChatApp
 //
-//  Created by Faiz Ikhwan on 07/10/2019.
+//  Created by Faiz Ikhwan on 10/10/2019.
 //  Copyright © 2019 Faiz Ikhwan. All rights reserved.
 //
 
 import UIKit
 import Firebase
 
-class HomeViewController: UIViewController {
-    
+class MainViewController: UITabBarController {
+
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkIfUserIsLoggedIn()        
+        checkIfUserIsLoggedIn()
     }
     
     // MARK: - Navigation
@@ -26,26 +26,26 @@ class HomeViewController: UIViewController {
         navigationItem.backBarButtonItem = backItem
     }
     
-    // MARK: - Functions        
+    func presentLoginView() {
+        let loginVC = LoginViewController.instantiate(storyboardName: Constant.Main)
+        loginVC.modalPresentationStyle = .overCurrentContext
+        loginVC.modalTransitionStyle = .crossDissolve
+        present(loginVC, animated: true)
+    }
+    
+    // MARK: - Functions
     
     func checkIfUserIsLoggedIn() {
         if Auth.auth().currentUser?.uid == nil {
             presentLoginView()
         } else {
             guard let uid = Auth.auth().currentUser?.uid else { return }
-            Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshots) in
+            Database.database().reference().child(Constant.users).child(uid).observeSingleEvent(of: .value, with: { (snapshots) in
                 if let dic = snapshots.value as? [String: AnyObject] {
-                    self.navigationItem.title = dic["username"] as? String
+                    self.navigationItem.title = dic[User.Const.username] as? String
                 }
             })
         }
-    }
-    
-    func presentLoginView() {
-        let loginVC = LoginViewController.instantiate(storyboardName: "Main")
-        loginVC.modalPresentationStyle = .overCurrentContext
-        loginVC.modalTransitionStyle = .crossDissolve
-        present(loginVC, animated: true)
     }
     
     func handleLogout() {
@@ -55,12 +55,4 @@ class HomeViewController: UIViewController {
             print(logoutError)
         }
     }
-    
-    // MARK: - IBAction
-    
-    @IBAction func logoutButtonPressed(_ sender: Any) {
-        handleLogout()
-        presentLoginView()
-    }
-
 }

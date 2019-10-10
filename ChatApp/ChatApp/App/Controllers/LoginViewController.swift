@@ -86,7 +86,7 @@ class LoginViewController: UIViewController, Storyboarded {
         }
             
         guard let password = passwordTextField.text, password.count > 4 else {
-            print("Form is not valid")
+            // alert
             return
         }
         // Validate input first

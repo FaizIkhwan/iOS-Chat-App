@@ -106,7 +106,7 @@ class RegisterViewController: UIViewController {
             let password = passwordTextField.text,
             let confirmPassword = confirmPasswordTextField.text
         else {
-            print("Form is not valid")
+            // alert
             return
         }
         // Validate input first
