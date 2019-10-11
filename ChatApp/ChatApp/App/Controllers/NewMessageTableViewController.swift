@@ -43,7 +43,8 @@ class NewMessageTableViewController: UITableViewController {
                 let email = dic["email"] as? String ?? ""
                 let password = dic["password"] as? String ?? ""
                 let username = dic["username"] as? String ?? ""
-                let user = User(email: email, password: password, username: username)
+                let profileImageURL = dic["profileImageURL"] as? String ?? ""
+                let user = User(email: email, password: password, username: username, profileImageURL: profileImageURL)
                 self.users.append(user)
                 self.tableView.reloadData()
             }
