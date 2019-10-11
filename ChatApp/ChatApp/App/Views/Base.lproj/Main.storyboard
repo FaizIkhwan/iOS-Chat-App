@@ -189,7 +189,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M9J-rl-crZ">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="M9J-rl-crZ">
                                             <rect key="frame" x="20" y="10" width="60" height="60"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="jO7-71-mc4"/>
@@ -214,7 +214,6 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="Qkl-e9-Jos" secondAttribute="trailing" constant="30" id="QTN-yP-iNv"/>
                                         <constraint firstItem="Qkl-e9-Jos" firstAttribute="centerY" secondItem="F6E-4U-TPI" secondAttribute="centerY" id="RdY-OW-S2R"/>
                                         <constraint firstAttribute="bottom" secondItem="M9J-rl-crZ" secondAttribute="bottom" constant="10" id="gic-UE-8EA"/>
-                                        <constraint firstItem="M9J-rl-crZ" firstAttribute="centerY" secondItem="F6E-4U-TPI" secondAttribute="centerY" id="mch-2r-yQM"/>
                                         <constraint firstItem="Qkl-e9-Jos" firstAttribute="leading" secondItem="M9J-rl-crZ" secondAttribute="trailing" constant="30" id="t7h-H2-cBh"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -395,5 +394,6 @@
     </scenes>
     <resources>
         <image name="plus" catalog="system" width="64" height="58"/>
+        <image name="user" width="64" height="64"/>
     </resources>
 </document>

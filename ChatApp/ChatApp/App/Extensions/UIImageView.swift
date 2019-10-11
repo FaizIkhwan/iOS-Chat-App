@@ -11,28 +11,28 @@ import UIKit
 let imageCache = NSCache<NSString, AnyObject>()
 
 extension UIImageView {
-    func loadImageUsingCacheWithURLString(urlString: String) {
-        
-        // Check cache for first image
-        if let cachedImage = imageCache.object(forKey: urlString as NSString) as? UIImage {
-            self.image = cachedImage
-            return
-        }
-        
-        // else do this
-        let url = URL(string: urlString)
-        URLSession.shared.dataTask(with: url!) { (data, response, error) in
-            if let err = error {
-                // alert
-                print(err)
-                return
-            }
-            DispatchQueue.main.async {
-                if let downloadedImage = UIImage(data: data!) {
-                    imageCache.setObject(downloadedImage, forKey: urlString as NSString)
-                    self.image = downloadedImage
-                }
-            }
-        }.resume()
-    }
+//    func loadImageUsingCacheWithURLString(urlString: String) {
+//        
+//        // Check cache for first image
+//        if let cachedImage = imageCache.object(forKey: urlString as NSString) as? UIImage {
+//            self.image = cachedImage
+//            return
+//        }
+//        
+//        // else do this
+//        let url = URL(string: urlString)
+//        URLSession.shared.dataTask(with: url!) { (data, response, error) in
+//            if let err = error {
+//                // alert
+//                print(err)
+//                return
+//            }
+//            DispatchQueue.main.async {
+//                if let downloadedImage = UIImage(data: data!) {
+//                    imageCache.setObject(downloadedImage, forKey: urlString as NSString)
+//                    self.image = downloadedImage
+//                }
+//            }
+//        }.resume()
+//    }
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SDWebImage
 
 class NewMessageTableViewController: UITableViewController {
 
@@ -33,10 +34,11 @@ class NewMessageTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! NewMessageTableViewCell
         let user = users[indexPath.row]
         cell.usernameLabel.text = user.username
-        cell.profilePictureImageView.image = UIImage(named: "user")
         
-        if let profileImageURL = user.profileImageURL {
-            cell.profilePictureImageView.loadImageUsingCacheWithURLString(urlString: profileImageURL)
+        if let profileImageURLString = user.profileImageURL {
+            if let profileImageURL = URL(string: profileImageURLString) {
+                cell.profilePictureImageView.sd_setImage(with: profileImageURL)
+            }
         }
         
         return cell
