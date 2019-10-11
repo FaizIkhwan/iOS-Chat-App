@@ -68,7 +68,14 @@ class LoginViewController: UIViewController, Storyboarded {
     func authenticate(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
             if let err = error {
-                print("ERROR: ", err)
+                // alert controller
+                let alertController = UIAlertController(title: "Error", message: err.localizedDescription, preferredStyle: .alert)
+                let okayAction = UIAlertAction(title: "Okay", style: .default) { (_) in
+                    
+                }
+                alertController.addAction(okayAction)
+                self.present(alertController, animated: true)
+                print("ERROR: ", err.localizedDescription)
                 return
             }
             self.dismiss(animated: true)
@@ -86,7 +93,7 @@ class LoginViewController: UIViewController, Storyboarded {
         }
             
         guard let password = passwordTextField.text, password.count > 4 else {
-            // alert
+            print("Form is not valid")
             return
         }
         // Validate input first
