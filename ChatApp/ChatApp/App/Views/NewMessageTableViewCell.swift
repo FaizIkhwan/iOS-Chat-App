@@ -9,9 +9,6 @@
 import UIKit
 
 class NewMessageTableViewCell: UITableViewCell {
-
     @IBOutlet weak var profilePictureImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
-    
-
 }

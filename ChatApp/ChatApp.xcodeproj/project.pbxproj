@@ -15,6 +15,7 @@
 		ED130FB6234C4A320009ACFD /* NewMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED130FB5234C4A320009ACFD /* NewMessageTableViewController.swift */; };
 		ED130FBD234C64630009ACFD /* NewMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED130FBC234C64630009ACFD /* NewMessageTableViewCell.swift */; };
 		ED130FC1234C70C30009ACFD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED130FC0234C70C30009ACFD /* User.swift */; };
+		ED8631152350611800E3EBAD /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8631142350611800E3EBAD /* UIImageView.swift */; };
 		EDCA218C234AE67800CF6D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCA218B234AE67800CF6D77 /* AppDelegate.swift */; };
 		EDCA218E234AE67800CF6D77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCA218D234AE67800CF6D77 /* SceneDelegate.swift */; };
 		EDCA2193234AE67800CF6D77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDCA2191234AE67800CF6D77 /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 		ED130FB5234C4A320009ACFD /* NewMessageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewController.swift; sourceTree = "<group>"; };
 		ED130FBC234C64630009ACFD /* NewMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewCell.swift; sourceTree = "<group>"; };
 		ED130FC0234C70C30009ACFD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		ED8631142350611800E3EBAD /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		EDCA2188234AE67800CF6D77 /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDCA218B234AE67800CF6D77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDCA218D234AE67800CF6D77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				EDCA21A8234AECC800CF6D77 /* UIView.swift */,
+				ED8631142350611800E3EBAD /* UIImageView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 				ED0E85C5234B1D79005CD23C /* RegisterViewController.swift in Sources */,
 				ED0E85C3234B1D6E005CD23C /* LoginViewController.swift in Sources */,
 				ED130FB6234C4A320009ACFD /* NewMessageTableViewController.swift in Sources */,
+				ED8631152350611800E3EBAD /* UIImageView.swift in Sources */,
 				EDCA218E234AE67800CF6D77 /* SceneDelegate.swift in Sources */,
 				ED06D0E1234B396B007AC3BF /* HomeViewController.swift in Sources */,
 				ED130FC1234C70C30009ACFD /* User.swift in Sources */,

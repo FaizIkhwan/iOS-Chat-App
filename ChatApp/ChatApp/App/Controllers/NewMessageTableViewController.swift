@@ -31,7 +31,14 @@ class NewMessageTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! NewMessageTableViewCell
-        cell.usernameLabel.text = users[indexPath.row].username
+        let user = users[indexPath.row]
+        cell.usernameLabel.text = user.username
+        cell.profilePictureImageView.image = UIImage(named: "user")
+        
+        if let profileImageURL = user.profileImageURL {
+            cell.profilePictureImageView.loadImageUsingCacheWithURLString(urlString: profileImageURL)
+        }
+        
         return cell
     }
 
@@ -40,10 +47,10 @@ class NewMessageTableViewController: UITableViewController {
     func fetchUser() {
         Database.database().reference().child("users").observe(.childAdded) { (snapshots) in
             if let dic = snapshots.value as? [String: AnyObject] {
-                let email = dic["email"] as? String ?? ""
-                let password = dic["password"] as? String ?? ""
-                let username = dic["username"] as? String ?? ""
-                let profileImageURL = dic["profileImageURL"] as? String ?? ""
+                let email = dic[User.Const.email] as? String ?? ""
+                let password = dic[User.Const.password] as? String ?? ""
+                let username = dic[User.Const.username] as? String ?? ""
+                let profileImageURL = dic[User.Const.profileImageURL] as? String ?? ""
                 let user = User(email: email, password: password, username: username, profileImageURL: profileImageURL)
                 self.users.append(user)
                 self.tableView.reloadData()
