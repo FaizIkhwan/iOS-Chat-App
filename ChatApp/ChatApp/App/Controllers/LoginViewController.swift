@@ -55,12 +55,6 @@ class LoginViewController: UIViewController, Storyboarded {
     
     // MARK: - Notifications
     
-    // HOMEWORK: Is this necessary on iOS version ??
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
     func notificationAddObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -103,5 +97,12 @@ class LoginViewController: UIViewController, Storyboarded {
         }
         // Validate input first
         authenticate(email: email, password: password)
+    }
+    
+    // HOMEWORK: Is this necessary on iOS version ??
+    deinit {
+        print("Deinit - Login VC")
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }

@@ -6,6 +6,7 @@
 //  Copyright © 2019 Faiz Ikhwan. All rights reserved.
 //
 
+// import alphabetically
 import UIKit
 import Firebase
 
@@ -16,8 +17,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
         
     // MARK: - Global Variable
-    
-    let newMessageController = NewMessageTableViewController()
+        
     var chats: [Chat] = []
     let cellID = "cellID"
     
@@ -29,9 +29,6 @@ class HomeViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        let loginController = LoginViewController()
-        loginController.homeViewController = self
         
         checkIfUserIsLoggedIn()
         observeMessages()
@@ -149,7 +146,6 @@ class HomeViewController: UIViewController {
     }
         
     @IBAction func newMessageButtonPressed(_ sender: Any) {
-        newMessageController.homeController = self
         let newMessageVC = NewMessageTableViewController.instantiate(storyboardName: Constant.Main)
         present(newMessageVC, animated: true)
     }
@@ -171,17 +167,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellID)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! RecentChatTableViewCell
         let chat = chats[indexPath.row]
                 
         let ref = Database.database().reference().child(Constant.users).child(chat.receiver)
         ref.observeSingleEvent(of: .value) { (snapshot) in
             if let dict = snapshot.value as? [String: AnyObject] {
-                cell.textLabel?.text = dict[User.Const.username] as? String
+                cell.usernameLabel?.text = dict[User.Const.username] as? String
             }
         }
         
-        cell.detailTextLabel?.text = chat.message
+        cell.lastMessageLabel?.text = chat.message
         
         return cell
     }

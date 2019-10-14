@@ -13,8 +13,7 @@ import SDWebImage
 class NewMessageTableViewController: UITableViewController, Storyboarded {
 
     // MARK: - Global Variable
-    
-    var homeController: HomeViewController?
+        
     private var users: [User] = []
     private let cellId = "NewMessageTableViewCell"
     
@@ -34,8 +33,8 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismiss(animated: true) {
             print("dissmised")
-            let user = self.users[indexPath.row]
-            self.homeController?.showChatController(user: user) // ? did not call
+//            let user = self.users[indexPath.row]
+            // will do closure
         }
     }
     
@@ -46,15 +45,11 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
         
         if let profileImageURLString = user.profileImageURL {
             if let profileImageURL = URL(string: profileImageURLString) {
-                cell.profilePictureImageView.sd_setImage(with: profileImageURL)
+//                cell.profilePictureImageView.sd_setImage(with: profileImageURL)
             }
         }
         
         return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
     }
 
     // MARK: - Functions

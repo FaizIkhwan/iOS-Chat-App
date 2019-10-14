@@ -17,6 +17,7 @@
 		EDC2891A2354218400A807CC /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC289192354218400A807CC /* Chat.swift */; };
 		EDC2891D2354697000A807CC /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC2891C2354697000A807CC /* Constant.swift */; };
 		EDC2891F23546EDD00A807CC /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC2891E23546EDD00A807CC /* UIImageView.swift */; };
+		EDC28921235476A400A807CC /* RecentChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC28920235476A400A807CC /* RecentChatTableViewCell.swift */; };
 		EDCA218C234AE67800CF6D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCA218B234AE67800CF6D77 /* AppDelegate.swift */; };
 		EDCA218E234AE67800CF6D77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCA218D234AE67800CF6D77 /* SceneDelegate.swift */; };
 		EDCA2193234AE67800CF6D77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDCA2191234AE67800CF6D77 /* Main.storyboard */; };
@@ -42,6 +43,7 @@
 		EDC289192354218400A807CC /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		EDC2891C2354697000A807CC /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		EDC2891E23546EDD00A807CC /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		EDC28920235476A400A807CC /* RecentChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentChatTableViewCell.swift; sourceTree = "<group>"; };
 		EDCA2188234AE67800CF6D77 /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDCA218B234AE67800CF6D77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDCA218D234AE67800CF6D77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				EDCEF2632350832A0086F226 /* NewMessageTableViewCell.swift */,
 				EDCA2191234AE67800CF6D77 /* Main.storyboard */,
 				EDCA2196234AE67B00CF6D77 /* LaunchScreen.storyboard */,
+				EDC28920235476A400A807CC /* RecentChatTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 				EDC2891F23546EDD00A807CC /* UIImageView.swift in Sources */,
 				EDCA218C234AE67800CF6D77 /* AppDelegate.swift in Sources */,
 				ED0E85C5234B1D79005CD23C /* RegisterViewController.swift in Sources */,
+				EDC28921235476A400A807CC /* RecentChatTableViewCell.swift in Sources */,
 				ED0E85C3234B1D6E005CD23C /* LoginViewController.swift in Sources */,
 				EDCEF2642350832A0086F226 /* NewMessageTableViewCell.swift in Sources */,
 				ED130FB6234C4A320009ACFD /* NewMessageTableViewController.swift in Sources */,

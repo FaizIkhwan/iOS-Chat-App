@@ -47,6 +47,10 @@ class ChatLogViewController: UIViewController, Storyboarded {
     @IBAction func sendButtonPressed(_ sender: UIButton) {
         handleSendMessage()
     }
+    
+    deinit {
+        print("Deinit - Chat Log VC")
+    }
 }
 
 extension ChatLogViewController: UITextFieldDelegate {
