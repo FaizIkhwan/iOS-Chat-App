@@ -9,12 +9,14 @@
 import UIKit
 
 struct User {
+    let id: String
     let email: String
     let password: String
     let username: String
     let profileImageURL: String?
     
     enum Const {
+        static let id = "id"
         static let email = "email"
         static let password = "password"
         static let username = "username"

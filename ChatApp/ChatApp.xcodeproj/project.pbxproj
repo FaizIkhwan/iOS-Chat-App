@@ -13,6 +13,8 @@
 		ED0E85C5234B1D79005CD23C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0E85C4234B1D79005CD23C /* RegisterViewController.swift */; };
 		ED130FB6234C4A320009ACFD /* NewMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED130FB5234C4A320009ACFD /* NewMessageTableViewController.swift */; };
 		ED130FC1234C70C30009ACFD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED130FC0234C70C30009ACFD /* User.swift */; };
+		EDC289182354139D00A807CC /* ChatLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC289172354139C00A807CC /* ChatLogViewController.swift */; };
+		EDC2891A2354218400A807CC /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC289192354218400A807CC /* Chat.swift */; };
 		EDCA218C234AE67800CF6D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCA218B234AE67800CF6D77 /* AppDelegate.swift */; };
 		EDCA218E234AE67800CF6D77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCA218D234AE67800CF6D77 /* SceneDelegate.swift */; };
 		EDCA2193234AE67800CF6D77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDCA2191234AE67800CF6D77 /* Main.storyboard */; };
@@ -34,6 +36,8 @@
 		ED0E85C4234B1D79005CD23C /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		ED130FB5234C4A320009ACFD /* NewMessageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewController.swift; sourceTree = "<group>"; };
 		ED130FC0234C70C30009ACFD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		EDC289172354139C00A807CC /* ChatLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogViewController.swift; sourceTree = "<group>"; };
+		EDC289192354218400A807CC /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		EDCA2188234AE67800CF6D77 /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDCA218B234AE67800CF6D77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDCA218D234AE67800CF6D77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -151,6 +155,7 @@
 				ED0E85C2234B1D6E005CD23C /* LoginViewController.swift */,
 				ED0E85C4234B1D79005CD23C /* RegisterViewController.swift */,
 				ED130FB5234C4A320009ACFD /* NewMessageTableViewController.swift */,
+				EDC289172354139C00A807CC /* ChatLogViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -159,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				ED130FC0234C70C30009ACFD /* User.swift */,
+				EDC289192354218400A807CC /* Chat.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -304,12 +310,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDCA21A9234AECC800CF6D77 /* UIView.swift in Sources */,
+				EDC2891A2354218400A807CC /* Chat.swift in Sources */,
 				EDCA218C234AE67800CF6D77 /* AppDelegate.swift in Sources */,
 				ED0E85C5234B1D79005CD23C /* RegisterViewController.swift in Sources */,
 				ED0E85C3234B1D6E005CD23C /* LoginViewController.swift in Sources */,
 				EDCEF2642350832A0086F226 /* NewMessageTableViewCell.swift in Sources */,
 				ED130FB6234C4A320009ACFD /* NewMessageTableViewController.swift in Sources */,
 				EDCEF2622350831A0086F226 /* HomeViewController.swift in Sources */,
+				EDC289182354139D00A807CC /* ChatLogViewController.swift in Sources */,
 				EDCA218E234AE67800CF6D77 /* SceneDelegate.swift in Sources */,
 				ED130FC1234C70C30009ACFD /* User.swift in Sources */,
 				ED06D0E5234B39DB007AC3BF /* Storyboarded.swift in Sources */,

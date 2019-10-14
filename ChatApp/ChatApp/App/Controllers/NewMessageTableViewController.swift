@@ -10,10 +10,15 @@ import UIKit
 import Firebase
 import SDWebImage
 
-class NewMessageTableViewController: UITableViewController {
+class NewMessageTableViewController: UITableViewController, Storyboarded {
 
+    // MARK: - Global Variable
+    
+    var homeController: HomeViewController?
     private var users: [User] = []
     private let cellId = "NewMessageTableViewCell"
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,12 +27,16 @@ class NewMessageTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dismiss(animated: true) {
+            print("dissmised")
+            let user = self.users[indexPath.row]
+            self.homeController?.showChatController(user: user)
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -53,7 +62,7 @@ class NewMessageTableViewController: UITableViewController {
                 let password = dic[User.Const.password] as? String ?? ""
                 let username = dic[User.Const.username] as? String ?? ""
                 let profileImageURL = dic[User.Const.profileImageURL] as? String ?? ""
-                let user = User(email: email, password: password, username: username, profileImageURL: profileImageURL)
+                let user = User(id: snapshots.key, email: email, password: password, username: username, profileImageURL: profileImageURL)
                 self.users.append(user)
                 self.tableView.reloadData()
             }

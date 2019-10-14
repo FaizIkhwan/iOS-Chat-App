@@ -11,15 +11,31 @@ import Firebase
 
 class HomeViewController: UIViewController {
     
+    // MARK: - IBOutlet
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    
+    // MARK: - Global Variable
+    
+    let newMessageController = NewMessageTableViewController()
+    var chats: [Chat] = []
+    let cellID = "cellID"
+    
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("viewDidLoad HomeViewController")
+        
+        tableView.delegate = self
+        tableView.dataSource = self
         
         let loginController = LoginViewController()
         loginController.homeViewController = self
         
-        checkIfUserIsLoggedIn()        
+        checkIfUserIsLoggedIn()
+        observeMessages()
     }
     
     // MARK: - Navigation
@@ -31,6 +47,20 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - Functions        
+    
+    func observeMessages() {
+        let ref = Database.database().reference().child("Chats")
+        ref.observe(.childAdded) { (snapshot) in
+            if let dict = snapshot.value as? [String: AnyObject] {
+                let chat = Chat(message: dict[Chat.Const.message] as? String ?? "", sender: dict[Chat.Const.sender] as? String ?? "", receiver: dict[Chat.Const.receiver] as? String ?? "", timestamp: dict[Chat.Const.timestamp] as? String ?? "")
+                self.chats.append(chat)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
     
     func checkIfUserIsLoggedIn() {
         if Auth.auth().currentUser?.uid == nil {
@@ -45,8 +75,7 @@ class HomeViewController: UIViewController {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshots) in
             if let dic = snapshots.value as? [String: AnyObject] {
-                
-                let user = User(email: dic[User.Const.email] as! String, password: dic[User.Const.password] as! String, username: dic[User.Const.username] as! String, profileImageURL: dic[User.Const.profileImageURL] as? String)
+                let user = User(id: snapshots.key, email: dic[User.Const.email] as! String, password: dic[User.Const.password] as! String, username: dic[User.Const.username] as! String, profileImageURL: dic[User.Const.profileImageURL] as? String)
                 self.setupNavBarWithUser(user: user)
             }
         })
@@ -55,9 +84,13 @@ class HomeViewController: UIViewController {
     func setupNavBarWithUser(user: User) {
         let titleView = UIView()
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        titleView.addSubview(containerView)
         
         let profileImageView = UIImageView()
-        titleView.addSubview(profileImageView)
+        containerView.addSubview(profileImageView)
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.cornerRadiusV = 20
@@ -66,23 +99,33 @@ class HomeViewController: UIViewController {
         }
         
         // Constraint profileImageView
-        profileImageView.leftAnchor.constraint(equalTo: titleView.leftAnchor).isActive = true
-        profileImageView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
+        profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+        profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         let nameLabel = UILabel()
-        titleView.addSubview(nameLabel)
+        containerView.addSubview(nameLabel)
         nameLabel.text = user.username
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         
         // Constraint nameLabel
         nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
         nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: titleView.rightAnchor).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
         nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
         
+        containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
+        containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
+        
         self.navigationItem.titleView = titleView
+    }
+    
+    func showChatController(user: User) {
+        print("showChatController")
+        let chatVC = ChatLogViewController.instantiate(storyboardName: "Main")
+        chatVC.user = user
+        self.navigationController?.pushViewController(chatVC, animated: true)
     }
     
     func presentLoginView() {
@@ -106,5 +149,30 @@ class HomeViewController: UIViewController {
         handleLogout()
         presentLoginView()
     }
+        
+    @IBAction func newMessageButtonPressed(_ sender: Any) {
+        print("newMessageButtonPressed")
+        newMessageController.homeController = self
+        let newMessageVC = NewMessageTableViewController.instantiate(storyboardName: "Main")
+        present(newMessageVC, animated: true)
+    }
+    
+    @IBAction func chatLogButtonPressed(_ sender: UIButton) {
+        // HARD CODE
+        let user = User(id: "TYVlACMnswWh0JghfiyBeDGq2Ij2", email: "test1@gmail.com", password: "123456", username: "faiz joker", profileImageURL: "https://firebasestorage.googleapis.com/v0/b/ios-chat-apps.appspot.com/o/profile_images%2F98D64492-C31E-4428-9E50-5CB9AF540802.png?alt=media&token=0d7ad306-5529-4fc8-8544-8f056e9f43a8")
+        showChatController(user: user)
+    }
+    
+}
 
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return chats.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellID)
+        cell.textLabel?.text = chats[indexPath.row].message
+        return cell
+    }
 }
