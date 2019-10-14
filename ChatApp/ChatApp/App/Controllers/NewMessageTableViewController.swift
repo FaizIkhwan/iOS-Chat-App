@@ -35,7 +35,7 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
         dismiss(animated: true) {
             print("dissmised")
             let user = self.users[indexPath.row]
-            self.homeController?.showChatController(user: user)
+            self.homeController?.showChatController(user: user) // ? did not call
         }
     }
     
@@ -52,11 +52,15 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
 
     // MARK: - Functions
     
     func fetchUser() {
-        Database.database().reference().child("users").observe(.childAdded) { (snapshots) in
+        Database.database().reference().child(Constant.users).observe(.childAdded) { (snapshots) in
             if let dic = snapshots.value as? [String: AnyObject] {
                 let email = dic[User.Const.email] as? String ?? ""
                 let password = dic[User.Const.password] as? String ?? ""
@@ -69,4 +73,7 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
         }
     }
 
+    deinit {
+        print("Deinit - New Message VC")
+    }
 }

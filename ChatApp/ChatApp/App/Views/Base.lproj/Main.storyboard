@@ -165,11 +165,11 @@
                                 <rect key="frame" x="0.0" y="160" width="414" height="702"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellID" id="kl7-UU-h2L">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.666667938232422"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellID" rowHeight="80" id="kl7-UU-h2L">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kl7-UU-h2L" id="SPa-hT-PFC">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -205,7 +205,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dd0-Bi-i9k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1048" y="830"/>
+            <point key="canvasLocation" x="1047.8260869565217" y="829.6875"/>
         </scene>
         <!--Chat Log Controller-->
         <scene sceneID="PQr-pI-jjJ">
@@ -276,7 +276,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="M9J-rl-crZ">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="M9J-rl-crZ">
                                             <rect key="frame" x="20" y="10" width="60" height="60"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="jO7-71-mc4"/>
@@ -288,7 +288,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qkl-e9-Jos">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qkl-e9-Jos">
                                             <rect key="frame" x="110" y="29.666666666666671" width="254" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -296,11 +296,10 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="M9J-rl-crZ" firstAttribute="top" secondItem="F6E-4U-TPI" secondAttribute="top" constant="10" id="680-mN-Hhp"/>
                                         <constraint firstItem="M9J-rl-crZ" firstAttribute="leading" secondItem="F6E-4U-TPI" secondAttribute="leading" constant="20" id="Leh-5d-x4d"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="Qkl-e9-Jos" secondAttribute="trailing" constant="30" id="QTN-yP-iNv"/>
                                         <constraint firstItem="Qkl-e9-Jos" firstAttribute="centerY" secondItem="F6E-4U-TPI" secondAttribute="centerY" id="RdY-OW-S2R"/>
-                                        <constraint firstAttribute="bottom" secondItem="M9J-rl-crZ" secondAttribute="bottom" constant="10" id="gic-UE-8EA"/>
+                                        <constraint firstItem="M9J-rl-crZ" firstAttribute="centerY" secondItem="F6E-4U-TPI" secondAttribute="centerY" id="Zfs-uW-HxO"/>
                                         <constraint firstItem="Qkl-e9-Jos" firstAttribute="leading" secondItem="M9J-rl-crZ" secondAttribute="trailing" constant="30" id="t7h-H2-cBh"/>
                                     </constraints>
                                 </tableViewCellContentView>

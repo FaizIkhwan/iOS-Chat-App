@@ -10,17 +10,18 @@ import UIKit
 import Firebase
 
 class ChatLogViewController: UIViewController, Storyboarded {
+            
+    // MARK:- IBOutlet
+    
+    @IBOutlet weak var messageTextField: UITextField!
     
     // MARK:- Global Variable
+    
     var user: User? {
         didSet {
             navigationItem.title = user?.username
         }
     }
-    
-    // MARK:- IBOutlet
-    
-    @IBOutlet weak var messageTextField: UITextField!
     
     // MARK:- View Lifecycle
     
@@ -34,10 +35,10 @@ class ChatLogViewController: UIViewController, Storyboarded {
     // MARK:- Functions
     
     func handleSendMessage() {
-        let ref = Database.database().reference().child("Chats")
+        let ref = Database.database().reference().child(Constant.chats)
         let childRef = ref.childByAutoId()
         let timestamp = String(NSDate().timeIntervalSince1970)
-        let values = ["message": messageTextField.text!, "sender": Auth.auth().currentUser?.uid, "recipient": user!.id, "timestamp": timestamp]
+        let values = [Chat.Const.message: messageTextField.text!, Chat.Const.sender: Auth.auth().currentUser?.uid, Chat.Const.receiver: user!.id, Chat.Const.timestamp: timestamp]
         childRef.updateChildValues(values)
     }
     

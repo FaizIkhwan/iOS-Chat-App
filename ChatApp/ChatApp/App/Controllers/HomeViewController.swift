@@ -14,8 +14,7 @@ class HomeViewController: UIViewController {
     // MARK: - IBOutlet
     
     @IBOutlet weak var tableView: UITableView!
-    
-    
+        
     // MARK: - Global Variable
     
     let newMessageController = NewMessageTableViewController()
@@ -49,7 +48,7 @@ class HomeViewController: UIViewController {
     // MARK: - Functions        
     
     func observeMessages() {
-        let ref = Database.database().reference().child("Chats")
+        let ref = Database.database().reference().child(Constant.chats)
         ref.observe(.childAdded) { (snapshot) in
             if let dict = snapshot.value as? [String: AnyObject] {
                 let chat = Chat(message: dict[Chat.Const.message] as? String ?? "", sender: dict[Chat.Const.sender] as? String ?? "", receiver: dict[Chat.Const.receiver] as? String ?? "", timestamp: dict[Chat.Const.timestamp] as? String ?? "")
@@ -71,9 +70,8 @@ class HomeViewController: UIViewController {
     }
     
     func fetchUserAndSetupNavBarTitle() {
-        print("fetchUserAndSetupNavBarTitle")
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshots) in
+        Database.database().reference().child(Constant.users).child(uid).observeSingleEvent(of: .value, with: { (snapshots) in
             if let dic = snapshots.value as? [String: AnyObject] {
                 let user = User(id: snapshots.key, email: dic[User.Const.email] as! String, password: dic[User.Const.password] as! String, username: dic[User.Const.username] as! String, profileImageURL: dic[User.Const.profileImageURL] as? String)
                 self.setupNavBarWithUser(user: user)
@@ -123,13 +121,13 @@ class HomeViewController: UIViewController {
     
     func showChatController(user: User) {
         print("showChatController")
-        let chatVC = ChatLogViewController.instantiate(storyboardName: "Main")
+        let chatVC = ChatLogViewController.instantiate(storyboardName: Constant.Main)
         chatVC.user = user
         self.navigationController?.pushViewController(chatVC, animated: true)
     }
     
     func presentLoginView() {
-        let loginVC = LoginViewController.instantiate(storyboardName: "Main")
+        let loginVC = LoginViewController.instantiate(storyboardName: Constant.Main)
         loginVC.modalPresentationStyle = .overCurrentContext
         loginVC.modalTransitionStyle = .crossDissolve
         present(loginVC, animated: true)
@@ -151,9 +149,8 @@ class HomeViewController: UIViewController {
     }
         
     @IBAction func newMessageButtonPressed(_ sender: Any) {
-        print("newMessageButtonPressed")
         newMessageController.homeController = self
-        let newMessageVC = NewMessageTableViewController.instantiate(storyboardName: "Main")
+        let newMessageVC = NewMessageTableViewController.instantiate(storyboardName: Constant.Main)
         present(newMessageVC, animated: true)
     }
     
@@ -163,6 +160,9 @@ class HomeViewController: UIViewController {
         showChatController(user: user)
     }
     
+    deinit {
+        print("Deinit - Home VC")
+    }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
@@ -172,7 +172,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellID)
-        cell.textLabel?.text = chats[indexPath.row].message
+        let chat = chats[indexPath.row]
+                
+        let ref = Database.database().reference().child(Constant.users).child(chat.receiver)
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            if let dict = snapshot.value as? [String: AnyObject] {
+                cell.textLabel?.text = dict[User.Const.username] as? String
+            }
+        }
+        
+        cell.detailTextLabel?.text = chat.message
+        
         return cell
     }
 }
