@@ -17,6 +17,9 @@ class LoginViewController: UIViewController, Storyboarded {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
+    // MARK:- Global Variable
+    var homeViewController: HomeViewController?
+    
     // MARK:- View Lifecycle
     
     override func viewDidLoad() {
@@ -78,6 +81,8 @@ class LoginViewController: UIViewController, Storyboarded {
                 print("ERROR: ", err.localizedDescription)
                 return
             }
+            
+            self.homeViewController?.fetchUserAndSetupNavBarTitle() // FIXME: tak read
             self.dismiss(animated: true)
         }
     }

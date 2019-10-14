@@ -18,7 +18,7 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!        
     
     // MARK:- View Lifecycle
     
@@ -85,8 +85,8 @@ class RegisterViewController: UIViewController {
             
             // Profile image
             let imageName = NSUUID().uuidString
-            let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).png")
-            if let uploadData = self.imageView.image!.pngData() {
+            let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
+            if let uploadData = self.imageView.image?.jpegData(compressionQuality: 0.1) {
                 storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
 
                     if let err = error {
