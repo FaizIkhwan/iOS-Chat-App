@@ -29,6 +29,10 @@ class RegisterViewController: UIViewController {
         setupImageView()
     }
             
+    override func viewDidLayoutSubviews() {
+        imageView.cornerRadiusV = imageView.frame.size.height/2 // make the image circle
+    }
+    
     // MARK: - Keyboard Handler
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
