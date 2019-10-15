@@ -188,9 +188,9 @@
 			isa = PBXGroup;
 			children = (
 				EDCEF2632350832A0086F226 /* NewMessageTableViewCell.swift */,
+				EDC28920235476A400A807CC /* RecentChatTableViewCell.swift */,
 				EDCA2191234AE67800CF6D77 /* Main.storyboard */,
 				EDCA2196234AE67B00CF6D77 /* LaunchScreen.storyboard */,
-				EDC28920235476A400A807CC /* RecentChatTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

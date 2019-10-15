@@ -61,7 +61,7 @@ class LoginViewController: UIViewController, Storyboarded {
     // MARK: - Functions
     
     func handleAuthenticate(email: String, password: String) {
-        self.activityIndicator.startAnimating()
+        activityIndicator.startAnimating()
         Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
             if let err = error {
                 self.activityIndicator.stopAnimating()
@@ -88,13 +88,6 @@ class LoginViewController: UIViewController, Storyboarded {
         guard let email = emailTextField.text, let password = passwordTextField.text else { return }
         if email.count == 0 || password.count == 0 {
             presentAlertController(withMessage: "Email and password cannot be empty", title: "Error")
-        }
-        if email.count < 3 {
-            presentAlertController(withMessage: "Email to short", title: "Error")
-            return
-        }
-        if password.count < 6 {
-            presentAlertController(withMessage: "Password to short", title: "Error")
             return
         }
         

@@ -469,6 +469,19 @@
                                             <action selector="backButtonPressed:" destination="nPd-QY-cfb" eventType="touchUpInside" id="CCF-Mo-FdS"/>
                                         </connections>
                                     </button>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="nLc-5n-u92">
+                                        <rect key="frame" x="67" y="269" width="280" height="280"/>
+                                        <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="280" id="8pQ-8U-0Ln"/>
+                                            <constraint firstAttribute="width" constant="280" id="qKF-G4-BvD"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusV">
+                                                <real key="value" value="15"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
@@ -482,10 +495,12 @@
                                     <constraint firstItem="bBa-4R-krk" firstAttribute="leading" secondItem="Wtf-Vg-SeN" secondAttribute="leading" constant="20" id="Rem-aE-vwT"/>
                                     <constraint firstItem="bKe-0m-Hjk" firstAttribute="leading" secondItem="Wtf-Vg-SeN" secondAttribute="leading" constant="20" id="RnN-8P-u3X"/>
                                     <constraint firstAttribute="trailing" secondItem="bKe-0m-Hjk" secondAttribute="trailing" constant="20" id="S89-sV-gyl"/>
+                                    <constraint firstItem="nLc-5n-u92" firstAttribute="centerY" secondItem="Wtf-Vg-SeN" secondAttribute="centerY" id="Scg-zM-OhN"/>
                                     <constraint firstItem="6bh-Sd-Mco" firstAttribute="centerY" secondItem="Wtf-Vg-SeN" secondAttribute="centerY" id="cKL-0e-3hX"/>
                                     <constraint firstItem="6bh-Sd-Mco" firstAttribute="top" secondItem="bKe-0m-Hjk" secondAttribute="bottom" constant="20" id="ec1-r0-esV"/>
                                     <constraint firstItem="nir-Xw-zOV" firstAttribute="top" secondItem="6bh-Sd-Mco" secondAttribute="bottom" constant="20" id="l42-O2-gmn"/>
                                     <constraint firstItem="nir-Xw-zOV" firstAttribute="leading" secondItem="Wtf-Vg-SeN" secondAttribute="leading" constant="20" id="p0M-YD-l1m"/>
+                                    <constraint firstItem="nLc-5n-u92" firstAttribute="centerX" secondItem="Wtf-Vg-SeN" secondAttribute="centerX" id="s4S-nb-dkT"/>
                                     <constraint firstItem="XMa-zW-pvN" firstAttribute="top" secondItem="nir-Xw-zOV" secondAttribute="bottom" constant="10" id="sqg-NN-fQS"/>
                                     <constraint firstItem="bBa-4R-krk" firstAttribute="top" secondItem="Wtf-Vg-SeN" secondAttribute="top" constant="20" id="wAJ-5j-lyb"/>
                                 </constraints>
@@ -502,6 +517,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="EQI-sN-0Vy"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="nLc-5n-u92" id="rmJ-4a-IiH"/>
                         <outlet property="bottomConstraint" destination="w3b-kH-m2h" id="zej-S0-naT"/>
                         <outlet property="confirmPasswordTextField" destination="72z-Ne-WrY" id="YX5-cX-EdC"/>
                         <outlet property="emailTextField" destination="GH0-4c-nZ8" id="ZTL-NH-VBX"/>

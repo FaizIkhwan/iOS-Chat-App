@@ -12,4 +12,5 @@ enum Constant {
     static let users = "users"
     static let chats = "chats"
     static let Main = "Main"
+    static let profile_images = "profile_images"
 }

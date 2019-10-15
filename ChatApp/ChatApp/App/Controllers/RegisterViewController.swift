@@ -13,6 +13,7 @@ class RegisterViewController: UIViewController {
 
     // MARK: - IBOutlet
         
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -71,28 +72,39 @@ class RegisterViewController: UIViewController {
     // MARK: - Functions
     
     func handleRegister(username: String, email: String, password: String) {
+        activityIndicator.startAnimating()
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            if error != nil {
-                print("ERROR: ", error!)
+            if let err = error {
+                self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
                 return
             }
             
             // Profile image
             let imageName = NSUUID().uuidString
-            let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
+            let storageRef = Storage.storage().reference().child(Constant.profile_images).child("\(imageName).jpg")
             if let uploadData = self.imageView.image?.jpegData(compressionQuality: 0.1) {
                 storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
-
                     if let err = error {
-                        print(err)
+                        self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
                         return
                     }
                                         
                     storageRef.downloadURL { (url, errorURL) in
-                        guard let profileImageURL = url?.absoluteString else { return }
+                        if let errURL = errorURL {
+                            self.presentAlertController(withMessage: errURL.localizedDescription, title: "Error")
+                            return
+                        }
+                        
+                        guard let profileImageURL = url?.absoluteString else {
+                            self.presentAlertController(withMessage: "Failed to add profile image", title: "Error")
+                            return
+                        }
                                                                         
                         let values = [User.Const.username: username, User.Const.email: email, User.Const.password: password, User.Const.profileImageURL: profileImageURL] as [String : AnyObject]
-                        guard let uid = authResult?.user.uid else { return }
+                        guard let uid = authResult?.user.uid else {
+                            self.presentAlertController(withMessage: "Something has broken", title: "Error")
+                            return
+                        }
                         
                         self.handleAddUserIntoDatabaseWithUID(uid, values: values)
                     }
@@ -103,18 +115,26 @@ class RegisterViewController: UIViewController {
     
     private func handleAddUserIntoDatabaseWithUID(_ uid: String, values: [String: AnyObject]) {
         let ref = Database.database().reference(fromURL: "https://ios-chat-apps.firebaseio.com/")
-        let userReference = ref.child("users").child(uid)
-        userReference.updateChildValues(values) { (err, ref) in
-            if err != nil {
-                print("ERR: ", err!)
+        let userReference = ref.child(Constant.users).child(uid)
+        userReference.updateChildValues(values) { (error, ref) in
+            if let err = error {
+                self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
                 return
             }
+            self.activityIndicator.stopAnimating()
             self.dismiss(animated: true)
         }
     }
     
     func setupImageView() {
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
+    }
+    
+    func presentAlertController(withMessage message: String, title: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okayAction = UIAlertAction(title: "Okay", style: .default) { (_) in }
+        alertController.addAction(okayAction)
+        self.present(alertController, animated: true)
     }
     
     @objc func handleSelectProfileImageView() {
@@ -133,11 +153,17 @@ class RegisterViewController: UIViewController {
             let email = emailTextField.text,
             let password = passwordTextField.text,
             let confirmPassword = confirmPasswordTextField.text
-        else {
-            print("Form is not valid")
+        else { return }
+        
+        if username.count == 0 || email.count == 0 || password.count == 0 || confirmPassword.count == 0 {
+            presentAlertController(withMessage: "Please fill all the form", title: "Error")
             return
         }
-        // Validate input first
+        if password != confirmPassword {
+            presentAlertController(withMessage: "Password and confirm password does not match", title: "Error")
+            return
+        }
+        
         handleRegister(username: username, email: email, password: password)
     }
     
