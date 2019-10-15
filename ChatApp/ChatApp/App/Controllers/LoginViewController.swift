@@ -6,8 +6,8 @@
 //  Copyright © 2019 Faiz Ikhwan. All rights reserved.
 //
 
-import UIKit
 import Firebase
+import UIKit
 
 class LoginViewController: UIViewController, Storyboarded {
 
@@ -17,10 +17,6 @@ class LoginViewController: UIViewController, Storyboarded {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-    
-    // MARK:- Global Variable
-    
-    var homeViewController: HomeViewController?
     
     // MARK:- View Lifecycle
     
@@ -64,25 +60,24 @@ class LoginViewController: UIViewController, Storyboarded {
     
     // MARK: - Functions
     
-    func authenticate(email: String, password: String) {
+    func handleAuthenticate(email: String, password: String) {
         self.activityIndicator.startAnimating()
         Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
             if let err = error {
-                // alert controller
-                let alertController = UIAlertController(title: "Error", message: err.localizedDescription, preferredStyle: .alert)
-                let okayAction = UIAlertAction(title: "Okay", style: .default) { (_) in
-                    
-                }
-                alertController.addAction(okayAction)
-                self.present(alertController, animated: true)
-                print("ERROR: ", err.localizedDescription)
+                self.activityIndicator.stopAnimating()
+                self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
                 return
             }
-            
             self.activityIndicator.stopAnimating()
-            self.homeViewController?.fetchUserAndSetupNavBarTitle() // FIXME: tak read
             self.dismiss(animated: true)
         }
+    }
+    
+    func presentAlertController(withMessage message: String, title: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okayAction = UIAlertAction(title: "Okay", style: .default) { (_) in }
+        alertController.addAction(okayAction)
+        self.present(alertController, animated: true)
     }
     
     // MARK: - IBAction
@@ -90,17 +85,20 @@ class LoginViewController: UIViewController, Storyboarded {
     @IBAction func loginButton(_ sender: UIButton) {
         hideKeyboard()
         
-        guard let email = emailTextField.text, email.count > 4 else {
-            // alert
+        guard let email = emailTextField.text, let password = passwordTextField.text else { return }
+        if email.count == 0 || password.count == 0 {
+            presentAlertController(withMessage: "Email and password cannot be empty", title: "Error")
+        }
+        if email.count < 3 {
+            presentAlertController(withMessage: "Email to short", title: "Error")
             return
         }
-            
-        guard let password = passwordTextField.text, password.count > 4 else {
-            print("Form is not valid")
+        if password.count < 6 {
+            presentAlertController(withMessage: "Password to short", title: "Error")
             return
         }
-        // Validate input first
-        authenticate(email: email, password: password)
+        
+        handleAuthenticate(email: email, password: password)
     }
         
     deinit {
