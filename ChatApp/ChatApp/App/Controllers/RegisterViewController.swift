@@ -129,14 +129,7 @@ class RegisterViewController: UIViewController {
     func setupImageView() {
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
     }
-    
-    func presentAlertController(withMessage message: String, title: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okayAction = UIAlertAction(title: "Okay", style: .default) { (_) in }
-        alertController.addAction(okayAction)
-        self.present(alertController, animated: true)
-    }
-    
+        
     @objc func handleSelectProfileImageView() {
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -155,6 +148,7 @@ class RegisterViewController: UIViewController {
             let confirmPassword = confirmPasswordTextField.text
         else { return }
         
+        // Validation
         if username.count == 0 || email.count == 0 || password.count == 0 || confirmPassword.count == 0 {
             presentAlertController(withMessage: "Please fill all the form", title: "Error")
             return

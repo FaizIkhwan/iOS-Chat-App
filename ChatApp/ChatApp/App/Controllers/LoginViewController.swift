@@ -71,14 +71,7 @@ class LoginViewController: UIViewController, Storyboarded {
             self.activityIndicator.stopAnimating()
             self.dismiss(animated: true)
         }
-    }
-    
-    func presentAlertController(withMessage message: String, title: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okayAction = UIAlertAction(title: "Okay", style: .default) { (_) in }
-        alertController.addAction(okayAction)
-        self.present(alertController, animated: true)
-    }
+    }        
     
     // MARK: - IBAction
     
