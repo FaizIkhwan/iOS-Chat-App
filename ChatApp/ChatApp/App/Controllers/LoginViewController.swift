@@ -13,6 +13,7 @@ class LoginViewController: UIViewController, Storyboarded {
 
     // MARK: - IBOutlet
                 
+    @IBOutlet weak var chatAppLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -36,11 +37,13 @@ class LoginViewController: UIViewController, Storyboarded {
         if notification.name == UIResponder.keyboardWillShowNotification {
             UIView.animate(withDuration: 0.2) {
                 self.bottomConstraint.constant = -keyboardRect.height
+                self.chatAppLabel.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
                 self.view.layoutIfNeeded()
             }
         } else {
             UIView.animate(withDuration: 0.2) {
                 self.bottomConstraint.constant = 0
+                self.chatAppLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 self.view.layoutIfNeeded()
             }
         }
@@ -71,7 +74,7 @@ class LoginViewController: UIViewController, Storyboarded {
             self.activityIndicator.stopAnimating()
             self.dismiss(animated: true)
         }
-    }        
+    }
     
     // MARK: - IBAction
     
