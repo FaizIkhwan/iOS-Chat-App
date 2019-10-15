@@ -13,11 +13,13 @@ class LoginViewController: UIViewController, Storyboarded {
 
     // MARK: - IBOutlet
                 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     // MARK:- Global Variable
+    
     var homeViewController: HomeViewController?
     
     // MARK:- View Lifecycle
@@ -63,6 +65,7 @@ class LoginViewController: UIViewController, Storyboarded {
     // MARK: - Functions
     
     func authenticate(email: String, password: String) {
+        self.activityIndicator.startAnimating()
         Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
             if let err = error {
                 // alert controller
@@ -76,6 +79,7 @@ class LoginViewController: UIViewController, Storyboarded {
                 return
             }
             
+            self.activityIndicator.stopAnimating()
             self.homeViewController?.fetchUserAndSetupNavBarTitle() // FIXME: tak read
             self.dismiss(animated: true)
         }
