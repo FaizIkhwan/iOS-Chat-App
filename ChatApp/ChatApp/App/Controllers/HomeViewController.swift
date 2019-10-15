@@ -25,8 +25,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad HomeViewController")
-        
+                
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -165,20 +164,20 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chats.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! RecentChatTableViewCell
         let chat = chats[indexPath.row]
-                
+
         let ref = Database.database().reference().child(Constant.users).child(chat.receiver)
         ref.observeSingleEvent(of: .value) { (snapshot) in
             if let dict = snapshot.value as? [String: AnyObject] {
                 cell.usernameLabel?.text = dict[User.Const.username] as? String
             }
         }
-        
+
         cell.lastMessageLabel?.text = chat.message
-        
+
         return cell
     }
 }

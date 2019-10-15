@@ -45,7 +45,7 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
         
         if let profileImageURLString = user.profileImageURL {
             if let profileImageURL = URL(string: profileImageURLString) {
-//                cell.profilePictureImageView.sd_setImage(with: profileImageURL)
+                cell.profilePictureImageView.sd_setImage(with: profileImageURL)
             }
         }
         
