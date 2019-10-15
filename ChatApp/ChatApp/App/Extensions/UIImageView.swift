@@ -10,8 +10,8 @@ import SDWebImage
 import UIKit
 
 extension UIImageView {
-    func setImage(withURL: String) {
-        guard let url = URL(string: withURL) else { return }
+    func setImage(withURL url: String) {
+        guard let url = URL(string: url) else { return }
         self.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "user (1).png"), options: .fromCacheOnly, completed: nil)
     }
 }

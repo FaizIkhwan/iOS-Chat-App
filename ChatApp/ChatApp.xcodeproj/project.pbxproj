@@ -14,6 +14,7 @@
 		ED130FB6234C4A320009ACFD /* NewMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED130FB5234C4A320009ACFD /* NewMessageTableViewController.swift */; };
 		ED130FC1234C70C30009ACFD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED130FC0234C70C30009ACFD /* User.swift */; };
 		ED5F6DB9235568220091151D /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F6DB8235568220091151D /* UIViewController.swift */; };
+		ED5F6DBB23558C640091151D /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F6DBA23558C640091151D /* ForgotPasswordViewController.swift */; };
 		EDC289182354139D00A807CC /* ChatLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC289172354139C00A807CC /* ChatLogViewController.swift */; };
 		EDC2891A2354218400A807CC /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC289192354218400A807CC /* Chat.swift */; };
 		EDC2891D2354697000A807CC /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC2891C2354697000A807CC /* Constant.swift */; };
@@ -41,6 +42,7 @@
 		ED130FB5234C4A320009ACFD /* NewMessageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewController.swift; sourceTree = "<group>"; };
 		ED130FC0234C70C30009ACFD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		ED5F6DB8235568220091151D /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		ED5F6DBA23558C640091151D /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		EDC289172354139C00A807CC /* ChatLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogViewController.swift; sourceTree = "<group>"; };
 		EDC289192354218400A807CC /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		EDC2891C2354697000A807CC /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				ED0E85C4234B1D79005CD23C /* RegisterViewController.swift */,
 				ED130FB5234C4A320009ACFD /* NewMessageTableViewController.swift */,
 				EDC289172354139C00A807CC /* ChatLogViewController.swift */,
+				ED5F6DBA23558C640091151D /* ForgotPasswordViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				ED130FB6234C4A320009ACFD /* NewMessageTableViewController.swift in Sources */,
 				EDCEF2622350831A0086F226 /* HomeViewController.swift in Sources */,
 				EDC289182354139D00A807CC /* ChatLogViewController.swift in Sources */,
+				ED5F6DBB23558C640091151D /* ForgotPasswordViewController.swift in Sources */,
 				EDC2891D2354697000A807CC /* Constant.swift in Sources */,
 				EDCA218E234AE67800CF6D77 /* SceneDelegate.swift in Sources */,
 				ED130FC1234C70C30009ACFD /* User.swift in Sources */,
