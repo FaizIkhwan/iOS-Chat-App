@@ -75,6 +75,7 @@ class RegisterViewController: UIViewController {
         activityIndicator.startAnimating()
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let err = error {
+                self.activityIndicator.stopAnimating()
                 self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
                 return
             }
@@ -85,23 +86,27 @@ class RegisterViewController: UIViewController {
             if let uploadData = self.imageView.image?.jpegData(compressionQuality: 0.1) {
                 storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
                     if let err = error {
+                        self.activityIndicator.stopAnimating()
                         self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
                         return
                     }
                                         
                     storageRef.downloadURL { (url, errorURL) in
                         if let errURL = errorURL {
+                            self.activityIndicator.stopAnimating()
                             self.presentAlertController(withMessage: errURL.localizedDescription, title: "Error")
                             return
                         }
                         
                         guard let profileImageURL = url?.absoluteString else {
+                            self.activityIndicator.stopAnimating()
                             self.presentAlertController(withMessage: "Failed to add profile image", title: "Error")
                             return
                         }
                                                                         
                         let values = [User.Const.username: username, User.Const.email: email, User.Const.password: password, User.Const.profileImageURL: profileImageURL] as [String : AnyObject]
                         guard let uid = authResult?.user.uid else {
+                            self.activityIndicator.stopAnimating()
                             self.presentAlertController(withMessage: "Something has broken", title: "Error")
                             return
                         }
@@ -118,6 +123,7 @@ class RegisterViewController: UIViewController {
         let userReference = ref.child(Constant.users).child(uid)
         userReference.updateChildValues(values) { (error, ref) in
             if let err = error {
+                self.activityIndicator.stopAnimating()
                 self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
                 return
             }
