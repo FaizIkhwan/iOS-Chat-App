@@ -10,10 +10,15 @@ import Firebase
 import SDWebImage
 import UIKit
 
+protocol NewMessageProtocol {
+    func passUserToHomeVC(user: User)
+}
+
 class NewMessageTableViewController: UITableViewController, Storyboarded {
 
     // MARK: - Global Variable
         
+    var delegate: NewMessageProtocol? = nil
     private var users: [User] = []
     private let cellId = "NewMessageTableViewCell"
     
@@ -31,11 +36,8 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        dismiss(animated: true) {
-            print("dissmised")
-//            let user = self.users[indexPath.row]
-            // will do closure
-        }
+        delegate?.passUserToHomeVC(user: users[indexPath.row])
+        dismiss(animated: true)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -55,9 +57,9 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
     func fetchUser() {
         Database.database().reference().child(Constant.users).observe(.childAdded) { (snapshots) in
             if let dic = snapshots.value as? [String: String] {
-                let email = dic[User.Const.email, default: ""]
-                let username = dic[User.Const.username, default: ""]
-                let profileImageURL = dic[User.Const.profileImageURL, default: ""]
+                let email = dic[User.Const.email, default: "No data"]
+                let username = dic[User.Const.username, default: "No data"]
+                let profileImageURL = dic[User.Const.profileImageURL, default: "No data"]
                 let user = User(id: snapshots.key, email: email, username: username, profileImageURL: profileImageURL)
                 self.users.append(user)
                 self.tableView.reloadData()

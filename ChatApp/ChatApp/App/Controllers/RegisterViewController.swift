@@ -48,11 +48,11 @@ class RegisterViewController: UIViewController {
             self.imageView.alpha = alpha
             self.bottomConstraint.constant = constraintHeight
             self.view.layoutIfNeeded()
-        }) { (finished) in
-            if isHidden == true {
-                self.imageView.isHidden = true
-            }
-        }
+        }, completion: { finished in
+          if isHidden == true {
+              self.imageView.isHidden = true
+          }
+        })
     }
     
     @objc func keyboardWillChange(notification: Notification) {

@@ -24,7 +24,6 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad")
         tableView.delegate = self
         tableView.dataSource = self
         fetchMessages()
@@ -145,13 +144,8 @@ class HomeViewController: UIViewController {
         
     @IBAction func newMessageButtonPressed(_ sender: Any) {
         let newMessageVC = NewMessageTableViewController.instantiate(storyboardName: Constant.Main)
+        newMessageVC.delegate = self
         present(newMessageVC, animated: true)
-    }
-    
-    @IBAction func chatLogButtonPressed(_ sender: UIButton) {
-        // FIXME: HARD CODE
-        let user = User(id: "TYVlACMnswWh0JghfiyBeDGq2Ij2", email: "test1@gmail.com", username: "faiz joker", profileImageURL: "https://firebasestorage.googleapis.com/v0/b/ios-chat-apps.appspot.com/o/profile_images%2F98D64492-C31E-4428-9E50-5CB9AF540802.png?alt=media&token=0d7ad306-5529-4fc8-8544-8f056e9f43a8")
-        presentChatController(user: user)
     }
     
     deinit {
@@ -176,5 +170,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
         cell.lastMessageLabel?.text = chat.message
         return cell
+    }
+}
+
+extension HomeViewController: NewMessageProtocol {
+    func passUserToHomeVC(user: User) {
+        presentChatController(user: user)
     }
 }
