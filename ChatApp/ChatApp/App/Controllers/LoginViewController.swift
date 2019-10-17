@@ -80,13 +80,11 @@ class LoginViewController: UIViewController, Storyboarded {
     
     @IBAction func loginButton(_ sender: UIButton) {
         hideKeyboard()
-        
         guard let email = emailTextField.text, let password = passwordTextField.text else { return }
         if email.count == 0 || password.count == 0 {
             presentAlertController(withMessage: "Email and password cannot be empty", title: "Error")
             return
         }
-        
         handleAuthenticate(email: email, password: password)
     }
         

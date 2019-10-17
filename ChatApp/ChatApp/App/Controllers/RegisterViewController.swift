@@ -6,11 +6,11 @@
 //  Copyright © 2019 Faiz Ikhwan. All rights reserved.
 //
 
-import UIKit
 import Firebase
+import UIKit
 
 class RegisterViewController: UIViewController {
-
+    
     // MARK: - IBOutlet
         
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -19,7 +19,11 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!        
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    
+    // MARK: - Global Variable
+    
+    let databaseURL = "https://ios-chat-apps.firebaseio.com/"
     
     // MARK:- View Lifecycle
     
@@ -83,47 +87,50 @@ class RegisterViewController: UIViewController {
                 self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
                 return
             }
-            
-            // Profile image
-            let imageName = NSUUID().uuidString
-            let storageRef = Storage.storage().reference().child(Constant.profile_images).child("\(imageName).jpg")
-            if let uploadData = self.imageView.image?.jpegData(compressionQuality: 0.1) {
-                storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
-                    if let err = error {
-                        self.activityIndicator.stopAnimating()
-                        self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
-                        return
-                    }
-                                        
-                    storageRef.downloadURL { (url, errorURL) in
-                        if let errURL = errorURL {
-                            self.activityIndicator.stopAnimating()
-                            self.presentAlertController(withMessage: errURL.localizedDescription, title: "Error")
-                            return
-                        }
-                        
-                        guard let profileImageURL = url?.absoluteString else {
-                            self.activityIndicator.stopAnimating()
-                            self.presentAlertController(withMessage: "Failed to add profile image", title: "Error")
-                            return
-                        }
-                                                                        
-                        let values = [User.Const.username: username, User.Const.email: email, User.Const.password: password, User.Const.profileImageURL: profileImageURL] as [String : AnyObject]
-                        guard let uid = authResult?.user.uid else {
-                            self.activityIndicator.stopAnimating()
-                            self.presentAlertController(withMessage: "Something has broken", title: "Error")
-                            return
-                        }
-                        
-                        self.handleAddUserIntoDatabaseWithUID(uid, values: values)
-                    }
-                }
+            self.handleUploadProfileImage(username: username, email: email, authResult: authResult)
+        }
+    }
+    
+    private func handleUploadProfileImage(username: String, email: String, authResult: AuthDataResult?) {
+        let imageName = NSUUID().uuidString
+        guard let uploadData = self.imageView.image?.jpegData(compressionQuality: 0.1) else { return }
+        let storageRef = Storage.storage().reference().child(Constant.profileImages).child("\(imageName).jpg")
+        storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
+            if let err = error {
+                self.activityIndicator.stopAnimating()
+                self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
+                return
             }
+            self.fetchProfileImageDownloadURL(username: username, email: email, authResult: authResult, storageRef: storageRef)
+        }
+    }
+    
+    private func fetchProfileImageDownloadURL(username: String, email: String, authResult: AuthDataResult?, storageRef: StorageReference) {
+        storageRef.downloadURL { (url, errorURL) in
+            if let errURL = errorURL {
+                self.activityIndicator.stopAnimating()
+                self.presentAlertController(withMessage: errURL.localizedDescription, title: "Error")
+                return
+            }            
+            guard let profileImageURL = url?.absoluteString else {
+                self.activityIndicator.stopAnimating()
+                self.presentAlertController(withMessage: "Failed to add profile image", title: "Error")
+                return
+            }
+                                                            
+            let values = [User.Const.username: username, User.Const.email: email, User.Const.profileImageURL: profileImageURL] as [String : AnyObject]
+            guard let uid = authResult?.user.uid else {
+                self.activityIndicator.stopAnimating()
+                self.presentAlertController(withMessage: "Something has broken", title: "Error")
+                return
+            }
+            
+            self.handleAddUserIntoDatabaseWithUID(uid, values: values)
         }
     }
     
     private func handleAddUserIntoDatabaseWithUID(_ uid: String, values: [String: AnyObject]) {
-        let ref = Database.database().reference(fromURL: "https://ios-chat-apps.firebaseio.com/")
+        let ref = Database.database().reference(fromURL: databaseURL)
         let userReference = ref.child(Constant.users).child(uid)
         userReference.updateChildValues(values) { (error, ref) in
             if let err = error {
@@ -136,7 +143,7 @@ class RegisterViewController: UIViewController {
         }
     }
     
-    func setupImageView() {
+    private func setupImageView() {
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
     }
         
@@ -157,8 +164,7 @@ class RegisterViewController: UIViewController {
             let password = passwordTextField.text,
             let confirmPassword = confirmPasswordTextField.text
         else { return }
-        
-        // Validation
+                
         if username.count == 0 || email.count == 0 || password.count == 0 || confirmPassword.count == 0 {
             presentAlertController(withMessage: "Please fill all the form", title: "Error")
             return

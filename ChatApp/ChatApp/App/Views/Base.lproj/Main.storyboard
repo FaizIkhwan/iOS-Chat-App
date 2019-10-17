@@ -447,8 +447,8 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" image="plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="bKe-0m-Hjk">
-                                        <rect key="frame" x="97.000000000000014" y="71" width="220.33333333333337" height="216"/>
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="bKe-0m-Hjk">
+                                        <rect key="frame" x="97.000000000000014" y="68.666666666666671" width="220.33333333333337" height="220.33333333333331"/>
                                         <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="bKe-0m-Hjk" secondAttribute="height" multiplier="1:1" id="xWF-5M-hKd"/>
@@ -669,7 +669,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="plus" catalog="system" width="64" height="56"/>
-        <image name="user" width="64" height="64"/>
+        <image name="user" width="256" height="256"/>
     </resources>
 </document>

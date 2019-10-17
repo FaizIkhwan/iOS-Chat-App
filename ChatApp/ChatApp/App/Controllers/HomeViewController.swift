@@ -69,7 +69,7 @@ class HomeViewController: UIViewController {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         Database.database().reference().child(Constant.users).child(uid).observeSingleEvent(of: .value, with: { (snapshots) in
             if let dic = snapshots.value as? [String: AnyObject] {
-                let user = User(id: snapshots.key, email: dic[User.Const.email] as! String, password: dic[User.Const.password] as! String, username: dic[User.Const.username] as! String, profileImageURL: dic[User.Const.profileImageURL] as? String)
+                let user = User(id: snapshots.key, email: dic[User.Const.email] as! String, username: dic[User.Const.username] as! String, profileImageURL: dic[User.Const.profileImageURL] as? String)
                 self.setupNavBarWithUser(user: user)
             }
         })
@@ -151,7 +151,7 @@ class HomeViewController: UIViewController {
     
     @IBAction func chatLogButtonPressed(_ sender: UIButton) {
         // HARD CODE
-        let user = User(id: "TYVlACMnswWh0JghfiyBeDGq2Ij2", email: "test1@gmail.com", password: "123456", username: "faiz joker", profileImageURL: "https://firebasestorage.googleapis.com/v0/b/ios-chat-apps.appspot.com/o/profile_images%2F98D64492-C31E-4428-9E50-5CB9AF540802.png?alt=media&token=0d7ad306-5529-4fc8-8544-8f056e9f43a8")
+        let user = User(id: "TYVlACMnswWh0JghfiyBeDGq2Ij2", email: "test1@gmail.com", username: "faiz joker", profileImageURL: "https://firebasestorage.googleapis.com/v0/b/ios-chat-apps.appspot.com/o/profile_images%2F98D64492-C31E-4428-9E50-5CB9AF540802.png?alt=media&token=0d7ad306-5529-4fc8-8544-8f056e9f43a8")
         showChatController(user: user)
     }
     

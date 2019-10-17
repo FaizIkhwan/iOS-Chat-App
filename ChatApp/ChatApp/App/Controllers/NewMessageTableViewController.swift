@@ -21,7 +21,7 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchUser()
+//        fetchUser()
     }
 
     // MARK: - Table view data source
@@ -57,11 +57,10 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
     func fetchUser() {
         Database.database().reference().child(Constant.users).observe(.childAdded) { (snapshots) in
             if let dic = snapshots.value as? [String: AnyObject] {
-                let email = dic[User.Const.email] as? String ?? ""
-                let password = dic[User.Const.password] as? String ?? ""
+                let email = dic[User.Const.email] as? String ?? ""                
                 let username = dic[User.Const.username] as? String ?? ""
                 let profileImageURL = dic[User.Const.profileImageURL] as? String ?? ""
-                let user = User(id: snapshots.key, email: email, password: password, username: username, profileImageURL: profileImageURL)
+                let user = User(id: snapshots.key, email: email, username: username, profileImageURL: profileImageURL)
                 self.users.append(user)
                 self.tableView.reloadData()
             }
