@@ -6,9 +6,8 @@
 //  Copyright © 2019 Faiz Ikhwan. All rights reserved.
 //
 
-// import alphabetically
-import UIKit
 import Firebase
+import UIKit
 
 class HomeViewController: UIViewController {
     
@@ -25,29 +24,28 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        print("viewDidLoad")
         tableView.delegate = self
         tableView.dataSource = self
-        
-        checkIfUserIsLoggedIn()
-        observeMessages()
+        fetchMessages()
     }
     
-    // MARK: - Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let backItem = UIBarButtonItem()
-        backItem.title = "Back"
-        navigationItem.backBarButtonItem = backItem
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("viewDidAppear")
+        checkIfUserIsLoggedIn()
     }
     
     // MARK: - Functions        
     
-    func observeMessages() {
+    func fetchMessages() {
         let ref = Database.database().reference().child(Constant.chats)
         ref.observe(.childAdded) { (snapshot) in
-            if let dict = snapshot.value as? [String: AnyObject] {
-                let chat = Chat(message: dict[Chat.Const.message] as? String ?? "", sender: dict[Chat.Const.sender] as? String ?? "", receiver: dict[Chat.Const.receiver] as? String ?? "", timestamp: dict[Chat.Const.timestamp] as? String ?? "")
+            if let dict = snapshot.value as? [String: String] {
+                let chat = Chat(message: dict[Chat.Const.message, default: ""],
+                                sender: dict[Chat.Const.sender, default: ""],
+                                receiver: dict[Chat.Const.receiver, default: ""],
+                                timestamp: dict[Chat.Const.timestamp, default: ""])
                 self.chats.append(chat)
                 
                 DispatchQueue.main.async {
@@ -68,13 +66,17 @@ class HomeViewController: UIViewController {
     func fetchUserAndSetupNavBarTitle() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         Database.database().reference().child(Constant.users).child(uid).observeSingleEvent(of: .value, with: { (snapshots) in
-            if let dic = snapshots.value as? [String: AnyObject] {
-                let user = User(id: snapshots.key, email: dic[User.Const.email] as! String, username: dic[User.Const.username] as! String, profileImageURL: dic[User.Const.profileImageURL] as? String)
+            if let dic = snapshots.value as? [String: String] {
+                let user = User(id: snapshots.key,
+                                email: dic[User.Const.email, default: ""],
+                                username: dic[User.Const.username, default: ""],
+                                profileImageURL: dic[User.Const.profileImageURL, default: ""])
                 self.setupNavBarWithUser(user: user)
             }
         })
     }
     
+    // TODO: tukar storyboard
     func setupNavBarWithUser(user: User) {
         let titleView = UIView()
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
@@ -115,8 +117,7 @@ class HomeViewController: UIViewController {
         self.navigationItem.titleView = titleView
     }
     
-    func showChatController(user: User) {
-        print("showChatController")
+    func presentChatController(user: User) {
         let chatVC = ChatLogViewController.instantiate(storyboardName: Constant.Main)
         chatVC.user = user
         self.navigationController?.pushViewController(chatVC, animated: true)
@@ -124,8 +125,6 @@ class HomeViewController: UIViewController {
     
     func presentLoginView() {
         let loginVC = LoginViewController.instantiate(storyboardName: Constant.Main)
-        loginVC.modalPresentationStyle = .overCurrentContext
-        loginVC.modalTransitionStyle = .crossDissolve
         present(loginVC, animated: true)
     }
     
@@ -150,9 +149,9 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func chatLogButtonPressed(_ sender: UIButton) {
-        // HARD CODE
+        // FIXME: HARD CODE
         let user = User(id: "TYVlACMnswWh0JghfiyBeDGq2Ij2", email: "test1@gmail.com", username: "faiz joker", profileImageURL: "https://firebasestorage.googleapis.com/v0/b/ios-chat-apps.appspot.com/o/profile_images%2F98D64492-C31E-4428-9E50-5CB9AF540802.png?alt=media&token=0d7ad306-5529-4fc8-8544-8f056e9f43a8")
-        showChatController(user: user)
+        presentChatController(user: user)
     }
     
     deinit {
@@ -168,16 +167,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! RecentChatTableViewCell
         let chat = chats[indexPath.row]
-
         let ref = Database.database().reference().child(Constant.users).child(chat.receiver)
         ref.observeSingleEvent(of: .value) { (snapshot) in
-            if let dict = snapshot.value as? [String: AnyObject] {
-                cell.usernameLabel?.text = dict[User.Const.username] as? String
+            if let dict = snapshot.value as? [String: String] {
+                cell.usernameLabel?.text = dict[User.Const.username, default: ""]
+                cell.profileImageView.setImage(withURL: dict[User.Const.profileImageURL, default: ""])
             }
         }
-
         cell.lastMessageLabel?.text = chat.message
-
         return cell
     }
 }

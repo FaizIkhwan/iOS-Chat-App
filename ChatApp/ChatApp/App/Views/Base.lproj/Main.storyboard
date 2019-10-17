@@ -11,7 +11,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="LoginViewController" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -113,12 +113,12 @@
                                             <constraint firstItem="b0o-cN-dcl" firstAttribute="centerY" secondItem="JLc-dA-dzb" secondAttribute="centerY" id="h4e-g2-e6q"/>
                                         </constraints>
                                     </view>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="OWG-nV-s44">
-                                        <rect key="frame" x="67" y="269" width="280" height="280"/>
+                                    <activityIndicatorView hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="OWG-nV-s44">
+                                        <rect key="frame" x="97" y="299" width="220" height="220"/>
                                         <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="280" id="0Pj-pe-PDi"/>
-                                            <constraint firstAttribute="height" constant="280" id="0VP-iD-HII"/>
+                                            <constraint firstAttribute="width" constant="220" id="0Pj-pe-PDi"/>
+                                            <constraint firstAttribute="height" constant="220" id="0VP-iD-HII"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusV">
@@ -198,6 +198,11 @@
                                                         <constraint firstAttribute="height" constant="60" id="9U2-Wk-3KI"/>
                                                         <constraint firstAttribute="width" constant="60" id="ehU-Sg-wa0"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusV">
+                                                            <real key="value" value="30"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="yNu-VD-3yQ">
                                                     <rect key="frame" x="110" y="10" width="46" height="60"/>
@@ -321,7 +326,7 @@
         <!--New Message-->
         <scene sceneID="pPe-ou-TKS">
             <objects>
-                <tableViewController storyboardIdentifier="NewMessageTableViewController" modalPresentationStyle="formSheet" id="EZr-t6-gc4" customClass="NewMessageTableViewController" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="NewMessageTableViewController" modalPresentationStyle="overFullScreen" id="EZr-t6-gc4" customClass="NewMessageTableViewController" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="0hn-0M-RdN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -473,12 +478,12 @@
                                             <action selector="backButtonPressed:" destination="nPd-QY-cfb" eventType="touchUpInside" id="CCF-Mo-FdS"/>
                                         </connections>
                                     </button>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="nLc-5n-u92">
-                                        <rect key="frame" x="67" y="269" width="280" height="280"/>
+                                    <activityIndicatorView hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="nLc-5n-u92">
+                                        <rect key="frame" x="97" y="299" width="220" height="220"/>
                                         <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="280" id="8pQ-8U-0Ln"/>
-                                            <constraint firstAttribute="width" constant="280" id="qKF-G4-BvD"/>
+                                            <constraint firstAttribute="height" constant="220" id="8pQ-8U-0Ln"/>
+                                            <constraint firstAttribute="width" constant="220" id="qKF-G4-BvD"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusV">
@@ -596,12 +601,12 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="DG3-Ss-XJZ">
-                                        <rect key="frame" x="67" y="269" width="280" height="280"/>
+                                    <activityIndicatorView hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="DG3-Ss-XJZ">
+                                        <rect key="frame" x="97" y="299" width="220" height="220"/>
                                         <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="280" id="GTU-lR-Djk"/>
-                                            <constraint firstAttribute="height" constant="280" id="qka-KZ-8pd"/>
+                                            <constraint firstAttribute="width" constant="220" id="GTU-lR-Djk"/>
+                                            <constraint firstAttribute="height" constant="220" id="qka-KZ-8pd"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusV">

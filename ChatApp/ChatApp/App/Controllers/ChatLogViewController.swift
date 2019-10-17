@@ -6,8 +6,8 @@
 //  Copyright © 2019 Faiz Ikhwan. All rights reserved.
 //
 
-import UIKit
 import Firebase
+import UIKit
 
 class ChatLogViewController: UIViewController, Storyboarded {
             
@@ -38,7 +38,10 @@ class ChatLogViewController: UIViewController, Storyboarded {
         let ref = Database.database().reference().child(Constant.chats)
         let childRef = ref.childByAutoId()
         let timestamp = String(NSDate().timeIntervalSince1970)
-        let values = [Chat.Const.message: messageTextField.text!, Chat.Const.sender: Auth.auth().currentUser?.uid, Chat.Const.receiver: user!.id, Chat.Const.timestamp: timestamp]
+        let values: [String: String] = [Chat.Const.message: messageTextField.text ?? "",
+                                        Chat.Const.sender: Auth.auth().currentUser?.uid ?? "",
+                                        Chat.Const.receiver: user?.id ?? "",
+                                        Chat.Const.timestamp: timestamp]
         childRef.updateChildValues(values)
     }
     

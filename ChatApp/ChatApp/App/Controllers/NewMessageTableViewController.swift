@@ -6,9 +6,9 @@
 //  Copyright © 2019 Faiz Ikhwan. All rights reserved.
 //
 
-import UIKit
 import Firebase
 import SDWebImage
+import UIKit
 
 class NewMessageTableViewController: UITableViewController, Storyboarded {
 
@@ -21,7 +21,7 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        fetchUser()
+        fetchUser()
     }
 
     // MARK: - Table view data source
@@ -44,9 +44,7 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
         cell.usernameLabel.text = user.username
         
         if let profileImageURLString = user.profileImageURL {
-            if let profileImageURL = URL(string: profileImageURLString) {
-                cell.profilePictureImageView.sd_setImage(with: profileImageURL)
-            }
+            cell.profilePictureImageView.setImage(withURL: profileImageURLString)
         }
         
         return cell
