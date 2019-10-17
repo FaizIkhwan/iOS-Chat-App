@@ -251,6 +251,7 @@
                         <viewLayoutGuide key="safeArea" id="tSn-cA-FMY"/>
                     </view>
                     <navigationItem key="navigationItem" id="hAL-7z-aDD">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="6ef-VO-EHt">
                             <connections>
                                 <action selector="logoutButtonPressed:" destination="1Oz-dh-bK3" id="LY4-xY-YgZ"/>

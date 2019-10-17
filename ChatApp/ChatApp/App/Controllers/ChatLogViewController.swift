@@ -27,8 +27,6 @@ class ChatLogViewController: UIViewController, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("ChatLogViewController viewDidLoad")
-        
         messageTextField?.delegate = self
     }
     

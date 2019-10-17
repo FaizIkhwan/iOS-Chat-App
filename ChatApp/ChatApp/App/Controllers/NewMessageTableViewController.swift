@@ -54,10 +54,10 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
     
     func fetchUser() {
         Database.database().reference().child(Constant.users).observe(.childAdded) { (snapshots) in
-            if let dic = snapshots.value as? [String: AnyObject] {
-                let email = dic[User.Const.email] as? String ?? ""                
-                let username = dic[User.Const.username] as? String ?? ""
-                let profileImageURL = dic[User.Const.profileImageURL] as? String ?? ""
+            if let dic = snapshots.value as? [String: String] {
+                let email = dic[User.Const.email, default: ""]
+                let username = dic[User.Const.username, default: ""]
+                let profileImageURL = dic[User.Const.profileImageURL, default: ""]
                 let user = User(id: snapshots.key, email: email, username: username, profileImageURL: profileImageURL)
                 self.users.append(user)
                 self.tableView.reloadData()

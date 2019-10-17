@@ -30,18 +30,19 @@ class ForgotPasswordViewController: UIViewController {
         self.view.endEditing(true)
     }
     
+    fileprivate func animateKeyboard(constraintHeight: CGFloat) {
+        UIView.animate(withDuration: 0.2) {
+            self.bottomConstraint.constant = constraintHeight
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     @objc func keyboardWillChange(notification: Notification) {
         guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
         if notification.name == UIResponder.keyboardWillShowNotification {
-            UIView.animate(withDuration: 0.2) {
-                self.bottomConstraint.constant = -keyboardRect.height
-                self.view.layoutIfNeeded()
-            }
+            animateKeyboard(constraintHeight: -keyboardRect.height)
         } else {
-            UIView.animate(withDuration: 0.2) {
-                self.bottomConstraint.constant = 0
-                self.view.layoutIfNeeded()
-            }
+            animateKeyboard(constraintHeight: 0)
         }
     }
     
@@ -62,11 +63,11 @@ class ForgotPasswordViewController: UIViewController {
         activityIndicator.startAnimating()
         Auth.auth().sendPasswordReset(withEmail: email) { (error) in
             if let err = error {
-                self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
+                self.presentAlertController(withMessage: err.localizedDescription, title: "Error", willDismiss: false)
                 return
             }
             self.activityIndicator.stopAnimating()
-            self.presentAlertControllerAndDismiss(withMessage: "Email sent", title: "Notice")
+            self.presentAlertController(withMessage: "Email sent", title: "Notice", willDismiss: true)
         }
     }
     
@@ -80,7 +81,7 @@ class ForgotPasswordViewController: UIViewController {
         hideKeyboard()
         guard let email = emailTextField.text else { return }
         if email.count == 0 {
-            presentAlertController(withMessage: "Email cannot be empty", title: "Error")
+            presentAlertController(withMessage: "Email cannot be empty", title: "Error", willDismiss: false)
             return
         }
         handleResetPassword(withEmail: email)

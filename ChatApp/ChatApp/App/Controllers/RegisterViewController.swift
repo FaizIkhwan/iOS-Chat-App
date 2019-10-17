@@ -43,23 +43,25 @@ class RegisterViewController: UIViewController {
         self.view.endEditing(true)
     }
     
+    fileprivate func animateKeyboard(constraintHeight: CGFloat, alpha: CGFloat, isHidden: Bool) {
+        UIImageView.animate(withDuration: 0.2, animations: {
+            self.imageView.alpha = alpha
+            self.bottomConstraint.constant = constraintHeight
+            self.view.layoutIfNeeded()
+        }) { (finished) in
+            if isHidden == true {
+                self.imageView.isHidden = true
+            }
+        }
+    }
+    
     @objc func keyboardWillChange(notification: Notification) {
         guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
         if notification.name == UIResponder.keyboardWillShowNotification {
-            UIImageView.animate(withDuration: 0.2, animations: {
-                self.imageView.alpha = 0.0
-                self.bottomConstraint.constant = -keyboardRect.height
-                self.view.layoutIfNeeded()
-            }) { (finished) in
-                self.imageView.isHidden = true
-            }
+            animateKeyboard(constraintHeight: -keyboardRect.height, alpha: 0.0, isHidden: true)
         } else {
             self.imageView.isHidden = false
-            UIImageView.animate(withDuration: 0.2, animations: {
-                self.imageView.alpha = 1.0
-                self.bottomConstraint.constant = 0
-                self.view.layoutIfNeeded()
-            })
+            animateKeyboard(constraintHeight: 0, alpha: 1.0, isHidden: false)
         }
     }
     
@@ -84,7 +86,7 @@ class RegisterViewController: UIViewController {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let err = error {
                 self.activityIndicator.stopAnimating()
-                self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
+                self.presentAlertController(withMessage: err.localizedDescription, title: "Error", willDismiss: false)
                 return
             }
             self.handleUploadProfileImage(username: username, email: email, authResult: authResult)
@@ -98,7 +100,7 @@ class RegisterViewController: UIViewController {
         storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
             if let err = error {
                 self.activityIndicator.stopAnimating()
-                self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
+                self.presentAlertController(withMessage: err.localizedDescription, title: "Error", willDismiss: false)
                 return
             }
             self.fetchProfileImageDownloadURL(username: username, email: email, authResult: authResult, storageRef: storageRef)
@@ -109,19 +111,19 @@ class RegisterViewController: UIViewController {
         storageRef.downloadURL { (url, errorURL) in
             if let errURL = errorURL {
                 self.activityIndicator.stopAnimating()
-                self.presentAlertController(withMessage: errURL.localizedDescription, title: "Error")
+                self.presentAlertController(withMessage: errURL.localizedDescription, title: "Error", willDismiss: false)
                 return
             }            
             guard let profileImageURL = url?.absoluteString else {
                 self.activityIndicator.stopAnimating()
-                self.presentAlertController(withMessage: "Failed to add profile image", title: "Error")
+                self.presentAlertController(withMessage: "Failed to add profile image", title: "Error", willDismiss: false)
                 return
             }
                                                             
             let values = [User.Const.username: username, User.Const.email: email, User.Const.profileImageURL: profileImageURL] as [String : AnyObject]
             guard let uid = authResult?.user.uid else {
                 self.activityIndicator.stopAnimating()
-                self.presentAlertController(withMessage: "Something has broken", title: "Error")
+                self.presentAlertController(withMessage: "Something has broken", title: "Error", willDismiss: false)
                 return
             }
             
@@ -135,7 +137,7 @@ class RegisterViewController: UIViewController {
         userReference.updateChildValues(values) { (error, ref) in
             if let err = error {
                 self.activityIndicator.stopAnimating()
-                self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
+                self.presentAlertController(withMessage: err.localizedDescription, title: "Error", willDismiss: false)
                 return
             }
             self.activityIndicator.stopAnimating()
@@ -166,11 +168,11 @@ class RegisterViewController: UIViewController {
         else { return }
                 
         if username.count == 0 || email.count == 0 || password.count == 0 || confirmPassword.count == 0 {
-            presentAlertController(withMessage: "Please fill all the form", title: "Error")
+            presentAlertController(withMessage: "Please fill all the form", title: "Error", willDismiss: false)
             return
         }
         if password != confirmPassword {
-            presentAlertController(withMessage: "Password and confirm password does not match", title: "Error")
+            presentAlertController(withMessage: "Password and confirm password does not match", title: "Error", willDismiss: false)
             return
         }
         

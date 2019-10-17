@@ -32,23 +32,23 @@ class LoginViewController: UIViewController, Storyboarded {
         self.view.endEditing(true)
     }
     
+    fileprivate func animateKeyboard(constraintHeight: CGFloat, fontSize: CGFloat) {
+        UIView.animate(withDuration: 0.2) {
+            self.bottomConstraint.constant = constraintHeight
+            self.chatAppLabel.transform = CGAffineTransform(scaleX: fontSize, y: fontSize)
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     @objc func keyboardWillChange(notification: Notification) {
         guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
         if notification.name == UIResponder.keyboardWillShowNotification {
-            UIView.animate(withDuration: 0.2) {
-                self.bottomConstraint.constant = -keyboardRect.height
-                self.chatAppLabel.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-                self.view.layoutIfNeeded()
-            }
+            animateKeyboard(constraintHeight: -keyboardRect.height, fontSize: 0.7)
         } else {
-            UIView.animate(withDuration: 0.2) {
-                self.bottomConstraint.constant = 0
-                self.chatAppLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                self.view.layoutIfNeeded()
-            }
+            animateKeyboard(constraintHeight: 0, fontSize: 1.0)
         }
     }
-  
+    
     func hideKeyboard() {
         emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
@@ -68,7 +68,7 @@ class LoginViewController: UIViewController, Storyboarded {
         Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
             if let err = error {
                 self.activityIndicator.stopAnimating()
-                self.presentAlertController(withMessage: err.localizedDescription, title: "Error")
+                self.presentAlertController(withMessage: err.localizedDescription, title: "Error", willDismiss: false)
                 return
             }
             self.activityIndicator.stopAnimating()
@@ -82,7 +82,7 @@ class LoginViewController: UIViewController, Storyboarded {
         hideKeyboard()
         guard let email = emailTextField.text, let password = passwordTextField.text else { return }
         if email.count == 0 || password.count == 0 {
-            presentAlertController(withMessage: "Email and password cannot be empty", title: "Error")
+            presentAlertController(withMessage: "Email and password cannot be empty", title: "Error", willDismiss: false)
             return
         }
         handleAuthenticate(email: email, password: password)
