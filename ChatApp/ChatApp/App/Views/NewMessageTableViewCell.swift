@@ -11,4 +11,12 @@ import UIKit
 class NewMessageTableViewCell: UITableViewCell {
     @IBOutlet weak var profilePictureImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
+    
+    var user: User? {
+        didSet {
+            guard let user = user else { return }
+            usernameLabel.text = user.username
+            profilePictureImageView.setImage(withURL: user.profileImageURL)
+        }
+    }
 }

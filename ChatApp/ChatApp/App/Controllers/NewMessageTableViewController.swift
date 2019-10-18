@@ -44,9 +44,7 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! NewMessageTableViewCell
-        let user = users[indexPath.row]
-        cell.usernameLabel.text = user.username
-        cell.profilePictureImageView.setImage(withURL: user.profileImageURL)
+        cell.user = users[indexPath.row]
         return cell
     }
 

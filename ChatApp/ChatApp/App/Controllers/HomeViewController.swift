@@ -131,15 +131,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! RecentChatTableViewCell
-        let chat = chats[indexPath.row]
-        let ref = Database.database().reference().child(Constant.users).child(chat.receiver)
-        ref.observeSingleEvent(of: .value) { (snapshot) in
-            if let dict = snapshot.value as? [String: String] {
-                cell.usernameLabel?.text = dict[User.Const.username, default: "No data"]
-                cell.profileImageView.setImage(withURL: dict[User.Const.profileImageURL, default: "No data"])
-            }
-        }
-        cell.lastMessageLabel?.text = chat.message
+        cell.chat = chats[indexPath.row]
         return cell
     }
 }
