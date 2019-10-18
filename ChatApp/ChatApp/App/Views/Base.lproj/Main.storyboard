@@ -404,7 +404,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="New Message" id="ypk-Gn-gGn">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="Ffy-tp-6Ku"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="CPF-R3-gcD">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="EZr-t6-gc4" id="iXw-HR-zWW"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6zx-a1-BLM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -684,7 +688,7 @@
         <!--Navigation Controller-->
         <scene sceneID="n8E-ZV-reC">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="L0Q-vZ-OZd" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavigationControllerNewMessage" automaticallyAdjustsScrollViewInsets="NO" id="L0Q-vZ-OZd" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LAg-9V-dpt">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

@@ -46,8 +46,7 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! NewMessageTableViewCell
         let user = users[indexPath.row]
         cell.usernameLabel.text = user.username
-        cell.profilePictureImageView.setImage(withURL: user.profileImageURL)    
-        
+        cell.profilePictureImageView.setImage(withURL: user.profileImageURL)
         return cell
     }
 
@@ -66,6 +65,12 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
         }
     }
 
+    // MARK: - IBAction
+    
+    @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+        dismiss(animated: true)
+    }
+    
     deinit {
         print("Deinit - New Message VC")
     }

@@ -21,6 +21,7 @@ class HomeViewController: UIViewController {
         
     var chats: [Chat] = []
     let cellID = "cellID"
+    let NavigationControllerStoryboardID = "NavigationControllerNewMessage"
     
     // MARK: - View Lifecycle
     
@@ -28,7 +29,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        self.tableView.tableFooterView = UIView() // Remove extra separator in TableView
+        tableView.tableFooterView = UIView() // Remove extra separator in TableView
         fetchMessages()
     }
         
@@ -71,9 +72,9 @@ class HomeViewController: UIViewController {
         Database.database().reference().child(Constant.users).child(uid).observeSingleEvent(of: .value, with: { (snapshots) in
             if let dic = snapshots.value as? [String: String] {
                 let user = User(id: snapshots.key,
-                                email: dic[User.Const.email, default: ""],
-                                username: dic[User.Const.username, default: ""],
-                                profileImageURL: dic[User.Const.profileImageURL, default: ""])
+                                email: dic[User.Const.email, default: "No data"],
+                                username: dic[User.Const.username, default: "No data"],
+                                profileImageURL: dic[User.Const.profileImageURL, default: "No data"])
                 self.profilePictureNavBarImageView.setImage(withURL: user.profileImageURL)
                 self.usernameNavBarLabel.text = user.username
             }
@@ -83,7 +84,7 @@ class HomeViewController: UIViewController {
     func presentChatController(user: User) {
         let chatVC = ChatLogViewController.instantiate(storyboardName: Constant.Main)
         chatVC.user = user
-        self.navigationController?.pushViewController(chatVC, animated: true)
+        navigationController?.pushViewController(chatVC, animated: true)
     }
     
     func presentLoginView() {
@@ -109,7 +110,13 @@ class HomeViewController: UIViewController {
     @IBAction func newMessageButtonPressed(_ sender: Any) {
         let newMessageVC = NewMessageTableViewController.instantiate(storyboardName: Constant.Main)
         newMessageVC.delegate = self
-        present(newMessageVC, animated: true)
+        newMessageVC.navigationItem.setHidesBackButton(true, animated: true)
+        // TODO: REFACTOR?
+        let storyboard = UIStoryboard(name: Constant.Main, bundle: nil)
+        let destinationNavigationController = storyboard.instantiateViewController(withIdentifier: NavigationControllerStoryboardID) as! UINavigationController
+        destinationNavigationController.pushViewController(newMessageVC, animated: true)
+        destinationNavigationController.modalPresentationStyle = .fullScreen
+        present(destinationNavigationController, animated: true)
     }
     
     deinit {
