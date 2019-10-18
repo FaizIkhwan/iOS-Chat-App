@@ -13,8 +13,10 @@ class HomeViewController: UIViewController {
     
     // MARK: - IBOutlet
     
+    @IBOutlet weak var profilePictureNavBarImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
-        
+    @IBOutlet weak var usernameNavBarLabel: UILabel!
+    
     // MARK: - Global Variable
         
     var chats: [Chat] = []
@@ -26,12 +28,14 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        self.tableView.tableFooterView = UIView() // Remove extra separator in TableView
         fetchMessages()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print("viewDidAppear")
+        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        profilePictureNavBarImageView.image = #imageLiteral(resourceName: "user")
+        usernameNavBarLabel.text = ""
         checkIfUserIsLoggedIn()
     }
     
@@ -41,10 +45,10 @@ class HomeViewController: UIViewController {
         let ref = Database.database().reference().child(Constant.chats)
         ref.observe(.childAdded) { (snapshot) in
             if let dict = snapshot.value as? [String: String] {
-                let chat = Chat(message: dict[Chat.Const.message, default: ""],
-                                sender: dict[Chat.Const.sender, default: ""],
-                                receiver: dict[Chat.Const.receiver, default: ""],
-                                timestamp: dict[Chat.Const.timestamp, default: ""])
+                let chat = Chat(message: dict[Chat.Const.message, default: "No data"],
+                                sender: dict[Chat.Const.sender, default: "No data"],
+                                receiver: dict[Chat.Const.receiver, default: "No data"],
+                                timestamp: dict[Chat.Const.timestamp, default: "No data"])
                 self.chats.append(chat)
                 
                 DispatchQueue.main.async {
@@ -70,50 +74,10 @@ class HomeViewController: UIViewController {
                                 email: dic[User.Const.email, default: ""],
                                 username: dic[User.Const.username, default: ""],
                                 profileImageURL: dic[User.Const.profileImageURL, default: ""])
-                self.setupNavBarWithUser(user: user)
+                self.profilePictureNavBarImageView.setImage(withURL: user.profileImageURL)
+                self.usernameNavBarLabel.text = user.username
             }
         })
-    }
-    
-    // TODO: tukar storyboard
-    func setupNavBarWithUser(user: User) {
-        let titleView = UIView()
-        titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
-
-        let containerView = UIView()
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        titleView.addSubview(containerView)
-        
-        let profileImageView = UIImageView()
-        containerView.addSubview(profileImageView)
-        profileImageView.translatesAutoresizingMaskIntoConstraints = false
-        profileImageView.contentMode = .scaleAspectFill
-        profileImageView.cornerRadiusV = 20
-        if let url = URL(string: user.profileImageURL!) {
-            profileImageView.sd_setImage(with: url)
-        }
-        
-        // Constraint profileImageView
-        profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
-        profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        
-        let nameLabel = UILabel()
-        containerView.addSubview(nameLabel)
-        nameLabel.text = user.username
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Constraint nameLabel
-        nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
-        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
-        nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
-        
-        containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
-        containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
-        
-        self.navigationItem.titleView = titleView
     }
     
     func presentChatController(user: User) {
@@ -164,8 +128,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let ref = Database.database().reference().child(Constant.users).child(chat.receiver)
         ref.observeSingleEvent(of: .value) { (snapshot) in
             if let dict = snapshot.value as? [String: String] {
-                cell.usernameLabel?.text = dict[User.Const.username, default: ""]
-                cell.profileImageView.setImage(withURL: dict[User.Const.profileImageURL, default: ""])
+                cell.usernameLabel?.text = dict[User.Const.username, default: "No data"]
+                cell.profileImageView.setImage(withURL: dict[User.Const.profileImageURL, default: "No data"])
             }
         }
         cell.lastMessageLabel?.text = chat.message

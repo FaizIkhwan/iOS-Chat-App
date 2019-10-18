@@ -12,7 +12,7 @@ struct User {
     let id: String
     let email: String
     let username: String
-    let profileImageURL: String?
+    let profileImageURL: String
     
     enum Const {
         static let id = "id"

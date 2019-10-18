@@ -26,6 +26,7 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.tableFooterView = UIView() // Remove extra separator in TableView
         fetchUser()
     }
 
@@ -45,10 +46,7 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! NewMessageTableViewCell
         let user = users[indexPath.row]
         cell.usernameLabel.text = user.username
-        
-        if let profileImageURLString = user.profileImageURL {
-            cell.profilePictureImageView.setImage(withURL: profileImageURLString)
-        }
+        cell.profilePictureImageView.setImage(withURL: user.profileImageURL)    
         
         return cell
     }

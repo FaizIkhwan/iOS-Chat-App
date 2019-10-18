@@ -248,6 +248,37 @@
                                 <action selector="logoutButtonPressed:" destination="1Oz-dh-bK3" id="LY4-xY-YgZ"/>
                             </connections>
                         </barButtonItem>
+                        <view key="titleView" contentMode="scaleToFill" id="6zC-r9-JfH">
+                            <rect key="frame" x="132" y="0.0" width="150" height="44"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="YAK-H2-iaN">
+                                    <rect key="frame" x="8" y="0.0" width="44" height="44"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="44" id="6F8-s9-boj"/>
+                                        <constraint firstAttribute="height" constant="44" id="xtJ-7H-r3g"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusV">
+                                            <real key="value" value="22"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jtf-xn-Zmy">
+                                    <rect key="frame" x="60" y="22" width="82" height="0.0"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="YAK-H2-iaN" firstAttribute="centerY" secondItem="6zC-r9-JfH" secondAttribute="centerY" id="9j6-jX-CMI"/>
+                                <constraint firstItem="Jtf-xn-Zmy" firstAttribute="leading" secondItem="YAK-H2-iaN" secondAttribute="trailing" constant="8" id="H8Q-7U-SB9"/>
+                                <constraint firstAttribute="trailing" secondItem="Jtf-xn-Zmy" secondAttribute="trailing" constant="8" id="JBP-iu-SFi"/>
+                                <constraint firstItem="YAK-H2-iaN" firstAttribute="leading" secondItem="6zC-r9-JfH" secondAttribute="leading" constant="8" id="hjg-8p-RvO"/>
+                                <constraint firstItem="Jtf-xn-Zmy" firstAttribute="centerY" secondItem="6zC-r9-JfH" secondAttribute="centerY" id="mfG-cb-u6n"/>
+                            </constraints>
+                        </view>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="0ie-Pf-aCK">
                             <connections>
                                 <action selector="newMessageButtonPressed:" destination="1Oz-dh-bK3" id="Yfg-Cc-OOR"/>
@@ -255,7 +286,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="profilePictureNavBarImageView" destination="YAK-H2-iaN" id="ztc-Fr-vG7"/>
                         <outlet property="tableView" destination="I5e-fc-GI4" id="VID-1I-435"/>
+                        <outlet property="usernameNavBarLabel" destination="Jtf-xn-Zmy" id="Bdi-fW-dbi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dd0-Bi-i9k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -370,7 +403,9 @@
                             <outlet property="delegate" destination="EZr-t6-gc4" id="csF-oM-NaW"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="New Message" id="ypk-Gn-gGn"/>
+                    <navigationItem key="navigationItem" title="New Message" id="ypk-Gn-gGn">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="Ffy-tp-6Ku"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6zx-a1-BLM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
