@@ -20,6 +20,7 @@ class HomeViewController: UIViewController {
     // MARK: - Global Variable
         
     var chats: [Chat] = []
+    var chatsDictionary = [String: Chat]()
     let cellID = "cellID"
     let NavigationControllerStoryboardID = "NavigationControllerNewMessage"
     
@@ -50,7 +51,9 @@ class HomeViewController: UIViewController {
                                 sender: dict[Chat.Const.sender, default: "No data"],
                                 receiver: dict[Chat.Const.receiver, default: "No data"],
                                 timestamp: dict[Chat.Const.timestamp, default: "No data"])
-                self.chats.append(chat)
+                self.chatsDictionary[chat.receiver] = chat
+                self.chats = Array(self.chatsDictionary.values)
+                self.chats.sort { $0.timestamp > $1.timestamp }
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()

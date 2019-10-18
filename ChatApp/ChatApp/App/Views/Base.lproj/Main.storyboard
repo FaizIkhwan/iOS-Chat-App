@@ -214,11 +214,19 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xhq-7G-oAN">
+                                                    <rect key="frame" x="352.33333333333331" y="10.999999999999998" width="41.666666666666686" height="20.333333333333329"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="yNu-VD-3yQ" secondAttribute="bottom" constant="10" id="DBQ-og-sxI"/>
                                                 <constraint firstItem="yNu-VD-3yQ" firstAttribute="leading" secondItem="tmL-g7-jLj" secondAttribute="trailing" constant="30" id="IJK-oP-KCx"/>
                                                 <constraint firstItem="tmL-g7-jLj" firstAttribute="leading" secondItem="SPa-hT-PFC" secondAttribute="leading" constant="20" id="PWB-8A-w73"/>
+                                                <constraint firstItem="xhq-7G-oAN" firstAttribute="trailing" secondItem="SPa-hT-PFC" secondAttribute="trailingMargin" id="edL-hq-TbV"/>
+                                                <constraint firstItem="xhq-7G-oAN" firstAttribute="top" secondItem="SPa-hT-PFC" secondAttribute="topMargin" id="hKg-sp-h7X"/>
                                                 <constraint firstItem="tmL-g7-jLj" firstAttribute="centerY" secondItem="SPa-hT-PFC" secondAttribute="centerY" id="n8u-c5-t9M"/>
                                                 <constraint firstItem="yNu-VD-3yQ" firstAttribute="top" secondItem="SPa-hT-PFC" secondAttribute="top" constant="10" id="vet-Fr-M4L"/>
                                             </constraints>
@@ -226,6 +234,7 @@
                                         <connections>
                                             <outlet property="lastMessageLabel" destination="a52-gn-6Uq" id="SOh-KF-dLn"/>
                                             <outlet property="profileImageView" destination="tmL-g7-jLj" id="7q1-II-jHT"/>
+                                            <outlet property="timeLabel" destination="xhq-7G-oAN" id="H0Z-es-qrc"/>
                                             <outlet property="usernameLabel" destination="meY-dc-jHX" id="hnK-kR-eRl"/>
                                         </connections>
                                     </tableViewCell>

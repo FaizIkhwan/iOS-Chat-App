@@ -10,9 +10,11 @@ import Firebase
 import UIKit
 
 class RecentChatTableViewCell: UITableViewCell {
+    
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var lastMessageLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     
     var chat: Chat? {
         didSet {
@@ -25,6 +27,13 @@ class RecentChatTableViewCell: UITableViewCell {
                 }
             }
             lastMessageLabel?.text = chat.message
+            
+            if let seconds = Double(chat.timestamp) {
+                let timestampDate = Date(timeIntervalSince1970: seconds)
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "HH:mm"
+                timeLabel.text = dateFormatter.string(from: timestampDate)
+            }
         }
     }
 }
