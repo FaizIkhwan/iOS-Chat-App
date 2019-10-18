@@ -44,7 +44,7 @@ class HomeViewController: UIViewController {
     // MARK: - Functions        
     
     func fetchMessages() {
-        let ref = Database.database().reference().child(Constant.chats)
+        let ref = Database.database().reference().child(Constant.chats).queryOrdered(byChild: Chat.Const.timestamp)
         ref.observe(.childAdded) { (snapshot) in
             if let dict = snapshot.value as? [String: String] {
                 let chat = Chat(message: dict[Chat.Const.message, default: "No data"],
@@ -53,7 +53,7 @@ class HomeViewController: UIViewController {
                                 timestamp: dict[Chat.Const.timestamp, default: "No data"])
                 self.chatsDictionary[chat.receiver] = chat
                 self.chats = Array(self.chatsDictionary.values)
-                self.chats.sort { $0.timestamp > $1.timestamp }
+//                self.chats.sort { $0.timestamp > $1.timestamp }
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
