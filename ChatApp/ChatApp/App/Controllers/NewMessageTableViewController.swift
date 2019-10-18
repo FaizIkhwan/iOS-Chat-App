@@ -36,8 +36,9 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.passUserToHomeVC(user: users[indexPath.row])
-        dismiss(animated: true)
+        dismiss(animated: true) {
+            self.delegate?.passUserToHomeVC(user: self.users[indexPath.row])
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
