@@ -18,11 +18,12 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var usernameNavBarLabel: UILabel!
     
     // MARK: - Global Variable
-        
-    var chats: [Chat] = []
-    var chatsDictionary = [String: Chat]()
+    
     let cellID = "cellID"
     let NavigationControllerStoryboardID = "NavigationControllerNewMessage"
+    
+    var chats: [Chat] = []
+    var chatsDictionary = [String: Chat]()
     
     // MARK: - View Lifecycle
     
@@ -51,17 +52,12 @@ class HomeViewController: UIViewController {
                                 sender: dict[Chat.Const.sender, default: "No data"],
                                 receiver: dict[Chat.Const.receiver, default: "No data"],
                                 timestamp: dict[Chat.Const.timestamp, default: "No data"])
-                              
-                print("sender id: ", chat.sender)
-                print("Auth.auth().currentUser?.uid: ", Auth.auth().currentUser?.uid)
-                                
+                                              
                 guard let currentUserID = Auth.auth().currentUser?.uid else { return }
                 
                 if chat.receiver == currentUserID || chat.sender == currentUserID {
-                    print("ADDED")
                     self.chatsDictionary[chat.sender] = chat
                     self.chats = Array(self.chatsDictionary.values)
-                    print("size: ", self.chats.count)
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
@@ -74,25 +70,42 @@ class HomeViewController: UIViewController {
         if Auth.auth().currentUser?.uid == nil {
             presentLoginView()
         } else {
-            fetchUserAndSetupNavBarTitle()
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            fetchUser(childPath: uid) { (user) in
+                guard let user = user else { return }
+                self.setupNavBarTitle(user: user)
+            }
         }
     }
     
-    func fetchUserAndSetupNavBarTitle() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        Database.database().reference().child(Constant.users).child(uid).observeSingleEvent(of: .value, with: { (snapshots) in
+    func fetchUser(childPath: String, completion: @escaping (User?) -> Void) {
+        var user: User?
+        Database.database().reference().child(Constant.users).child(childPath).observeSingleEvent(of: .value, with: { (snapshots) in
             if let dic = snapshots.value as? [String: String] {
-                let user = User(id: snapshots.key,
+                user = User(id: snapshots.key,
                                 email: dic[User.Const.email, default: "No data"],
                                 username: dic[User.Const.username, default: "No data"],
                                 profileImageURL: dic[User.Const.profileImageURL, default: "No data"])
-                self.profilePictureNavBarImageView.setImage(withURL: user.profileImageURL)
-                self.usernameNavBarLabel.text = user.username
+                completion(user)
             }
         })
     }
+
+    func setupNavBarTitle(user: User) {
+        profilePictureNavBarImageView.setImage(withURL: user.profileImageURL)
+        usernameNavBarLabel.text = user.username
+    }
+    
+    func handleLogout() {
+        do {
+            try Auth.auth().signOut()
+        } catch let logoutError {
+            print(logoutError)
+        }
+    }
     
     func presentChatController(user: User) {
+        print("presentChatController")
         let chatVC = ChatLogViewController.instantiate(storyboardName: Constant.Main)
         chatVC.user = user
         navigationController?.pushViewController(chatVC, animated: true)
@@ -102,14 +115,6 @@ class HomeViewController: UIViewController {
         let loginVC = LoginViewController.instantiate(storyboardName: Constant.Main)
         loginVC.delegate = self
         present(loginVC, animated: true)
-    }
-    
-    func handleLogout() {
-        do {
-            try Auth.auth().signOut()
-        } catch let logoutError {
-            print(logoutError)
-        }
     }
     
     // MARK: - IBAction
@@ -143,10 +148,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! RecentChatTableViewCell
-        print("indexPath.row: ", indexPath.row)
-        print("chats.count: ", chats.count)
         cell.chat = chats[indexPath.row]
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        fetchUser(childPath: chats[indexPath.row].receiver) { (user) in
+            guard let user = user else { return }
+            self.presentChatController(user: user)
+        }
     }
 }
 
