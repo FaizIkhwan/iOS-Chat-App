@@ -19,7 +19,10 @@ class RecentChatTableViewCell: UITableViewCell {
     var chat: Chat? {
         didSet {
             guard let chat = chat else { return }
-            let ref = Database.database().reference().child(Constant.users).child(chat.receiver)
+            guard let userID = Auth.auth().currentUser?.uid else { return }
+            
+            let childPath = userID == chat.sender ? chat.receiver : chat.sender
+            let ref = Database.database().reference().child(Constant.users).child(childPath)
             ref.observeSingleEvent(of: .value) { (snapshot) in
                 if let dict = snapshot.value as? [String: String] {
                     self.usernameLabel?.text = dict[User.Const.username, default: "No data"]

@@ -9,6 +9,10 @@
 import Firebase
 import UIKit
 
+protocol LoginViewProtocol {
+    func emptyArrayDict()
+}
+
 class LoginViewController: UIViewController, Storyboarded {
 
     // MARK: - IBOutlet
@@ -18,6 +22,10 @@ class LoginViewController: UIViewController, Storyboarded {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    
+    // MARK: - Global Variable
+    
+    var delegate: LoginViewProtocol? = nil
     
     // MARK:- View Lifecycle
     
@@ -72,6 +80,7 @@ class LoginViewController: UIViewController, Storyboarded {
                 return
             }
             self.activityIndicator.stopAnimating()
+            self.delegate?.emptyArrayDict()
             self.dismiss(animated: true)
         }
     }

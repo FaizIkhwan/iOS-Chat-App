@@ -13,6 +13,6 @@ extension UIImageView {
     func setImage(withURL url: String) {
         guard let url = URL(string: url) else { return }
         let placeholderImage = #imageLiteral(resourceName: "user")
-        self.sd_setImage(with: url, placeholderImage: placeholderImage, options: .fromCacheOnly)
+        self.sd_setImage(with: url, placeholderImage: placeholderImage)
     }
 }

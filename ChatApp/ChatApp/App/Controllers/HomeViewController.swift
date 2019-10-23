@@ -31,7 +31,6 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView() // Remove extra separator in TableView
-        fetchMessages()
     }
         
     override func viewWillAppear(_ animated: Bool) {
@@ -39,6 +38,7 @@ class HomeViewController: UIViewController {
         profilePictureNavBarImageView.image = #imageLiteral(resourceName: "user")
         usernameNavBarLabel.text = ""
         checkIfUserIsLoggedIn()
+        fetchMessages()
     }
     
     // MARK: - Functions        
@@ -51,12 +51,20 @@ class HomeViewController: UIViewController {
                                 sender: dict[Chat.Const.sender, default: "No data"],
                                 receiver: dict[Chat.Const.receiver, default: "No data"],
                                 timestamp: dict[Chat.Const.timestamp, default: "No data"])
-                self.chatsDictionary[chat.receiver] = chat
-                self.chats = Array(self.chatsDictionary.values)
-//                self.chats.sort { $0.timestamp > $1.timestamp }
+                              
+                print("sender id: ", chat.sender)
+                print("Auth.auth().currentUser?.uid: ", Auth.auth().currentUser?.uid)
+                                
+                guard let currentUserID = Auth.auth().currentUser?.uid else { return }
                 
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                if chat.receiver == currentUserID || chat.sender == currentUserID {
+                    print("ADDED")
+                    self.chatsDictionary[chat.sender] = chat
+                    self.chats = Array(self.chatsDictionary.values)
+                    print("size: ", self.chats.count)
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 }
             }
         }
@@ -92,6 +100,7 @@ class HomeViewController: UIViewController {
     
     func presentLoginView() {
         let loginVC = LoginViewController.instantiate(storyboardName: Constant.Main)
+        loginVC.delegate = self
         present(loginVC, animated: true)
     }
     
@@ -134,6 +143,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! RecentChatTableViewCell
+        print("indexPath.row: ", indexPath.row)
+        print("chats.count: ", chats.count)
         cell.chat = chats[indexPath.row]
         return cell
     }
@@ -142,5 +153,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 extension HomeViewController: NewMessageProtocol {
     func passUserToHomeVC(user: User) {
         presentChatController(user: user)
+    }
+}
+
+extension HomeViewController: LoginViewProtocol {
+    func emptyArrayDict() {
+        chats.removeAll()
+        chatsDictionary.removeAll()
     }
 }
