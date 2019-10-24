@@ -13,8 +13,12 @@
 		ED0E85C5234B1D79005CD23C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0E85C4234B1D79005CD23C /* RegisterViewController.swift */; };
 		ED130FB6234C4A320009ACFD /* NewMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED130FB5234C4A320009ACFD /* NewMessageTableViewController.swift */; };
 		ED130FC1234C70C30009ACFD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED130FC0234C70C30009ACFD /* User.swift */; };
+		ED3F26CA23614BCD001EC4A1 /* RightChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3F26C823614BCD001EC4A1 /* RightChatTableViewCell.swift */; };
+		ED3F26CB23614BCD001EC4A1 /* RightChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED3F26C923614BCD001EC4A1 /* RightChatTableViewCell.xib */; };
 		ED5F6DB9235568220091151D /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F6DB8235568220091151D /* UIViewController.swift */; };
 		ED5F6DBB23558C640091151D /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F6DBA23558C640091151D /* ForgotPasswordViewController.swift */; };
+		ED752A9223605577003CCC6B /* LeftChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED752A9023605577003CCC6B /* LeftChatTableViewCell.swift */; };
+		ED752A9323605577003CCC6B /* LeftChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED752A9123605577003CCC6B /* LeftChatTableViewCell.xib */; };
 		EDC289182354139D00A807CC /* ChatLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC289172354139C00A807CC /* ChatLogViewController.swift */; };
 		EDC2891A2354218400A807CC /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC289192354218400A807CC /* Chat.swift */; };
 		EDC2891D2354697000A807CC /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC2891C2354697000A807CC /* Constant.swift */; };
@@ -41,8 +45,12 @@
 		ED0E85C4234B1D79005CD23C /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		ED130FB5234C4A320009ACFD /* NewMessageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewController.swift; sourceTree = "<group>"; };
 		ED130FC0234C70C30009ACFD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		ED3F26C823614BCD001EC4A1 /* RightChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightChatTableViewCell.swift; sourceTree = "<group>"; };
+		ED3F26C923614BCD001EC4A1 /* RightChatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RightChatTableViewCell.xib; sourceTree = "<group>"; };
 		ED5F6DB8235568220091151D /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		ED5F6DBA23558C640091151D /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		ED752A9023605577003CCC6B /* LeftChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftChatTableViewCell.swift; sourceTree = "<group>"; };
+		ED752A9123605577003CCC6B /* LeftChatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeftChatTableViewCell.xib; sourceTree = "<group>"; };
 		EDC289172354139C00A807CC /* ChatLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogViewController.swift; sourceTree = "<group>"; };
 		EDC289192354218400A807CC /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		EDC2891C2354697000A807CC /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -89,6 +97,17 @@
 				3D667A4D26B69650F34E3802 /* Pods-ChatApp.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		ED752A8D236054F4003CCC6B /* Chat Log */ = {
+			isa = PBXGroup;
+			children = (
+				ED752A9023605577003CCC6B /* LeftChatTableViewCell.swift */,
+				ED752A9123605577003CCC6B /* LeftChatTableViewCell.xib */,
+				ED3F26C823614BCD001EC4A1 /* RightChatTableViewCell.swift */,
+				ED3F26C923614BCD001EC4A1 /* RightChatTableViewCell.xib */,
+			);
+			path = "Chat Log";
 			sourceTree = "<group>";
 		};
 		EDC2891B2354691500A807CC /* Constant */ = {
@@ -192,6 +211,7 @@
 		EDCA21A5234AE9D900CF6D77 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				ED752A8D236054F4003CCC6B /* Chat Log */,
 				EDCEF2632350832A0086F226 /* NewMessageTableViewCell.swift */,
 				EDC28920235476A400A807CC /* RecentChatTableViewCell.swift */,
 				EDCA2191234AE67800CF6D77 /* Main.storyboard */,
@@ -278,8 +298,10 @@
 			files = (
 				EDCA2198234AE67B00CF6D77 /* LaunchScreen.storyboard in Resources */,
 				EDCA21AB234AFA8300CF6D77 /* GoogleService-Info.plist in Resources */,
+				ED3F26CB23614BCD001EC4A1 /* RightChatTableViewCell.xib in Resources */,
 				EDCA2195234AE67B00CF6D77 /* Assets.xcassets in Resources */,
 				EDCA2193234AE67800CF6D77 /* Main.storyboard in Resources */,
+				ED752A9323605577003CCC6B /* LeftChatTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,11 +363,13 @@
 				ED0E85C3234B1D6E005CD23C /* LoginViewController.swift in Sources */,
 				EDCEF2642350832A0086F226 /* NewMessageTableViewCell.swift in Sources */,
 				ED130FB6234C4A320009ACFD /* NewMessageTableViewController.swift in Sources */,
+				ED3F26CA23614BCD001EC4A1 /* RightChatTableViewCell.swift in Sources */,
 				EDCEF2622350831A0086F226 /* HomeViewController.swift in Sources */,
 				EDC289182354139D00A807CC /* ChatLogViewController.swift in Sources */,
 				ED5F6DBB23558C640091151D /* ForgotPasswordViewController.swift in Sources */,
 				EDC2891D2354697000A807CC /* Constant.swift in Sources */,
 				EDCA218E234AE67800CF6D77 /* SceneDelegate.swift in Sources */,
+				ED752A9223605577003CCC6B /* LeftChatTableViewCell.swift in Sources */,
 				ED130FC1234C70C30009ACFD /* User.swift in Sources */,
 				ED5F6DB9235568220091151D /* UIViewController.swift in Sources */,
 				ED06D0E5234B39DB007AC3BF /* Storyboarded.swift in Sources */,
