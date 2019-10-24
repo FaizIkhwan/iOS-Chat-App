@@ -13,6 +13,7 @@ class ChatLogViewController: UIViewController, Storyboarded {
             
     // MARK:- IBOutlet
         
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageTextField: UITextField!
     
@@ -33,6 +34,33 @@ class ChatLogViewController: UIViewController, Storyboarded {
         tableView.delegate = self
         tableView.dataSource = self
         fetchMessages()
+        notificationAddObserver()
+    }
+    
+    // MARK: - Keyboard Handler
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    @objc func keyboardWillChange(notification: Notification) {
+        guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        if notification.name == UIResponder.keyboardWillShowNotification {
+            bottomConstraint.constant = -keyboardRect.height
+        } else {
+            bottomConstraint.constant = 0
+        }
+    }
+    
+    func hideKeyboard() {
+        messageTextField.resignFirstResponder()
+    }
+    
+    // MARK: - Notifications
+    
+    func notificationAddObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     // MARK:- Functions
@@ -48,8 +76,7 @@ class ChatLogViewController: UIViewController, Storyboarded {
         childRef.updateChildValues(values)
     }
     
-    func fetchMessages() {
-        guard let currentUserID = Auth.auth().currentUser?.uid else { return }
+    func fetchMessages() {        
         guard let user = user else { return }
         let ref = Database.database().reference().child(Constant.chats).queryOrdered(byChild: Chat.Const.receiver).queryEqual(toValue: user.id)
         ref.observe(.childAdded) { (snapshot) in

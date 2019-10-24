@@ -119,13 +119,14 @@ class RegisterViewController: UIViewController {
                 self.presentAlertController(withMessage: "Failed to add profile image", title: "Error", willDismiss: false)
                 return
             }
-                                                            
-            let values = [User.Const.username: username, User.Const.email: email, User.Const.profileImageURL: profileImageURL] as [String : AnyObject]
+                                                                        
             guard let uid = authResult?.user.uid else {
                 self.activityIndicator.stopAnimating()
                 self.presentAlertController(withMessage: "Something has broken", title: "Error", willDismiss: false)
                 return
             }
+            
+            let values = [User.Const.id: uid, User.Const.username: username, User.Const.email: email, User.Const.profileImageURL: profileImageURL] as [String : AnyObject]
             
             self.handleAddUserIntoDatabaseWithUID(uid, values: values)
         }
