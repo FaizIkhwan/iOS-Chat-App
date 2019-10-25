@@ -75,8 +75,10 @@ class ChatLogViewController: UIViewController, Storyboarded {
                                         Chat.Const.timestamp: timestamp]
         childRef.updateChildValues(values)
     }
-    
-    func fetchMessages() {        
+        
+    // FIXME: ???
+    func fetchMessages() {
+        guard let currentUserID = Auth.auth().currentUser?.uid else { return }
         guard let user = user else { return }
         let ref = Database.database().reference().child(Constant.chats).queryOrdered(byChild: Chat.Const.receiver).queryEqual(toValue: user.id)
         ref.observe(.childAdded) { (snapshot) in
@@ -85,7 +87,9 @@ class ChatLogViewController: UIViewController, Storyboarded {
                                 sender: dict[Chat.Const.sender, default: "No data"],
                                 receiver: dict[Chat.Const.receiver, default: "No data"],
                                 timestamp: dict[Chat.Const.timestamp, default: "No data"])
-                                                
+                                                    
+                print("chat: ", chat)
+                
                 self.chats.append(chat)
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -98,6 +102,7 @@ class ChatLogViewController: UIViewController, Storyboarded {
     
     @IBAction func sendButtonPressed(_ sender: UIButton) {
         handleSendMessage()
+        messageTextField.text = ""
     }
     
     deinit {

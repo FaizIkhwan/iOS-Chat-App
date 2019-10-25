@@ -153,7 +153,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        fetchUser(childPath: chats[indexPath.row].receiver) { (user) in
+        guard let currentUserID = Auth.auth().currentUser?.uid else { return }
+        
+        let childPath = currentUserID == chats[indexPath.row].receiver ? chats[indexPath.row].sender : chats[indexPath.row].receiver
+        
+        fetchUser(childPath: childPath) { (user) in
             guard let user = user else { return }
             self.presentChatController(user: user)
         }
