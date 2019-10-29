@@ -20,9 +20,6 @@
                             <rect key="frame" x="333" y="7" width="34" height="29"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="Send"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="string" keyPath="themeStyle" value="accentButton"/>
-                            </userDefinedRuntimeAttributes>
                         </button>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type a message" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gbj-sA-qO1">
                             <rect key="frame" x="5" y="5" width="323" height="34"/>
@@ -32,12 +29,12 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
+                        <constraint firstItem="awH-XV-6MU" firstAttribute="bottom" secondItem="MIK-6W-NbG" secondAttribute="bottom" constant="8" id="1Ix-bd-YIE"/>
                         <constraint firstItem="gbj-sA-qO1" firstAttribute="top" secondItem="hjU-Xe-vcW" secondAttribute="top" constant="5" id="6xn-5T-6pR"/>
                         <constraint firstItem="gbj-sA-qO1" firstAttribute="leading" secondItem="hjU-Xe-vcW" secondAttribute="leading" constant="5" id="Mam-y4-PLG"/>
                         <constraint firstAttribute="trailing" secondItem="MIK-6W-NbG" secondAttribute="trailing" constant="8" id="RkW-gI-kLC"/>
                         <constraint firstItem="MIK-6W-NbG" firstAttribute="leading" secondItem="gbj-sA-qO1" secondAttribute="trailing" constant="5" id="aXK-6t-b7r"/>
-                        <constraint firstItem="awH-XV-6MU" firstAttribute="bottom" secondItem="MIK-6W-NbG" secondAttribute="bottom" constant="8" id="vdg-Sk-GFy"/>
-                        <constraint firstItem="awH-XV-6MU" firstAttribute="bottom" secondItem="gbj-sA-qO1" secondAttribute="bottom" constant="5" id="wIP-CV-4fm"/>
+                        <constraint firstItem="awH-XV-6MU" firstAttribute="bottom" secondItem="gbj-sA-qO1" secondAttribute="bottom" constant="5" id="xwB-4c-8WV"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="awH-XV-6MU"/>
                 </view>
@@ -51,12 +48,6 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="odC-gv-Pua"/>
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="number" keyPath="viewBorderWidth">
-                    <real key="value" value="0.0"/>
-                </userDefinedRuntimeAttribute>
-            </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="messageTextField" destination="gbj-sA-qO1" id="d5h-6g-WmR"/>
                 <outlet property="sendButton" destination="MIK-6W-NbG" id="l5t-80-2ZV"/>

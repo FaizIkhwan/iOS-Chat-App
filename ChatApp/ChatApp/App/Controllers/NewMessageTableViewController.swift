@@ -47,6 +47,10 @@ class NewMessageTableViewController: UITableViewController, Storyboarded {
         cell.user = users[indexPath.row]
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 85
+    }
 
     // MARK: - Functions
     

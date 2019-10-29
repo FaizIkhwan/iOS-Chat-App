@@ -49,6 +49,7 @@ class ChatLogViewController: UIViewController, Storyboarded {
         
         fetchMessages()
         notificationAddObserver()
+        becomeFirstResponder()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

@@ -162,6 +162,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             self.presentChatController(user: user)
         }
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
 }
 
 extension HomeViewController: NewMessageProtocol {
