@@ -317,7 +317,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kVv-QU-cHZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="768"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellID" id="DwY-bw-94r">
@@ -330,43 +330,13 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a3r-fV-fCB" userLabel="Send Message View">
-                                        <rect key="frame" x="0.0" y="768" width="414" height="50"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uJg-6s-tPh">
-                                                <rect key="frame" x="361" y="10" width="38" height="30"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" title="Send"/>
-                                                <connections>
-                                                    <action selector="sendButtonPressed:" destination="9A5-Qt-nVR" eventType="touchUpInside" id="cQe-AV-1Iq"/>
-                                                </connections>
-                                            </button>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter message..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="foa-aJ-Yms">
-                                                <rect key="frame" x="10" y="16.666666666666629" width="346" height="17"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                        </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        <constraints>
-                                            <constraint firstItem="uJg-6s-tPh" firstAttribute="centerY" secondItem="a3r-fV-fCB" secondAttribute="centerY" id="0JT-Pt-sbM"/>
-                                            <constraint firstItem="uJg-6s-tPh" firstAttribute="leading" secondItem="foa-aJ-Yms" secondAttribute="trailing" constant="5" id="IGM-nX-d3U"/>
-                                            <constraint firstAttribute="trailing" secondItem="uJg-6s-tPh" secondAttribute="trailing" constant="15" id="KjY-Ct-QpO"/>
-                                            <constraint firstItem="foa-aJ-Yms" firstAttribute="centerY" secondItem="a3r-fV-fCB" secondAttribute="centerY" id="Lv9-0C-1BJ"/>
-                                            <constraint firstAttribute="height" constant="50" id="cgb-Py-Q3Z"/>
-                                            <constraint firstItem="foa-aJ-Yms" firstAttribute="leading" secondItem="a3r-fV-fCB" secondAttribute="leading" constant="10" id="mVz-fy-ub8"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="a3r-fV-fCB" secondAttribute="trailing" id="4WZ-1W-Bt8"/>
                                     <constraint firstItem="kVv-QU-cHZ" firstAttribute="top" secondItem="sTh-CF-c6Y" secondAttribute="top" id="8lf-Dw-qwJ"/>
                                     <constraint firstItem="kVv-QU-cHZ" firstAttribute="leading" secondItem="sTh-CF-c6Y" secondAttribute="leading" id="9Be-vS-gHN"/>
-                                    <constraint firstItem="a3r-fV-fCB" firstAttribute="top" secondItem="kVv-QU-cHZ" secondAttribute="bottom" id="Fa0-up-zn3"/>
+                                    <constraint firstAttribute="bottom" secondItem="kVv-QU-cHZ" secondAttribute="bottom" id="bCR-3n-NT0"/>
                                     <constraint firstAttribute="trailing" secondItem="kVv-QU-cHZ" secondAttribute="trailing" id="qug-vK-Iet"/>
-                                    <constraint firstAttribute="bottom" secondItem="a3r-fV-fCB" secondAttribute="bottom" id="tie-F1-8Ga"/>
-                                    <constraint firstItem="a3r-fV-fCB" firstAttribute="leading" secondItem="sTh-CF-c6Y" secondAttribute="leading" id="x3g-rt-ufE"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -382,8 +352,6 @@
                     <navigationItem key="navigationItem" title="Chat Log Controller" id="4VN-mE-Yv1"/>
                     <connections>
                         <outlet property="bottomConstraint" destination="TZh-sE-LbY" id="XVq-2A-tXR"/>
-                        <outlet property="messageTextField" destination="foa-aJ-Yms" id="w0H-Ba-oVv"/>
-                        <outlet property="sendMessageView" destination="a3r-fV-fCB" id="pSX-7q-arw"/>
                         <outlet property="tableView" destination="kVv-QU-cHZ" id="oGf-6J-rMn"/>
                     </connections>
                 </viewController>

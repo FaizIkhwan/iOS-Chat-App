@@ -10,12 +10,14 @@ import UIKit
 
 class ChatAccessoryView: UIView {
     
+    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var messageTextField: UITextField!
     
-    static func getView(target: UIViewController) -> ChatAccessoryView? {
+    static func getView(target: UIViewController, action: Selector) -> ChatAccessoryView? {
         let nib = ChatAccessoryView.nib()
         if let view = nib?.instantiate(withOwner: target, options: nil).first as?
             ChatAccessoryView {
+            view.sendButton.addTarget(target, action: action, for: .touchUpInside)
             view.messageTextField.delegate = view.self
             return view
         } else {

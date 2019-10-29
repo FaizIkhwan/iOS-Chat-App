@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -17,28 +17,25 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MIK-6W-NbG">
-                            <rect key="frame" x="329" y="7" width="38" height="29"/>
+                            <rect key="frame" x="333" y="7" width="34" height="29"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" title="SEND"/>
+                            <state key="normal" title="Send"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="string" keyPath="themeStyle" value="accentButton"/>
                             </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="sendButtonPressed:" destination="FFu-b3-Xi5" eventType="touchUpInside" id="0gR-S8-xyj"/>
-                            </connections>
                         </button>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type a message" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gbj-sA-qO1">
-                            <rect key="frame" x="16" y="5" width="308" height="34"/>
+                            <rect key="frame" x="5" y="5" width="323" height="34"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
                         <constraint firstItem="gbj-sA-qO1" firstAttribute="top" secondItem="hjU-Xe-vcW" secondAttribute="top" constant="5" id="6xn-5T-6pR"/>
+                        <constraint firstItem="gbj-sA-qO1" firstAttribute="leading" secondItem="hjU-Xe-vcW" secondAttribute="leading" constant="5" id="Mam-y4-PLG"/>
                         <constraint firstAttribute="trailing" secondItem="MIK-6W-NbG" secondAttribute="trailing" constant="8" id="RkW-gI-kLC"/>
                         <constraint firstItem="MIK-6W-NbG" firstAttribute="leading" secondItem="gbj-sA-qO1" secondAttribute="trailing" constant="5" id="aXK-6t-b7r"/>
-                        <constraint firstItem="gbj-sA-qO1" firstAttribute="leading" secondItem="hjU-Xe-vcW" secondAttribute="leading" constant="16" id="o4s-gq-HXI"/>
                         <constraint firstItem="awH-XV-6MU" firstAttribute="bottom" secondItem="MIK-6W-NbG" secondAttribute="bottom" constant="8" id="vdg-Sk-GFy"/>
                         <constraint firstItem="awH-XV-6MU" firstAttribute="bottom" secondItem="gbj-sA-qO1" secondAttribute="bottom" constant="5" id="wIP-CV-4fm"/>
                     </constraints>
@@ -61,8 +58,8 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
-                <outlet property="actionButton" destination="MIK-6W-NbG" id="3P5-vA-zEw"/>
                 <outlet property="messageTextField" destination="gbj-sA-qO1" id="d5h-6g-WmR"/>
+                <outlet property="sendButton" destination="MIK-6W-NbG" id="l5t-80-2ZV"/>
             </connections>
             <point key="canvasLocation" x="38.5" y="457"/>
         </view>

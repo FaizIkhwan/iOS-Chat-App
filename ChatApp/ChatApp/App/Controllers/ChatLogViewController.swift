@@ -12,17 +12,24 @@ import UIKit
 class ChatLogViewController: UIViewController, Storyboarded {
             
     // MARK:- IBOutlet
-        
-    @IBOutlet weak var sendMessageView: UIView!
+            
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var messageTextField: UITextField!
     
-//    override var inputAccessoryView: UIView? {
-//        get {
-//            return sendMessageView
-//        }
-//    }
+    lazy var messageInputView: ChatAccessoryView! = {
+        let footerView = ChatAccessoryView.getView(target: self, action: #selector(handleSendMessage))
+        return footerView
+    }()
+    
+    override var inputAccessoryView: UIView? {
+        get {
+            return messageInputView
+        }
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
     
     // MARK:- Global Variable
     
@@ -37,7 +44,6 @@ class ChatLogViewController: UIViewController, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        messageTextField.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -80,7 +86,7 @@ class ChatLogViewController: UIViewController, Storyboarded {
     }
     
     func hideKeyboard() {
-        messageTextField.resignFirstResponder()
+        messageInputView.messageTextField.resignFirstResponder()
     }
     
     // MARK: - Notifications
@@ -92,15 +98,20 @@ class ChatLogViewController: UIViewController, Storyboarded {
     
     // MARK:- Functions
     
-    func handleSendMessage() {
+    @objc func handleSendMessage() {
+        if messageInputView.messageTextField.text == "" {
+            return
+        }
         let ref = Database.database().reference().child(Constant.chats)
         let childRef = ref.childByAutoId()
         let timestamp = String(NSDate().timeIntervalSince1970)
-        let values: [String: String] = [Chat.Const.message: messageTextField.text ?? "",
+        let values: [String: String] = [Chat.Const.message: messageInputView.messageTextField.text ?? "",
                                         Chat.Const.sender: Auth.auth().currentUser?.uid ?? "",
                                         Chat.Const.receiver: user?.id ?? "",
                                         Chat.Const.timestamp: timestamp]
         childRef.updateChildValues(values)
+        hideKeyboard()
+        messageInputView.messageTextField.text = ""
     }
         
     // FIXME: ???
@@ -131,17 +142,6 @@ class ChatLogViewController: UIViewController, Storyboarded {
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
     
-//    override func becomeFirstResponder() -> Bool {
-//        return true
-//    }
-    
-    // MARK:- IBAction
-    
-    @IBAction func sendButtonPressed(_ sender: UIButton) {
-        handleSendMessage()
-        messageTextField.text = ""
-    }
-    
     deinit {
         print("Deinit - Chat Log VC")
     }
@@ -150,7 +150,7 @@ class ChatLogViewController: UIViewController, Storyboarded {
 extension ChatLogViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         handleSendMessage()
-        messageTextField.text = ""
+        messageInputView.messageTextField.text = ""
         return true
     }
 }
