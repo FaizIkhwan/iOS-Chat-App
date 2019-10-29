@@ -13,9 +13,16 @@ class ChatLogViewController: UIViewController, Storyboarded {
             
     // MARK:- IBOutlet
         
+    @IBOutlet weak var sendMessageView: UIView!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageTextField: UITextField!
+    
+//    override var inputAccessoryView: UIView? {
+//        get {
+//            return sendMessageView
+//        }
+//    }
     
     // MARK:- Global Variable
     
@@ -33,8 +40,14 @@ class ChatLogViewController: UIViewController, Storyboarded {
         messageTextField.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
+        
         fetchMessages()
         notificationAddObserver()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Keyboard Handler
@@ -45,10 +58,24 @@ class ChatLogViewController: UIViewController, Storyboarded {
     
     @objc func keyboardWillChange(notification: Notification) {
         guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        guard let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+        print("keyboardDuration \(keyboardDuration)")
         if notification.name == UIResponder.keyboardWillShowNotification {
-            bottomConstraint.constant = -keyboardRect.height
+            self.bottomConstraint.constant = -keyboardRect.height
+            UIView.animate(withDuration: keyboardDuration) {
+                self.view.layoutIfNeeded()
+            }
+//            DispatchQueue.main.async {
+//                self.scrollToBottom()
+//            }
         } else {
-            bottomConstraint.constant = 0
+            self.bottomConstraint.constant = 0
+            UIView.animate(withDuration: keyboardDuration) {
+                self.view.layoutIfNeeded()
+            }
+//            DispatchQueue.main.async {
+//                self.scrollToBottom()
+//            }
         }
     }
     
@@ -103,6 +130,10 @@ class ChatLogViewController: UIViewController, Storyboarded {
         let indexPath = IndexPath(row: chats.count-1, section: 0)
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
+    
+//    override func becomeFirstResponder() -> Bool {
+//        return true
+//    }
     
     // MARK:- IBAction
     

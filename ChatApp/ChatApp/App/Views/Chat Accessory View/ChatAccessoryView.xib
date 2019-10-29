@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="FFu-b3-Xi5" customClass="ChatAccessoryView" customModule="ChatApp">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hjU-Xe-vcW">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MIK-6W-NbG">
+                            <rect key="frame" x="329" y="7" width="38" height="29"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="SEND"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="themeStyle" value="accentButton"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="sendButtonPressed:" destination="FFu-b3-Xi5" eventType="touchUpInside" id="0gR-S8-xyj"/>
+                            </connections>
+                        </button>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type a message" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gbj-sA-qO1">
+                            <rect key="frame" x="16" y="5" width="308" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="gbj-sA-qO1" firstAttribute="top" secondItem="hjU-Xe-vcW" secondAttribute="top" constant="5" id="6xn-5T-6pR"/>
+                        <constraint firstAttribute="trailing" secondItem="MIK-6W-NbG" secondAttribute="trailing" constant="8" id="RkW-gI-kLC"/>
+                        <constraint firstItem="MIK-6W-NbG" firstAttribute="leading" secondItem="gbj-sA-qO1" secondAttribute="trailing" constant="5" id="aXK-6t-b7r"/>
+                        <constraint firstItem="gbj-sA-qO1" firstAttribute="leading" secondItem="hjU-Xe-vcW" secondAttribute="leading" constant="16" id="o4s-gq-HXI"/>
+                        <constraint firstItem="awH-XV-6MU" firstAttribute="bottom" secondItem="MIK-6W-NbG" secondAttribute="bottom" constant="8" id="vdg-Sk-GFy"/>
+                        <constraint firstItem="awH-XV-6MU" firstAttribute="bottom" secondItem="gbj-sA-qO1" secondAttribute="bottom" constant="5" id="wIP-CV-4fm"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="awH-XV-6MU"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="hjU-Xe-vcW" secondAttribute="bottom" id="Ksd-fc-KGp"/>
+                <constraint firstAttribute="trailing" secondItem="hjU-Xe-vcW" secondAttribute="trailing" id="NBf-zH-oNd"/>
+                <constraint firstItem="hjU-Xe-vcW" firstAttribute="top" secondItem="FFu-b3-Xi5" secondAttribute="top" id="tKp-TM-vla"/>
+                <constraint firstItem="hjU-Xe-vcW" firstAttribute="leading" secondItem="FFu-b3-Xi5" secondAttribute="leading" id="w2T-ax-hvK"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="odC-gv-Pua"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="viewBorderWidth">
+                    <real key="value" value="0.0"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="actionButton" destination="MIK-6W-NbG" id="3P5-vA-zEw"/>
+                <outlet property="messageTextField" destination="gbj-sA-qO1" id="d5h-6g-WmR"/>
+            </connections>
+            <point key="canvasLocation" x="38.5" y="457"/>
+        </view>
+    </objects>
+</document>

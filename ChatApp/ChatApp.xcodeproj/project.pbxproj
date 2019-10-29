@@ -13,6 +13,9 @@
 		ED0E85C5234B1D79005CD23C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0E85C4234B1D79005CD23C /* RegisterViewController.swift */; };
 		ED130FB6234C4A320009ACFD /* NewMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED130FB5234C4A320009ACFD /* NewMessageTableViewController.swift */; };
 		ED130FC1234C70C30009ACFD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED130FC0234C70C30009ACFD /* User.swift */; };
+		ED1BC37C2367FF5100508305 /* ChatAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1BC37B2367FF5100508305 /* ChatAccessoryView.swift */; };
+		ED1BC37E2367FF6500508305 /* ChatAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED1BC37D2367FF6500508305 /* ChatAccessoryView.xib */; };
+		ED1BC381236800F700508305 /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1BC380236800F700508305 /* NibLoadable.swift */; };
 		ED3F26CA23614BCD001EC4A1 /* RightChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3F26C823614BCD001EC4A1 /* RightChatTableViewCell.swift */; };
 		ED3F26CB23614BCD001EC4A1 /* RightChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED3F26C923614BCD001EC4A1 /* RightChatTableViewCell.xib */; };
 		ED5F6DB9235568220091151D /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F6DB8235568220091151D /* UIViewController.swift */; };
@@ -45,6 +48,9 @@
 		ED0E85C4234B1D79005CD23C /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		ED130FB5234C4A320009ACFD /* NewMessageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewController.swift; sourceTree = "<group>"; };
 		ED130FC0234C70C30009ACFD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		ED1BC37B2367FF5100508305 /* ChatAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAccessoryView.swift; sourceTree = "<group>"; };
+		ED1BC37D2367FF6500508305 /* ChatAccessoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatAccessoryView.xib; sourceTree = "<group>"; };
+		ED1BC380236800F700508305 /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		ED3F26C823614BCD001EC4A1 /* RightChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightChatTableViewCell.swift; sourceTree = "<group>"; };
 		ED3F26C923614BCD001EC4A1 /* RightChatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RightChatTableViewCell.xib; sourceTree = "<group>"; };
 		ED5F6DB8235568220091151D /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +105,24 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		ED1BC37A2367FEA700508305 /* Chat Accessory View */ = {
+			isa = PBXGroup;
+			children = (
+				ED1BC37B2367FF5100508305 /* ChatAccessoryView.swift */,
+				ED1BC37D2367FF6500508305 /* ChatAccessoryView.xib */,
+			);
+			path = "Chat Accessory View";
+			sourceTree = "<group>";
+		};
+		ED1BC37F2368009700508305 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				ED06D0E4234B39DB007AC3BF /* Storyboarded.swift */,
+				ED1BC380236800F700508305 /* NibLoadable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		ED752A8D236054F4003CCC6B /* Chat Log */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,13 +173,13 @@
 		EDCA219F234AE96700CF6D77 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				ED1BC37F2368009700508305 /* Protocols */,
 				EDC2891B2354691500A807CC /* Constant */,
 				EDCA21A7234AECB600CF6D77 /* Extensions */,
 				EDCA21A5234AE9D900CF6D77 /* Views */,
 				EDCA21A4234AE9CE00CF6D77 /* Models */,
 				EDCA21A3234AE9B000CF6D77 /* Controllers */,
 				EDCA21A2234AE9A400CF6D77 /* Assets */,
-				ED06D0E4234B39DB007AC3BF /* Storyboarded.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -211,6 +235,7 @@
 		EDCA21A5234AE9D900CF6D77 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				ED1BC37A2367FEA700508305 /* Chat Accessory View */,
 				ED752A8D236054F4003CCC6B /* Chat Log */,
 				EDCEF2632350832A0086F226 /* NewMessageTableViewCell.swift */,
 				EDC28920235476A400A807CC /* RecentChatTableViewCell.swift */,
@@ -301,6 +326,7 @@
 				ED3F26CB23614BCD001EC4A1 /* RightChatTableViewCell.xib in Resources */,
 				EDCA2195234AE67B00CF6D77 /* Assets.xcassets in Resources */,
 				EDCA2193234AE67800CF6D77 /* Main.storyboard in Resources */,
+				ED1BC37E2367FF6500508305 /* ChatAccessoryView.xib in Resources */,
 				ED752A9323605577003CCC6B /* LeftChatTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,9 +385,11 @@
 				EDC2891F23546EDD00A807CC /* UIImageView.swift in Sources */,
 				EDCA218C234AE67800CF6D77 /* AppDelegate.swift in Sources */,
 				ED0E85C5234B1D79005CD23C /* RegisterViewController.swift in Sources */,
+				ED1BC37C2367FF5100508305 /* ChatAccessoryView.swift in Sources */,
 				EDC28921235476A400A807CC /* RecentChatTableViewCell.swift in Sources */,
 				ED0E85C3234B1D6E005CD23C /* LoginViewController.swift in Sources */,
 				EDCEF2642350832A0086F226 /* NewMessageTableViewCell.swift in Sources */,
+				ED1BC381236800F700508305 /* NibLoadable.swift in Sources */,
 				ED130FB6234C4A320009ACFD /* NewMessageTableViewController.swift in Sources */,
 				ED3F26CA23614BCD001EC4A1 /* RightChatTableViewCell.swift in Sources */,
 				EDCEF2622350831A0086F226 /* HomeViewController.swift in Sources */,

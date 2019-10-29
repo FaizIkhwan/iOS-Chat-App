@@ -316,7 +316,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sTh-CF-c6Y" userLabel="Parent View">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kVv-QU-cHZ">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kVv-QU-cHZ">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="768"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
@@ -383,6 +383,7 @@
                     <connections>
                         <outlet property="bottomConstraint" destination="TZh-sE-LbY" id="XVq-2A-tXR"/>
                         <outlet property="messageTextField" destination="foa-aJ-Yms" id="w0H-Ba-oVv"/>
+                        <outlet property="sendMessageView" destination="a3r-fV-fCB" id="pSX-7q-arw"/>
                         <outlet property="tableView" destination="kVv-QU-cHZ" id="oGf-6J-rMn"/>
                     </connections>
                 </viewController>
