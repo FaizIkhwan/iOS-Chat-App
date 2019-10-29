@@ -92,10 +92,16 @@ class ChatLogViewController: UIViewController, Storyboarded {
                     self.chats.append(chat)
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
+                        self.scrollToBottom()
                     }
                 }
             }
         }
+    }
+    
+    func scrollToBottom() {
+        let indexPath = IndexPath(row: chats.count-1, section: 0)
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
     
     // MARK:- IBAction
@@ -113,6 +119,7 @@ class ChatLogViewController: UIViewController, Storyboarded {
 extension ChatLogViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         handleSendMessage()
+        messageTextField.text = ""
         return true
     }
 }
