@@ -45,6 +45,7 @@ class HomeViewController: UIViewController {
     // MARK: - Functions        
     
     func fetchMessages() {
+        print("fetchMessages")
         let ref = Database.database().reference().child(Constant.chats).queryOrdered(byChild: Chat.Const.timestamp)
         ref.observe(.childAdded) { (snapshot) in
             if let dict = snapshot.value as? [String: String] {
@@ -56,12 +57,15 @@ class HomeViewController: UIViewController {
                 guard let currentUserID = Auth.auth().currentUser?.uid else { return }
                 
                 if chat.receiver == currentUserID || chat.sender == currentUserID {
-                    self.chatsDictionary[chat.sender] = chat
+                    let partnerID = chat.receiver == currentUserID ? chat.sender : chat.receiver
+                    self.chatsDictionary[partnerID] = chat
                     self.chats = Array(self.chatsDictionary.values)
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
                 }
+                
+                print("home, chats: ", self.chats)
             }
         }
     }
@@ -79,6 +83,7 @@ class HomeViewController: UIViewController {
     }
     
     func fetchUser(childPath: String, completion: @escaping (User?) -> Void) {
+        print("fetchUser")
         var user: User?
         Database.database().reference().child(Constant.users).child(childPath).observeSingleEvent(of: .value, with: { (snapshots) in
             if let dic = snapshots.value as? [String: String] {
@@ -172,6 +177,7 @@ extension HomeViewController: NewMessageProtocol {
 
 extension HomeViewController: LoginViewProtocol {
     func emptyArrayDict() {
+        print("emptyArrayDict")
         chats.removeAll()
         chatsDictionary.removeAll()
     }

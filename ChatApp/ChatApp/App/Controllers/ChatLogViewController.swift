@@ -122,7 +122,7 @@ extension ChatLogViewController: UITableViewDelegate, UITableViewDataSource {
         return chats.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        
         if Auth.auth().currentUser?.uid == chats[indexPath.row].sender {
             let cell = Bundle.main.loadNibNamed("RightChatTableViewCell", owner: self, options: nil)?.first as! RightChatTableViewCell
             cell.chatLabel.text = chats[indexPath.row].message
