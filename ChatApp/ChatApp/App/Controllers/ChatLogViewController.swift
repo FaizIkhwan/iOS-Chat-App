@@ -80,19 +80,19 @@ class ChatLogViewController: UIViewController, Storyboarded {
     func fetchMessages() {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
         guard let user = user else { return }
-        let ref = Database.database().reference().child(Constant.chats).queryOrdered(byChild: Chat.Const.receiver).queryEqual(toValue: user.id)
+        let ref = Database.database().reference().child(Constant.chats).queryOrdered(byChild: Chat.Const.timestamp)
         ref.observe(.childAdded) { (snapshot) in
             if let dict = snapshot.value as? [String: String] {
                 let chat = Chat(message: dict[Chat.Const.message, default: "No data"],
                                 sender: dict[Chat.Const.sender, default: "No data"],
                                 receiver: dict[Chat.Const.receiver, default: "No data"],
                                 timestamp: dict[Chat.Const.timestamp, default: "No data"])
-                                                    
-                print("chat: ", chat)
-                
-                self.chats.append(chat)
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                                                                    
+                if (chat.receiver == currentUserID && chat.sender == user.id) || (chat.sender == currentUserID && chat.receiver == user.id) {
+                    self.chats.append(chat)
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 }
             }
         }
