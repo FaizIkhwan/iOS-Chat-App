@@ -17,7 +17,7 @@ class ChatLogViewController: UIViewController, Storyboarded {
     @IBOutlet weak var tableView: UITableView!
     
     lazy var messageInputView: ChatAccessoryView! = {
-        let footerView = ChatAccessoryView.getView(target: self, action: #selector(handleSendMessage))
+        let footerView = ChatAccessoryView.getView(target: self, actionSendButton: #selector(handleSendMessage), actionImageButton: #selector(presentImagePicker))
         return footerView
     }()
     
@@ -32,7 +32,8 @@ class ChatLogViewController: UIViewController, Storyboarded {
     }
     
     // MARK:- Global Variable
-    
+        
+    let databaseURL = "https://ios-chat-apps.firebaseio.com/"
     var chats: [Chat] = []
     var user: User? {
         didSet {
@@ -66,7 +67,6 @@ class ChatLogViewController: UIViewController, Storyboarded {
     @objc func keyboardWillChange(notification: Notification) {
         guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
         guard let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
-        print("keyboardDuration \(keyboardDuration)")
         if notification.name == UIResponder.keyboardWillShowNotification {
             self.bottomConstraint.constant = -keyboardRect.height
             UIView.animate(withDuration: keyboardDuration) {
@@ -122,10 +122,11 @@ class ChatLogViewController: UIViewController, Storyboarded {
         let ref = Database.database().reference().child(Constant.chats).queryOrdered(byChild: Chat.Const.timestamp)
         ref.observe(.childAdded) { (snapshot) in
             if let dict = snapshot.value as? [String: String] {
-                let chat = Chat(message: dict[Chat.Const.message, default: "No data"],
-                                sender: dict[Chat.Const.sender, default: "No data"],
-                                receiver: dict[Chat.Const.receiver, default: "No data"],
-                                timestamp: dict[Chat.Const.timestamp, default: "No data"])
+                let chat = Chat(message: dict[Chat.Const.message],
+                                sender: dict[Chat.Const.sender]!,
+                                receiver: dict[Chat.Const.receiver]!,
+                                timestamp: dict[Chat.Const.timestamp]!,
+                                imageURL: dict[Chat.Const.imageURL])
                                                                     
                 if (chat.receiver == currentUserID && chat.sender == user.id) || (chat.sender == currentUserID && chat.receiver == user.id) {
                     self.chats.append(chat)
@@ -143,8 +144,85 @@ class ChatLogViewController: UIViewController, Storyboarded {
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
     
+    @objc func presentImagePicker() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        present(picker, animated: true)
+    }
+    
+    private func uploadImageToFirebase(_ selectedImage: UIImage) {
+        let imageName = NSUUID().uuidString
+        guard let uploadData = selectedImage.jpegData(compressionQuality: 0.1) else { return }
+        let storageRef = Storage.storage().reference().child(Constant.messageImages).child("\(imageName).jpg")
+        storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
+            if let err = error {
+                self.presentAlertController(withMessage: err.localizedDescription, title: "Error", willDismiss: false)
+                return
+            }
+            self.fetchImageURL(storageRef)
+        }
+    }
+    
+    private func fetchImageURL(_ storageRef: StorageReference) {
+        storageRef.downloadURL { (url, error) in
+            if let err = error {
+                self.presentAlertController(withMessage: err.localizedDescription, title: "Error", willDismiss: false)
+                return
+            }
+            
+            guard let imageURL = url?.absoluteString else {
+                self.presentAlertController(withMessage: "Failed to add profile image", title: "Error", willDismiss: false)
+                return
+            }
+                                                                        
+            guard let currentUserID = Auth.auth().currentUser?.uid else {
+                self.presentAlertController(withMessage: "Something has broken", title: "Error", willDismiss: false)
+                return
+            }
+            let timestamp = String(NSDate().timeIntervalSince1970)
+            let values = [
+                Chat.Const.imageURL: imageURL,
+                Chat.Const.receiver: self.user?.id ?? "",
+                Chat.Const.sender: currentUserID,
+                Chat.Const.timestamp: timestamp
+            ]
+            
+            self.handleSendImageIntoDatabase(currentUserID, values: values)
+        }
+    }
+    
+    private func handleSendImageIntoDatabase(_ currentUserID: String, values: [String: String]) {
+        let ref = Database.database().reference().child(Constant.chats)
+        let childRef = ref.childByAutoId()
+        childRef.updateChildValues(values)
+    }
+    
     deinit {
         print("Deinit - Chat Log VC")
+    }
+}
+
+extension ChatLogViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        var selectedImageFromPicker: UIImage?
+        
+        if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            selectedImageFromPicker = editedImage
+        } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            selectedImageFromPicker = originalImage
+        }
+        
+        if let selectedImage = selectedImageFromPicker {
+            uploadImageToFirebase(selectedImage)
+        }
+        
+        dismiss(animated: true)
     }
 }
 
@@ -163,13 +241,25 @@ extension ChatLogViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        
         if Auth.auth().currentUser?.uid == chats[indexPath.row].sender {
-            let cell = Bundle.main.loadNibNamed("RightChatTableViewCell", owner: self, options: nil)?.first as! RightChatTableViewCell
-            cell.chatLabel.text = chats[indexPath.row].message
-            return cell
+            if let imageMessage = chats[indexPath.row].imageURL {
+                let cell = Bundle.main.loadNibNamed("RightChatImageTableViewCell", owner: self, options: nil)?.first as! RightChatImageTableViewCell
+                cell.messageImageView.setImage(withURL: imageMessage)
+                return cell
+            } else {
+                let cell = Bundle.main.loadNibNamed("RightChatTableViewCell", owner: self, options: nil)?.first as! RightChatTableViewCell
+                cell.chatLabel.text = chats[indexPath.row].message
+                return cell
+            }
         } else {
-            let cell = Bundle.main.loadNibNamed("LeftChatTableViewCell", owner: self, options: nil)?.first as! LeftChatTableViewCell
-            cell.chatLabel.text = chats[indexPath.row].message
-            return cell
+            if let imageMessage = chats[indexPath.row].imageURL {
+                let cell = Bundle.main.loadNibNamed("LeftChatImageTableViewCell", owner: self, options: nil)?.first as! LeftChatImageTableViewCell
+                cell.messageImageView.setImage(withURL: imageMessage)
+                return cell
+            } else {
+                let cell = Bundle.main.loadNibNamed("LeftChatTableViewCell", owner: self, options: nil)?.first as! LeftChatTableViewCell
+                cell.chatLabel.text = chats[indexPath.row].message
+                return cell
+            }
         }
     }
 }

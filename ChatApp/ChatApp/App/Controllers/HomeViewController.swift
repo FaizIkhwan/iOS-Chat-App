@@ -51,7 +51,8 @@ class HomeViewController: UIViewController {
                 let chat = Chat(message: dict[Chat.Const.message, default: "No data"],
                                 sender: dict[Chat.Const.sender, default: "No data"],
                                 receiver: dict[Chat.Const.receiver, default: "No data"],
-                                timestamp: dict[Chat.Const.timestamp, default: "No data"])
+                                timestamp: dict[Chat.Const.timestamp, default: "No data"],
+                                imageURL: dict[Chat.Const.imageURL, default: "INSERT LINK"])
                                               
                 guard let currentUserID = Auth.auth().currentUser?.uid else { return }
                 

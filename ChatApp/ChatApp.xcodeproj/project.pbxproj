@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		DE24E2FA045EAC78814F2379 /* Pods_ChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6814806494D46628A9A84C43 /* Pods_ChatApp.framework */; };
 		ED06D0E5234B39DB007AC3BF /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED06D0E4234B39DB007AC3BF /* Storyboarded.swift */; };
+		ED0ACF33236935F2003CB440 /* LeftChatImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0ACF31236935F2003CB440 /* LeftChatImageTableViewCell.swift */; };
+		ED0ACF34236935F2003CB440 /* LeftChatImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED0ACF32236935F2003CB440 /* LeftChatImageTableViewCell.xib */; };
+		ED0ACF392369364A003CB440 /* RightChatImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0ACF372369364A003CB440 /* RightChatImageTableViewCell.swift */; };
+		ED0ACF3A2369364A003CB440 /* RightChatImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED0ACF382369364A003CB440 /* RightChatImageTableViewCell.xib */; };
 		ED0E85C3234B1D6E005CD23C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0E85C2234B1D6E005CD23C /* LoginViewController.swift */; };
 		ED0E85C5234B1D79005CD23C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0E85C4234B1D79005CD23C /* RegisterViewController.swift */; };
 		ED130FB6234C4A320009ACFD /* NewMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED130FB5234C4A320009ACFD /* NewMessageTableViewController.swift */; };
@@ -44,6 +48,10 @@
 		6814806494D46628A9A84C43 /* Pods_ChatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4D509365C83F322797268E9 /* Pods-ChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatApp/Pods-ChatApp.debug.xcconfig"; sourceTree = "<group>"; };
 		ED06D0E4234B39DB007AC3BF /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
+		ED0ACF31236935F2003CB440 /* LeftChatImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftChatImageTableViewCell.swift; sourceTree = "<group>"; };
+		ED0ACF32236935F2003CB440 /* LeftChatImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeftChatImageTableViewCell.xib; sourceTree = "<group>"; };
+		ED0ACF372369364A003CB440 /* RightChatImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightChatImageTableViewCell.swift; sourceTree = "<group>"; };
+		ED0ACF382369364A003CB440 /* RightChatImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RightChatImageTableViewCell.xib; sourceTree = "<group>"; };
 		ED0E85C2234B1D6E005CD23C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		ED0E85C4234B1D79005CD23C /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		ED130FB5234C4A320009ACFD /* NewMessageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +138,10 @@
 				ED752A9123605577003CCC6B /* LeftChatTableViewCell.xib */,
 				ED3F26C823614BCD001EC4A1 /* RightChatTableViewCell.swift */,
 				ED3F26C923614BCD001EC4A1 /* RightChatTableViewCell.xib */,
+				ED0ACF31236935F2003CB440 /* LeftChatImageTableViewCell.swift */,
+				ED0ACF32236935F2003CB440 /* LeftChatImageTableViewCell.xib */,
+				ED0ACF372369364A003CB440 /* RightChatImageTableViewCell.swift */,
+				ED0ACF382369364A003CB440 /* RightChatImageTableViewCell.xib */,
 			);
 			path = "Chat Log";
 			sourceTree = "<group>";
@@ -321,6 +333,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED0ACF34236935F2003CB440 /* LeftChatImageTableViewCell.xib in Resources */,
 				EDCA2198234AE67B00CF6D77 /* LaunchScreen.storyboard in Resources */,
 				EDCA21AB234AFA8300CF6D77 /* GoogleService-Info.plist in Resources */,
 				ED3F26CB23614BCD001EC4A1 /* RightChatTableViewCell.xib in Resources */,
@@ -328,6 +341,7 @@
 				EDCA2193234AE67800CF6D77 /* Main.storyboard in Resources */,
 				ED1BC37E2367FF6500508305 /* ChatAccessoryView.xib in Resources */,
 				ED752A9323605577003CCC6B /* LeftChatTableViewCell.xib in Resources */,
+				ED0ACF3A2369364A003CB440 /* RightChatImageTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,9 +404,11 @@
 				ED0E85C3234B1D6E005CD23C /* LoginViewController.swift in Sources */,
 				EDCEF2642350832A0086F226 /* NewMessageTableViewCell.swift in Sources */,
 				ED1BC381236800F700508305 /* NibLoadable.swift in Sources */,
+				ED0ACF33236935F2003CB440 /* LeftChatImageTableViewCell.swift in Sources */,
 				ED130FB6234C4A320009ACFD /* NewMessageTableViewController.swift in Sources */,
 				ED3F26CA23614BCD001EC4A1 /* RightChatTableViewCell.swift in Sources */,
 				EDCEF2622350831A0086F226 /* HomeViewController.swift in Sources */,
+				ED0ACF392369364A003CB440 /* RightChatImageTableViewCell.swift in Sources */,
 				EDC289182354139D00A807CC /* ChatLogViewController.swift in Sources */,
 				ED5F6DBB23558C640091151D /* ForgotPasswordViewController.swift in Sources */,
 				EDC2891D2354697000A807CC /* Constant.swift in Sources */,

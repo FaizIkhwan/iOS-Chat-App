@@ -147,10 +147,10 @@ class RegisterViewController: UIViewController {
     }
     
     private func setupImageView() {
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(presentImagePicker)))
     }
         
-    @objc func handleSelectProfileImageView() {
+    @objc func presentImagePicker() {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = true
