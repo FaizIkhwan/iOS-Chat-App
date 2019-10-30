@@ -29,7 +29,11 @@ class RecentChatTableViewCell: UITableViewCell {
                     self.profileImageView.setImage(withURL: dict[User.Const.profileImageURL, default: "No data"])
                 }
             }
-            lastMessageLabel?.text = chat.message
+            if let message = chat.message {
+                lastMessageLabel?.text = message
+            } else if let messageImage = chat.imageURL {
+                lastMessageLabel?.text = "Image"
+            }
             
             if let seconds = Double(chat.timestamp) {
                 let timestampDate = Date(timeIntervalSince1970: seconds)

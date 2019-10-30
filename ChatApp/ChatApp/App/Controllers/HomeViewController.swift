@@ -48,11 +48,11 @@ class HomeViewController: UIViewController {
         let ref = Database.database().reference().child(Constant.chats).queryOrdered(byChild: Chat.Const.timestamp)
         ref.observe(.childAdded) { (snapshot) in
             if let dict = snapshot.value as? [String: String] {
-                let chat = Chat(message: dict[Chat.Const.message, default: "No data"],
-                                sender: dict[Chat.Const.sender, default: "No data"],
-                                receiver: dict[Chat.Const.receiver, default: "No data"],
-                                timestamp: dict[Chat.Const.timestamp, default: "No data"],
-                                imageURL: dict[Chat.Const.imageURL, default: "INSERT LINK"])
+                let chat = Chat(message: dict[Chat.Const.message],
+                                sender: dict[Chat.Const.sender]!,
+                                receiver: dict[Chat.Const.receiver]!,
+                                timestamp: dict[Chat.Const.timestamp]!,
+                                imageURL: dict[Chat.Const.imageURL])
                                               
                 guard let currentUserID = Auth.auth().currentUser?.uid else { return }
                 
@@ -148,7 +148,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! RecentChatTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! RecentChatTableViewCell        
         cell.chat = chats[indexPath.row]
         return cell
     }
