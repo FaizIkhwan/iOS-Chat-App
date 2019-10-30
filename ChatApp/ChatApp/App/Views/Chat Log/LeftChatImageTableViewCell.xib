@@ -19,7 +19,7 @@
                     <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="QWG-WA-QzV" userLabel="Chat Bubble">
                         <rect key="frame" x="15" y="9" width="214" height="174"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="9tT-Fp-At1">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="9tT-Fp-At1">
                                 <rect key="frame" x="7" y="7" width="200" height="160"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="160" id="71D-hC-u1J"/>

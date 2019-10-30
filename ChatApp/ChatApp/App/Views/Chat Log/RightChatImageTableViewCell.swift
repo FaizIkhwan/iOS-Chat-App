@@ -10,4 +10,5 @@ import UIKit
 
 class RightChatImageTableViewCell: UITableViewCell {
     @IBOutlet weak var messageImageView: UIImageView!
+    
 }

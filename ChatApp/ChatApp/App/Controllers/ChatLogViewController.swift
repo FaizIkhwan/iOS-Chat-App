@@ -64,10 +64,12 @@ class ChatLogViewController: UIViewController, Storyboarded {
         self.view.endEditing(true)
     }
     
+    // TODO: REFACTOR
     @objc func keyboardWillChange(notification: Notification) {
         guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
         guard let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
         if notification.name == UIResponder.keyboardWillShowNotification {
+            print("keyboardWillShowNotification")
             self.bottomConstraint.constant = -keyboardRect.height
             UIView.animate(withDuration: keyboardDuration) {
                 self.view.layoutIfNeeded()
@@ -76,6 +78,7 @@ class ChatLogViewController: UIViewController, Storyboarded {
 //                self.scrollToBottom()
 //            }
         } else {
+            print("keyboardWillShowNotification")
             self.bottomConstraint.constant = 0
             UIView.animate(withDuration: keyboardDuration) {
                 self.view.layoutIfNeeded()
@@ -92,6 +95,7 @@ class ChatLogViewController: UIViewController, Storyboarded {
     
     // MARK: - Notifications
     
+    // TODO: KEYBOARDDIDSHOWNOTIFICATION?
     func notificationAddObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -140,8 +144,13 @@ class ChatLogViewController: UIViewController, Storyboarded {
     }
     
     func scrollToBottom() {
-        let indexPath = IndexPath(row: chats.count-1, section: 0)
-        tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        print("scrollToBottom")
+        print("chats.count: \(chats.count)")
+        if chats.count > 0 {
+            print("MORE THAN 0")
+            let indexPath = IndexPath(row: chats.count-1, section: 0)
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
     }
     
     @objc func presentImagePicker() {

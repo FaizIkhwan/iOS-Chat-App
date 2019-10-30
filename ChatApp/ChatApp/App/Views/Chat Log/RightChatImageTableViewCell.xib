@@ -19,7 +19,7 @@
                     <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="0e1-tA-cmt" userLabel="Chat Bubble">
                         <rect key="frame" x="91" y="9" width="214" height="174"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="I6V-iA-nO9">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="I6V-iA-nO9">
                                 <rect key="frame" x="7" y="7" width="200" height="160"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="160" id="9pk-Nz-AnM"/>
@@ -57,7 +57,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="messageImageView" destination="I6V-iA-nO9" id="C3F-RL-ytD"/>
+                <outlet property="messageImageView" destination="I6V-iA-nO9" id="PvJ-am-pAC"/>
             </connections>
             <point key="canvasLocation" x="139" y="137"/>
         </tableViewCell>
