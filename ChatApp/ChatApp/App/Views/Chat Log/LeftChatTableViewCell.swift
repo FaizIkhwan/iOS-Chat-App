@@ -9,5 +9,21 @@
 import UIKit
 
 class LeftChatTableViewCell: UITableViewCell {
-    @IBOutlet weak var chatLabel: UILabel!    
+    @IBOutlet weak var chatLabel: UILabel!
+    
+    static func getView(target: UIViewController) -> LeftChatTableViewCell? {
+        let nib = LeftChatTableViewCell.nib()
+        if let view = nib?.instantiate(withOwner: target, options: nil).first as?
+            LeftChatTableViewCell {
+            return view
+        } else {
+            return nil
+        }
+    }
+}
+
+extension LeftChatTableViewCell: NibLoadable {
+    static var NibName: String {
+        return "LeftChatTableViewCell"
+    }
 }

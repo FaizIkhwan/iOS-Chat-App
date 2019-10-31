@@ -9,7 +9,6 @@
 import UIKit
 
 class ChatAccessoryView: UIView {
-    
     @IBOutlet weak var galleryImageView: UIImageView!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var messageTextField: UITextField!
@@ -31,8 +30,6 @@ class ChatAccessoryView: UIView {
 extension ChatAccessoryView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("ChatAccessoryView textFieldShouldReturn")
-//        handleSendMessage()
-//        messageTextField.text = ""
         return true
     }
 }

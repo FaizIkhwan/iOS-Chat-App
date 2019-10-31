@@ -21,6 +21,26 @@ class ChatLogViewController: UIViewController, Storyboarded {
         return footerView
     }()
     
+    lazy var rightChatImageView: RightChatImageTableViewCell! = {
+        let footerView = RightChatImageTableViewCell.getView(target: self, action: #selector(zoomImage))
+        return footerView
+    }()
+    
+    lazy var leftChatImageView: LeftChatImageTableViewCell! = {
+        let footerView = LeftChatImageTableViewCell.getView(target: self, action: #selector(zoomImage))
+        return footerView
+    }()
+    
+    lazy var rightChatMessageView: RightChatTableViewCell! = {
+        let footerView = RightChatTableViewCell.getView(target: self)
+        return footerView
+    }()
+    
+    lazy var leftChatMessageView: LeftChatTableViewCell! = {
+        let footerView = LeftChatTableViewCell.getView(target: self)
+        return footerView
+    }()
+    
     override var inputAccessoryView: UIView? {
         get {
             return messageInputView
@@ -207,6 +227,10 @@ class ChatLogViewController: UIViewController, Storyboarded {
         childRef.updateChildValues(values)
     }
     
+    @objc func zoomImage() {
+        print("zoomImage")
+    }
+    
     deinit {
         print("Deinit - Chat Log VC")
     }
@@ -251,23 +275,17 @@ extension ChatLogViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        
         if Auth.auth().currentUser?.uid == chats[indexPath.row].sender {
             if let imageMessage = chats[indexPath.row].imageURL {
-                let cell = Bundle.main.loadNibNamed("RightChatImageTableViewCell", owner: self, options: nil)?.first as! RightChatImageTableViewCell
-                cell.messageImageView.setImage(withURL: imageMessage)
-                return cell
+                rightChatImageView.messageImageView.setImage(withURL: imageMessage)
+                return rightChatImageView
             } else {
-                let cell = Bundle.main.loadNibNamed("RightChatTableViewCell", owner: self, options: nil)?.first as! RightChatTableViewCell
-                cell.chatLabel.text = chats[indexPath.row].message
-                return cell
+                return rightChatMessageView
             }
         } else {
             if let imageMessage = chats[indexPath.row].imageURL {
-                let cell = Bundle.main.loadNibNamed("LeftChatImageTableViewCell", owner: self, options: nil)?.first as! LeftChatImageTableViewCell
-                cell.messageImageView.setImage(withURL: imageMessage)
-                return cell
+                leftChatImageView.messageImageView.setImage(withURL: imageMessage)
+                return leftChatImageView
             } else {
-                let cell = Bundle.main.loadNibNamed("LeftChatTableViewCell", owner: self, options: nil)?.first as! LeftChatTableViewCell
-                cell.chatLabel.text = chats[indexPath.row].message
-                return cell
+                return leftChatMessageView
             }
         }
     }
