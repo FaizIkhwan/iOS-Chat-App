@@ -33,6 +33,9 @@ class ChatLogViewController: UIViewController, Storyboarded {
     
     // MARK:- Global Variable
         
+    var startingFrame: CGRect?
+    var blackBackgroundView: UIView?
+    var startingImageView: UIImageView?
     let databaseURL = "https://ios-chat-apps.firebaseio.com/"
     var chats: [Chat] = []
     var user: User? {
@@ -207,6 +210,50 @@ class ChatLogViewController: UIViewController, Storyboarded {
         childRef.updateChildValues(values)
     }
     
+    @objc func handleZoomImage(tapGestureRecognizer: UITapGestureRecognizer) {
+        messageInputView.messageTextField.resignFirstResponder()
+        startingImageView = tapGestureRecognizer.view as? UIImageView
+        startingImageView?.isHidden = true
+        startingFrame = startingImageView?.superview?.convert(startingImageView!.frame, to: nil)
+        
+        let zoomingImageView = UIImageView(frame: startingFrame!)
+        zoomingImageView.image = startingImageView?.image
+        zoomingImageView.isUserInteractionEnabled = true
+        zoomingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
+        
+        if let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
+            blackBackgroundView = UIView(frame: keyWindow.frame)
+            blackBackgroundView?.backgroundColor = UIColor.black
+            blackBackgroundView?.alpha = 0
+            keyWindow.addSubview(blackBackgroundView!)
+            keyWindow.addSubview(zoomingImageView)
+            
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.blackBackgroundView?.alpha = 1
+                self.inputAccessoryView?.alpha = 0
+                let height = self.startingFrame!.height / self.startingFrame!.width * keyWindow.frame.width
+                zoomingImageView.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: height)
+                zoomingImageView.center = keyWindow.center
+            })
+        }
+    }
+    
+    // TODO: FIX JERKY WHEN IMAGE ZOOM OUT
+    @objc func handleZoomOut(tapGestureRecognizer: UITapGestureRecognizer) {
+        if let zoomOutImageView = tapGestureRecognizer.view {
+            zoomOutImageView.cornerRadiusV = 15
+            
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                zoomOutImageView.frame = self.startingFrame!
+                self.blackBackgroundView?.alpha = 0
+                self.inputAccessoryView?.alpha = 1
+            }) { (completed) in
+                zoomOutImageView.removeFromSuperview()
+                self.startingImageView?.isHidden = false
+            }
+        }
+    }
+    
     deinit {
         print("Deinit - Chat Log VC")
     }
@@ -253,6 +300,8 @@ extension ChatLogViewController: UITableViewDelegate, UITableViewDataSource {
             if let imageMessage = chats[indexPath.row].imageURL {
                 let cell = Bundle.main.loadNibNamed("RightChatImageTableViewCell", owner: self, options: nil)?.first as! RightChatImageTableViewCell
                 cell.messageImageView.setImage(withURL: imageMessage)
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleZoomImage))
+                cell.messageImageView.addGestureRecognizer(tapGesture)
                 return cell
             } else {
                 let cell = Bundle.main.loadNibNamed("RightChatTableViewCell", owner: self, options: nil)?.first as! RightChatTableViewCell
@@ -263,6 +312,8 @@ extension ChatLogViewController: UITableViewDelegate, UITableViewDataSource {
             if let imageMessage = chats[indexPath.row].imageURL {
                 let cell = Bundle.main.loadNibNamed("LeftChatImageTableViewCell", owner: self, options: nil)?.first as! LeftChatImageTableViewCell
                 cell.messageImageView.setImage(withURL: imageMessage)
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleZoomImage))
+                cell.messageImageView.addGestureRecognizer(tapGesture)
                 return cell
             } else {
                 let cell = Bundle.main.loadNibNamed("LeftChatTableViewCell", owner: self, options: nil)?.first as! LeftChatTableViewCell
