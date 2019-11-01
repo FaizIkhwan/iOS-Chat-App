@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="RightChatVideoTableViewCell" customModule="ChatApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="192"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="192"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="CyJ-3I-4nD" userLabel="Chat Bubble">
+                        <rect key="frame" x="91" y="9" width="214" height="174"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0hv-Wq-d01">
+                                <rect key="frame" x="7" y="7" width="200" height="160"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Xis-aN-yaz"/>
+                                    <constraint firstAttribute="height" constant="160" id="re5-yZ-5z2"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusV">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="11K-Qn-asg">
+                                <rect key="frame" x="88.5" y="68.5" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="0hv-Wq-d01" firstAttribute="leading" secondItem="CyJ-3I-4nD" secondAttribute="leading" constant="7" id="5Ta-Le-kDH"/>
+                            <constraint firstItem="0hv-Wq-d01" firstAttribute="centerY" secondItem="CyJ-3I-4nD" secondAttribute="centerY" id="Ezf-Gw-oPi"/>
+                            <constraint firstItem="11K-Qn-asg" firstAttribute="centerX" secondItem="CyJ-3I-4nD" secondAttribute="centerX" id="MPZ-c3-Njc"/>
+                            <constraint firstItem="0hv-Wq-d01" firstAttribute="top" secondItem="CyJ-3I-4nD" secondAttribute="top" constant="7" id="PIg-RY-5zJ"/>
+                            <constraint firstItem="0hv-Wq-d01" firstAttribute="centerX" secondItem="CyJ-3I-4nD" secondAttribute="centerX" id="WQc-OS-Ga7"/>
+                            <constraint firstAttribute="trailing" secondItem="0hv-Wq-d01" secondAttribute="trailing" constant="7" id="eyo-Dz-jnp"/>
+                            <constraint firstItem="11K-Qn-asg" firstAttribute="centerY" secondItem="CyJ-3I-4nD" secondAttribute="centerY" id="jK7-F7-pql"/>
+                            <constraint firstAttribute="bottom" secondItem="0hv-Wq-d01" secondAttribute="bottom" constant="7" id="mdB-3A-gBw"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusV">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="CyJ-3I-4nD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="9" id="FXc-sq-Djn"/>
+                    <constraint firstItem="CyJ-3I-4nD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="60" id="tOX-3v-Tt5"/>
+                    <constraint firstAttribute="bottom" secondItem="CyJ-3I-4nD" secondAttribute="bottom" constant="9" id="ypf-wD-shf"/>
+                    <constraint firstAttribute="trailing" secondItem="CyJ-3I-4nD" secondAttribute="trailing" constant="15" id="zST-er-rQZ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="activityIndicator" destination="11K-Qn-asg" id="u9d-Gc-dde"/>
+                <outlet property="messageImageView" destination="0hv-Wq-d01" id="TMg-LQ-NAH"/>
+            </connections>
+            <point key="canvasLocation" x="141" y="142"/>
+        </tableViewCell>
+    </objects>
+</document>

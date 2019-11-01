@@ -116,13 +116,13 @@ class ChatLogViewController: UIViewController, Storyboarded {
         let values: [String: String] = [Chat.Const.message: messageInputView.messageTextField.text ?? "",
                                         Chat.Const.sender: Auth.auth().currentUser?.uid ?? "",
                                         Chat.Const.receiver: user?.id ?? "",
-                                        Chat.Const.timestamp: timestamp]
+                                        Chat.Const.timestamp: timestamp,
+                                        Chat.Const.messageType: Constant.messageTypeText]
         childRef.updateChildValues(values)
         hideKeyboard()
         messageInputView.messageTextField.text = ""
     }
-        
-    // FIXME: ???
+            
     func fetchMessages() {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
         guard let user = user else { return }
@@ -134,8 +134,10 @@ class ChatLogViewController: UIViewController, Storyboarded {
                                 receiver: dict[Chat.Const.receiver]!,
                                 timestamp: dict[Chat.Const.timestamp]!,
                                 imageURL: dict[Chat.Const.imageURL],
-                                videoURL: dict[Chat.Const.videoURL])
-                                                                    
+                                videoURL: dict[Chat.Const.videoURL],
+                                messageType: dict[Chat.Const.messageType]!)
+                                                    
+                // FIXME: ???
                 if (chat.receiver == currentUserID && chat.sender == user.id) || (chat.sender == currentUserID && chat.receiver == user.id) {
                     self.chats.append(chat)
                     DispatchQueue.main.async {
@@ -162,7 +164,7 @@ class ChatLogViewController: UIViewController, Storyboarded {
         present(picker, animated: true)
     }
     
-    private func handleUploadImageToStorage(_ selectedImage: UIImage) {
+    private func handleUploadImageToStorage(_ selectedImage: UIImage, messageType: String) {
         let imageName = NSUUID().uuidString
         guard let uploadData = selectedImage.jpegData(compressionQuality: 0.1) else { return }
         let storageRef = Storage.storage().reference().child(Constant.messageImages).child("\(imageName).jpg")
@@ -171,11 +173,11 @@ class ChatLogViewController: UIViewController, Storyboarded {
                 self.presentAlertController(withMessage: err.localizedDescription, title: "Error", willDismiss: false)
                 return
             }
-            self.fetchImageURL(storageRef)
+            self.fetchImageURL(storageRef, messageType: messageType)
         }
     }
     
-    private func fetchImageURL(_ storageRef: StorageReference) {
+    private func fetchImageURL(_ storageRef: StorageReference, messageType: String) {
         storageRef.downloadURL { (url, error) in
             if let err = error {
                 self.presentAlertController(withMessage: err.localizedDescription, title: "Error", willDismiss: false)
@@ -196,12 +198,29 @@ class ChatLogViewController: UIViewController, Storyboarded {
                 Chat.Const.imageURL: imageURL,
                 Chat.Const.receiver: self.user?.id ?? "",
                 Chat.Const.sender: currentUserID,
-                Chat.Const.timestamp: timestamp
-            ]
+                Chat.Const.timestamp: timestamp,
+                Chat.Const.messageType : messageType]
             
             self.handleSendImageIntoDatabase(currentUserID, values: values)
         }
     }
+    
+    func fetchVideoURL(_ storageRef: StorageReference) {
+            storageRef.downloadURL { (url, error) in
+                if let err = error {
+                    self.presentAlertController(withMessage: err.localizedDescription, title: "Error", willDismiss: false)
+                    return
+                }
+                
+                guard let videoURL = url?.absoluteString else {
+                    self.presentAlertController(withMessage: "Failed to fetch video", title: "Error", willDismiss: false)
+                    return
+                }
+                
+                guard let thumbnailImage = self.getThumbnailImage(videoURL) else { return }
+                self.handleUploadImageToStorage(thumbnailImage, messageType: Constant.messageTypeVideo)
+            }
+        }
     
     private func handleSendImageIntoDatabase(_ currentUserID: String, values: [String: String]) {
         let ref = Database.database().reference().child(Constant.chats)
@@ -283,37 +302,6 @@ class ChatLogViewController: UIViewController, Storyboarded {
         }
     }
     
-    func fetchVideoURL(_ storageRef: StorageReference) {
-        storageRef.downloadURL { (url, error) in
-            if let err = error {
-                self.presentAlertController(withMessage: err.localizedDescription, title: "Error", willDismiss: false)
-                return
-            }
-            
-            guard let videoURL = url?.absoluteString else {
-                self.presentAlertController(withMessage: "Failed to fetch video", title: "Error", willDismiss: false)
-                return
-            }
-            
-            guard let currentUserID = Auth.auth().currentUser?.uid else {
-                self.presentAlertController(withMessage: "Authentication has failed", title: "Error", willDismiss: false)
-                return
-            }
-            
-            let timestamp = String(NSDate().timeIntervalSince1970)
-            let values = [
-                Chat.Const.videoURL: videoURL,
-                Chat.Const.receiver: self.user?.id ?? "",
-                Chat.Const.sender: currentUserID,
-                Chat.Const.timestamp: timestamp
-            ]
-            
-            guard let thumbnailImage = self.getThumbnailImage(videoURL) else { return }
-            self.handleUploadImageToStorage(thumbnailImage)
-//            self.handleSendImageIntoDatabase(currentUserID, values: values)
-        }
-    }
-    
     private func getThumbnailImage(_ videoURL: String) -> UIImage? {
         let url = URL(string: videoURL)
         let asset = AVAsset(url: url!)
@@ -356,7 +344,7 @@ extension ChatLogViewController: UIImagePickerControllerDelegate, UINavigationCo
             }
             
             if let selectedImage = selectedImageFromPicker {
-                handleUploadImageToStorage(selectedImage)
+                handleUploadImageToStorage(selectedImage, messageType: Constant.messageTypeImage)
             }
         }
         
@@ -377,31 +365,57 @@ extension ChatLogViewController: UITableViewDelegate, UITableViewDataSource {
         return chats.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        
-        if Auth.auth().currentUser?.uid == chats[indexPath.row].sender {
-            if let imageMessage = chats[indexPath.row].imageURL {
-                let cell = Bundle.main.loadNibNamed("RightChatImageTableViewCell", owner: self, options: nil)?.first as! RightChatImageTableViewCell
-                cell.messageImageView.setImage(withURL: imageMessage)
-                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleZoomImage))
-                cell.messageImageView.addGestureRecognizer(tapGesture)
-                return cell
-            } else {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch chats[indexPath.row].messageType {
+        case Constant.messageTypeText:
+            
+            if Auth.auth().currentUser?.uid == chats[indexPath.row].sender {
                 let cell = Bundle.main.loadNibNamed("RightChatTableViewCell", owner: self, options: nil)?.first as! RightChatTableViewCell
                 cell.chatLabel.text = chats[indexPath.row].message
-                return cell
-            }
-        } else {
-            if let imageMessage = chats[indexPath.row].imageURL {
-                let cell = Bundle.main.loadNibNamed("LeftChatImageTableViewCell", owner: self, options: nil)?.first as! LeftChatImageTableViewCell
-                cell.messageImageView.setImage(withURL: imageMessage)
-                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleZoomImage))
-                cell.messageImageView.addGestureRecognizer(tapGesture)
                 return cell
             } else {
                 let cell = Bundle.main.loadNibNamed("LeftChatTableViewCell", owner: self, options: nil)?.first as! LeftChatTableViewCell
                 cell.chatLabel.text = chats[indexPath.row].message
                 return cell
             }
+            
+        case Constant.messageTypeImage:
+            
+            if Auth.auth().currentUser?.uid == chats[indexPath.row].sender {
+                let cell = Bundle.main.loadNibNamed("RightChatImageTableViewCell", owner: self, options: nil)?.first as! RightChatImageTableViewCell
+                cell.messageImageView.setImage(withURL: chats[indexPath.row].imageURL!)
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleZoomImage))
+                cell.messageImageView.addGestureRecognizer(tapGesture)
+                return cell
+            } else {
+                let cell = Bundle.main.loadNibNamed("LeftChatImageTableViewCell", owner: self, options: nil)?.first as! LeftChatImageTableViewCell
+                cell.messageImageView.setImage(withURL: chats[indexPath.row].imageURL!)
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleZoomImage))
+                cell.messageImageView.addGestureRecognizer(tapGesture)
+                return cell
+            }
+            
+        case Constant.messageTypeVideo:
+            
+            if Auth.auth().currentUser?.uid == chats[indexPath.row].sender {
+                let cell = Bundle.main.loadNibNamed("RightChatVideoTableViewCell", owner: self, options: nil)?.first as! RightChatVideoTableViewCell
+//                cell.messageImageView.setImage(withURL: chats[indexPath.row].imageURL!)
+//                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleZoomImage))
+//                cell.messageImageView.addGestureRecognizer(tapGesture)
+                return cell
+            } else {
+                let cell = Bundle.main.loadNibNamed("LeftChatVideoTableViewCell", owner: self, options: nil)?.first as! LeftChatVideoTableViewCell
+//                cell.messageImageView.setImage(withURL: chats[indexPath.row].imageURL!)
+//                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleZoomImage))
+//                cell.messageImageView.addGestureRecognizer(tapGesture)
+                return cell
+            }
+            
+        default:
+            print("FAILED TO RETRIEVE MESSAGE")
         }
+        let cell = Bundle.main.loadNibNamed("RightChatTableViewCell", owner: self, options: nil)?.first as! RightChatTableViewCell
+        cell.chatLabel.text = "FAILED TO RETRIEVE MESSAGE"
+        return cell
     }
 }

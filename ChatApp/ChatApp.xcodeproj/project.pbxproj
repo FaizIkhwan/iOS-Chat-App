@@ -41,6 +41,10 @@
 		EDCEF2622350831A0086F226 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCEF261235083190086F226 /* HomeViewController.swift */; };
 		EDCEF2642350832A0086F226 /* NewMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCEF2632350832A0086F226 /* NewMessageTableViewCell.swift */; };
 		EDCEF269235083D30086F226 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = EDCEF268235083D30086F226 /* SDWebImage */; };
+		EDF64393236BE4B50027EC67 /* LeftChatVideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF64391236BE4B50027EC67 /* LeftChatVideoTableViewCell.swift */; };
+		EDF64394236BE4B50027EC67 /* LeftChatVideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EDF64392236BE4B50027EC67 /* LeftChatVideoTableViewCell.xib */; };
+		EDF64397236BE6400027EC67 /* RightChatVideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF64395236BE6400027EC67 /* RightChatVideoTableViewCell.swift */; };
+		EDF64398236BE6400027EC67 /* RightChatVideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EDF64396236BE6400027EC67 /* RightChatVideoTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +85,10 @@
 		EDCA21AA234AFA8300CF6D77 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EDCEF261235083190086F226 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		EDCEF2632350832A0086F226 /* NewMessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewCell.swift; sourceTree = "<group>"; };
+		EDF64391236BE4B50027EC67 /* LeftChatVideoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftChatVideoTableViewCell.swift; sourceTree = "<group>"; };
+		EDF64392236BE4B50027EC67 /* LeftChatVideoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeftChatVideoTableViewCell.xib; sourceTree = "<group>"; };
+		EDF64395236BE6400027EC67 /* RightChatVideoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightChatVideoTableViewCell.swift; sourceTree = "<group>"; };
+		EDF64396236BE6400027EC67 /* RightChatVideoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RightChatVideoTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +150,10 @@
 				ED0ACF32236935F2003CB440 /* LeftChatImageTableViewCell.xib */,
 				ED0ACF372369364A003CB440 /* RightChatImageTableViewCell.swift */,
 				ED0ACF382369364A003CB440 /* RightChatImageTableViewCell.xib */,
+				EDF64391236BE4B50027EC67 /* LeftChatVideoTableViewCell.swift */,
+				EDF64392236BE4B50027EC67 /* LeftChatVideoTableViewCell.xib */,
+				EDF64395236BE6400027EC67 /* RightChatVideoTableViewCell.swift */,
+				EDF64396236BE6400027EC67 /* RightChatVideoTableViewCell.xib */,
 			);
 			path = "Chat Log";
 			sourceTree = "<group>";
@@ -339,8 +351,10 @@
 				ED3F26CB23614BCD001EC4A1 /* RightChatTableViewCell.xib in Resources */,
 				EDCA2195234AE67B00CF6D77 /* Assets.xcassets in Resources */,
 				EDCA2193234AE67800CF6D77 /* Main.storyboard in Resources */,
+				EDF64398236BE6400027EC67 /* RightChatVideoTableViewCell.xib in Resources */,
 				ED1BC37E2367FF6500508305 /* ChatAccessoryView.xib in Resources */,
 				ED752A9323605577003CCC6B /* LeftChatTableViewCell.xib in Resources */,
+				EDF64394236BE4B50027EC67 /* LeftChatVideoTableViewCell.xib in Resources */,
 				ED0ACF3A2369364A003CB440 /* RightChatImageTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,6 +424,8 @@
 				EDCEF2622350831A0086F226 /* HomeViewController.swift in Sources */,
 				ED0ACF392369364A003CB440 /* RightChatImageTableViewCell.swift in Sources */,
 				EDC289182354139D00A807CC /* ChatLogViewController.swift in Sources */,
+				EDF64393236BE4B50027EC67 /* LeftChatVideoTableViewCell.swift in Sources */,
+				EDF64397236BE6400027EC67 /* RightChatVideoTableViewCell.swift in Sources */,
 				ED5F6DBB23558C640091151D /* ForgotPasswordViewController.swift in Sources */,
 				EDC2891D2354697000A807CC /* Constant.swift in Sources */,
 				EDCA218E234AE67800CF6D77 /* SceneDelegate.swift in Sources */,

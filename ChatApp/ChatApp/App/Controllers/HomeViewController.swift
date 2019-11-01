@@ -53,7 +53,8 @@ class HomeViewController: UIViewController {
                                 receiver: dict[Chat.Const.receiver]!,
                                 timestamp: dict[Chat.Const.timestamp]!,
                                 imageURL: dict[Chat.Const.imageURL],
-                                videoURL: dict[Chat.Const.videoURL])
+                                videoURL: dict[Chat.Const.videoURL],
+                                messageType: dict[Chat.Const.messageType]!)
                                               
                 guard let currentUserID = Auth.auth().currentUser?.uid else { return }
                 

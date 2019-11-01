@@ -15,6 +15,7 @@ struct Chat {
     let timestamp: String
     let imageURL: String?
     let videoURL: String?
+    let messageType: String
     
     enum Const {
         static let message = "message"
@@ -23,5 +24,6 @@ struct Chat {
         static let timestamp = "timestamp"
         static let imageURL = "imageURL"
         static let videoURL = "videoURL"
+        static let messageType = "messageType"
     }
 }

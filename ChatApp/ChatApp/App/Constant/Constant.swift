@@ -15,4 +15,7 @@ enum Constant {
     static let profileImages = "profile_images"
     static let messageImages = "message_images"
     static let messageVideos = "message_videos"
+    static let messageTypeText = "TEXT"
+    static let messageTypeImage = "IMAGE"
+    static let messageTypeVideo = "VIDEO"
 }
