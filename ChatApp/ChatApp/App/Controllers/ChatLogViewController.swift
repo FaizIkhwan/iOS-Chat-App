@@ -6,7 +6,9 @@
 //  Copyright © 2019 Faiz Ikhwan. All rights reserved.
 //
 
+import AVFoundation
 import Firebase
+import MobileCoreServices
 import UIKit
 
 class ChatLogViewController: UIViewController, Storyboarded {
@@ -72,7 +74,6 @@ class ChatLogViewController: UIViewController, Storyboarded {
         guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
         guard let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
         if notification.name == UIResponder.keyboardWillShowNotification {
-            print("keyboardWillShowNotification")
             self.bottomConstraint.constant = -keyboardRect.height
             UIView.animate(withDuration: keyboardDuration) {
                 self.view.layoutIfNeeded()
@@ -81,7 +82,6 @@ class ChatLogViewController: UIViewController, Storyboarded {
 //                self.scrollToBottom()
 //            }
         } else {
-            print("keyboardWillShowNotification")
             self.bottomConstraint.constant = 0
             UIView.animate(withDuration: keyboardDuration) {
                 self.view.layoutIfNeeded()
@@ -133,7 +133,8 @@ class ChatLogViewController: UIViewController, Storyboarded {
                                 sender: dict[Chat.Const.sender]!,
                                 receiver: dict[Chat.Const.receiver]!,
                                 timestamp: dict[Chat.Const.timestamp]!,
-                                imageURL: dict[Chat.Const.imageURL])
+                                imageURL: dict[Chat.Const.imageURL],
+                                videoURL: dict[Chat.Const.videoURL])
                                                                     
                 if (chat.receiver == currentUserID && chat.sender == user.id) || (chat.sender == currentUserID && chat.receiver == user.id) {
                     self.chats.append(chat)
@@ -147,10 +148,7 @@ class ChatLogViewController: UIViewController, Storyboarded {
     }
     
     func scrollToBottom() {
-        print("scrollToBottom")
-        print("chats.count: \(chats.count)")
         if chats.count > 0 {
-            print("MORE THAN 0")
             let indexPath = IndexPath(row: chats.count-1, section: 0)
             tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
@@ -160,10 +158,11 @@ class ChatLogViewController: UIViewController, Storyboarded {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = true
+        picker.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
         present(picker, animated: true)
     }
     
-    private func uploadImageToFirebase(_ selectedImage: UIImage) {
+    private func handleUploadImageToStorage(_ selectedImage: UIImage) {
         let imageName = NSUUID().uuidString
         guard let uploadData = selectedImage.jpegData(compressionQuality: 0.1) else { return }
         let storageRef = Storage.storage().reference().child(Constant.messageImages).child("\(imageName).jpg")
@@ -184,12 +183,12 @@ class ChatLogViewController: UIViewController, Storyboarded {
             }
             
             guard let imageURL = url?.absoluteString else {
-                self.presentAlertController(withMessage: "Failed to add profile image", title: "Error", willDismiss: false)
+                self.presentAlertController(withMessage: "Failed to fetch profile image", title: "Error", willDismiss: false)
                 return
             }
                                                                         
             guard let currentUserID = Auth.auth().currentUser?.uid else {
-                self.presentAlertController(withMessage: "Something has broken", title: "Error", willDismiss: false)
+                self.presentAlertController(withMessage: "Authentication has failed", title: "Error", willDismiss: false)
                 return
             }
             let timestamp = String(NSDate().timeIntervalSince1970)
@@ -237,11 +236,10 @@ class ChatLogViewController: UIViewController, Storyboarded {
             })
         }
     }
-    
-    // TODO: FIX JERKY WHEN IMAGE ZOOM OUT
+        
     @objc func handleZoomOut(tapGestureRecognizer: UITapGestureRecognizer) {
         if let zoomOutImageView = tapGestureRecognizer.view {
-            zoomOutImageView.cornerRadiusV = 15
+            zoomOutImageView.cornerRadiusV = 10
             
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 zoomOutImageView.frame = self.startingFrame!
@@ -252,6 +250,82 @@ class ChatLogViewController: UIViewController, Storyboarded {
                 self.startingImageView?.isHidden = false
             }
         }
+    }
+    
+    func handleUploadVideoToStorage(_ videoURL: URL) {
+        let fileName = NSUUID().uuidString
+        let storageRef = Storage.storage().reference().child(Constant.messageVideos).child("\(fileName).mov")
+        print("videoURL: \(videoURL)")
+        
+        let metadata = StorageMetadata()
+        //specify MIME type
+        metadata.contentType = "video/quicktime"
+        
+        guard let videoData = NSData(contentsOf: videoURL) as Data? else { return }
+        
+        let uploadTask = storageRef.putData(videoData, metadata: metadata) { (metadata, error) in
+            if let err = error {
+                print("handleUploadVideoToStorage ERR")
+                self.presentAlertController(withMessage: err.localizedDescription, title: "Error", willDismiss: false)
+                return
+            }
+            print("fetchVideoURL")
+            self.fetchVideoURL(storageRef)
+        }
+        uploadTask.observe(.progress) { (snapshot) in
+            if let completedUnitCount = snapshot.progress?.completedUnitCount {
+                print("completedUnitCount: \(completedUnitCount)")
+            }
+        }
+        
+        uploadTask.observe(.success) { (snapshot) in
+            print("success")
+        }
+    }
+    
+    func fetchVideoURL(_ storageRef: StorageReference) {
+        storageRef.downloadURL { (url, error) in
+            if let err = error {
+                self.presentAlertController(withMessage: err.localizedDescription, title: "Error", willDismiss: false)
+                return
+            }
+            
+            guard let videoURL = url?.absoluteString else {
+                self.presentAlertController(withMessage: "Failed to fetch video", title: "Error", willDismiss: false)
+                return
+            }
+            
+            guard let currentUserID = Auth.auth().currentUser?.uid else {
+                self.presentAlertController(withMessage: "Authentication has failed", title: "Error", willDismiss: false)
+                return
+            }
+            
+            let timestamp = String(NSDate().timeIntervalSince1970)
+            let values = [
+                Chat.Const.videoURL: videoURL,
+                Chat.Const.receiver: self.user?.id ?? "",
+                Chat.Const.sender: currentUserID,
+                Chat.Const.timestamp: timestamp
+            ]
+            
+            guard let thumbnailImage = self.getThumbnailImage(videoURL) else { return }
+            self.handleUploadImageToStorage(thumbnailImage)
+//            self.handleSendImageIntoDatabase(currentUserID, values: values)
+        }
+    }
+    
+    private func getThumbnailImage(_ videoURL: String) -> UIImage? {
+        let url = URL(string: videoURL)
+        let asset = AVAsset(url: url!)
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        
+        do {
+            let thumbnailCGImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 1, timescale: 60), actualTime: nil)
+            return UIImage(cgImage: thumbnailCGImage)
+        } catch let error {
+            print("getThumbnailImage: ", error)
+        }
+        return nil
     }
     
     deinit {
@@ -266,16 +340,24 @@ extension ChatLogViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        var selectedImageFromPicker: UIImage?
-        
-        if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            selectedImageFromPicker = editedImage
-        } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            selectedImageFromPicker = originalImage
-        }
-        
-        if let selectedImage = selectedImageFromPicker {
-            uploadImageToFirebase(selectedImage)
+        if let videoUrl = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
+            // Video
+            handleUploadVideoToStorage(videoUrl)
+            dismiss(animated: true)
+            return
+        } else {
+            // Image
+            var selectedImageFromPicker: UIImage?
+            
+            if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+                selectedImageFromPicker = editedImage
+            } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                selectedImageFromPicker = originalImage
+            }
+            
+            if let selectedImage = selectedImageFromPicker {
+                handleUploadImageToStorage(selectedImage)
+            }
         }
         
         dismiss(animated: true)
