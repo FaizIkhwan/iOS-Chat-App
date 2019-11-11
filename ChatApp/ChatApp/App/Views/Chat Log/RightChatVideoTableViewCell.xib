@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,13 +31,25 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="11K-Qn-asg">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="11K-Qn-asg">
                                 <rect key="frame" x="88.5" y="68.5" width="37" height="37"/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vec-O9-BVL">
+                                <rect key="frame" x="84.5" y="64.5" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="2bB-Se-XVp"/>
+                                    <constraint firstAttribute="width" constant="45" id="xg9-Tk-osv"/>
+                                </constraints>
+                                <state key="normal" image="play.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="playButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="rJ6-Jw-lSm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="0hv-Wq-d01" firstAttribute="leading" secondItem="CyJ-3I-4nD" secondAttribute="leading" constant="7" id="5Ta-Le-kDH"/>
+                            <constraint firstItem="vec-O9-BVL" firstAttribute="centerX" secondItem="CyJ-3I-4nD" secondAttribute="centerX" id="CI7-iP-4o8"/>
                             <constraint firstItem="0hv-Wq-d01" firstAttribute="centerY" secondItem="CyJ-3I-4nD" secondAttribute="centerY" id="Ezf-Gw-oPi"/>
                             <constraint firstItem="11K-Qn-asg" firstAttribute="centerX" secondItem="CyJ-3I-4nD" secondAttribute="centerX" id="MPZ-c3-Njc"/>
                             <constraint firstItem="0hv-Wq-d01" firstAttribute="top" secondItem="CyJ-3I-4nD" secondAttribute="top" constant="7" id="PIg-RY-5zJ"/>
@@ -45,6 +57,7 @@
                             <constraint firstAttribute="trailing" secondItem="0hv-Wq-d01" secondAttribute="trailing" constant="7" id="eyo-Dz-jnp"/>
                             <constraint firstItem="11K-Qn-asg" firstAttribute="centerY" secondItem="CyJ-3I-4nD" secondAttribute="centerY" id="jK7-F7-pql"/>
                             <constraint firstAttribute="bottom" secondItem="0hv-Wq-d01" secondAttribute="bottom" constant="7" id="mdB-3A-gBw"/>
+                            <constraint firstItem="vec-O9-BVL" firstAttribute="centerY" secondItem="CyJ-3I-4nD" secondAttribute="centerY" id="qWZ-xc-Vao"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusV">
@@ -64,8 +77,12 @@
             <connections>
                 <outlet property="activityIndicator" destination="11K-Qn-asg" id="u9d-Gc-dde"/>
                 <outlet property="messageImageView" destination="0hv-Wq-d01" id="TMg-LQ-NAH"/>
+                <outlet property="playButtonRight" destination="vec-O9-BVL" id="p6H-Z2-de6"/>
             </connections>
             <point key="canvasLocation" x="141" y="142"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="play.fill" catalog="system" width="58" height="64"/>
+    </resources>
 </document>
